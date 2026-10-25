@@ -4,5 +4,8 @@
   "name": "prolipsi-formation",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // Conserve les variables saisies dans le tableau de bord Cloudflare
+  // à chaque déploiement (sinon elles sont effacées).
+  "keep_vars": true
 }
