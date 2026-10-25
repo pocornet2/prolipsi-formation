@@ -4,9 +4,10 @@ import type { Bloc } from '../../lib/content';
 import { typo } from '../../lib/content';
 import { resolveImage } from '../../lib/images';
 import Bouton from '../Bouton.astro';
+import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'appel' }>['value'];
-const { titre, texte, style = 'bandeau', image, boutons = [] } = Astro.props;
+const { titre, texte, style = 'bandeau', image, pictos = [], boutons = [] } = Astro.props;
 const img = resolveImage(image);
 ---
 
@@ -17,12 +18,32 @@ const img = resolveImage(image);
       <div class="conteneur appel-bandeau__contenu">
         <h2 class="appel-bandeau__titre">{typo(titre)}</h2>
         {texte && <p class="appel-bandeau__texte">{typo(texte)}</p>}
-        {boutons.length > 0 && (
-          <div class="appel-bandeau__boutons">
-            {boutons.map((b) => (
-              <Bouton bouton={b} />
-            ))}
+        {pictos.length > 0 ? (
+          <div class="appel-bandeau__bas">
+            <ul class="appel-bandeau__pictos" role="list">
+              {pictos.map((p) => (
+                <li>
+                  <Icone nom={p.icone} taille={44} epaisseur={1.4} />
+                  <span>{p.libelle}</span>
+                </li>
+              ))}
+            </ul>
+            {boutons.length > 0 && (
+              <div class="appel-bandeau__boutons appel-bandeau__boutons--ligne">
+                {boutons.map((b) => (
+                  <Bouton bouton={b} />
+                ))}
+              </div>
+            )}
           </div>
+        ) : (
+          boutons.length > 0 && (
+            <div class="appel-bandeau__boutons">
+              {boutons.map((b) => (
+                <Bouton bouton={b} />
+              ))}
+            </div>
+          )
         )}
       </div>
     </section>

@@ -4,13 +4,14 @@ import type { Bloc } from '../../lib/content';
 import { typo } from '../../lib/content';
 import Bouton from '../Bouton.astro';
 import { resolveImage } from '../../lib/images';
+import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'hero' }>['value'] & {
   principal?: boolean;
   /** Fil d'Ariane affiché dans le bandeau (pages internes). */
   fil?: { nom: string; url: string }[];
 };
-const { surtitre, titre, titreAccent, texte, sousTexte, fil = [], annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
+const { surtitre, titre, titreAccent, texte, sousTexte, lieu, fil = [], annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
 const img = resolveImage(image);
 const Titre = principal ? 'h1' : 'h2';
 ---
@@ -56,6 +57,7 @@ const Titre = principal ? 'h1' : 'h2';
       </Titre>
       {texte && <p class="hero__texte">{typo(texte)}</p>}
       {sousTexte && <p class="hero__sous-texte">{typo(sousTexte)}</p>}
+      {lieu && <p class="hero__lieu"><Icone nom="localisation" taille={20} />{lieu}</p>}
       {
         boutons.length > 0 && (
           <div class="boutons">

@@ -43,6 +43,10 @@ import {
   ChevronDown,
   Presentation,
   Footprints,
+  Lightbulb,
+  CircleCheck,
+  MessagesSquare,
+  ClipboardList,
 } from '@lucide/astro';
 
 const ICONES = {
@@ -85,6 +89,10 @@ const ICONES = {
   engrenage: Cog,
   message: MessageCircle,
   pedagogie: Presentation,
+  idee: Lightbulb,
+  valide: CircleCheck,
+  echange: MessagesSquare,
+  liste: ClipboardList,
 } as const;
 
 export type NomIcone = keyof typeof ICONES;

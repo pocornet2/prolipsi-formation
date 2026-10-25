@@ -8,10 +8,11 @@ type Props = Extract<Bloc, { discriminant: 'contact' }>['value'] & {
   /** Formation présélectionnée dans « Votre besoin ». */
   besoin?: string;
 };
-const { titre, texte, variante = 'simple', zone, besoin } = Astro.props;
+const { titre, texte, variante = 'simple', zone, besoins, besoin } = Astro.props;
+const choixLibres = (besoins ?? '').split('\n').map((l) => l.trim()).filter(Boolean);
 const devis = variante === 'devis';
 // Liste « Votre besoin » : le catalogue de formations, par catégorie.
-const formations = devis ? await getFormations() : [];
+const formations = devis && !choixLibres.length ? await getFormations() : [];
 const parCategorie = Object.entries(CATEGORIES_FORMATION).map(([cle, nom]) => ({
   nom,
   items: formations.filter((f) => f.entry.categorie === cle),
@@ -100,13 +101,14 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
       <div class="champ">
         <label for="devis-besoin">Votre besoin <span class="requis" aria-hidden="true">*</span></label>
         <select id="devis-besoin" name="besoin" required>
-          <option value="">Sélectionnez une formation</option>
+          <option value="">{choixLibres.length ? 'Sélectionnez une prestation' : 'Sélectionnez une formation'}</option>
+          {choixLibres.map((c) => <option>{c}</option>)}
           {parCategorie.filter((c) => c.items.length).map((c) => (
             <optgroup label={c.nom}>
               {c.items.map((f) => <option selected={f.entry.titre === besoin}>{f.entry.titre}</option>)}
             </optgroup>
           ))}
-          <option>Autre besoin / je ne sais pas encore</option>
+          {!choixLibres.length && <option>Autre besoin / je ne sais pas encore</option>}
         </select>
       </div>
     </div>

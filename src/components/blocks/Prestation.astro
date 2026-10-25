@@ -1,0 +1,67 @@
+---
+import { Picture } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo, lien } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'prestation' }>['value'];
+const { ancre, surtitre, titre, texte, points = [], note, lien: lienPrincipal, lienSecondaire, image, alt = '', position = 'gauche', fond = 'blanc' } = Astro.props;
+const img = resolveImage(image);
+const id = (ancre ?? '').replace(/^#/, '') || undefined;
+---
+
+<section class:list={['prestation', { 'section--bleue': fond === 'bleu' }]} id={id}>
+  <div class:list={['conteneur', 'prestation__grille', { 'prestation__grille--droite': position === 'droite' }]}>
+    {
+      img && (
+        <div class="prestation__media">
+          <Picture src={img} alt={alt} formats={['avif', 'webp']} widths={[480, 720, 960]} sizes="(min-width: 900px) 45vw, 100vw" loading="lazy" />
+        </div>
+      )
+    }
+    <div class="prestation__texte">
+      {surtitre && <p class="surtitre prestation__surtitre">{surtitre}</p>}
+      {titre && <h2 class="prestation__titre">{typo(titre)}</h2>}
+      {texte && <p class="prestation__intro">{typo(texte)}</p>}
+      {
+        points.length > 0 && (
+          <ul class="prestation__points" role="list">
+            {points.map((p) => (
+              <li>
+                <Icone nom="valide" taille={22} class="prestation__coche" />
+                {typo(p)}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {
+        note && (
+          <p class="prestation__note">
+            <Icone nom="idee" taille={20} />
+            {typo(note)}
+          </p>
+        )
+      }
+      {
+        (lienPrincipal?.url || lienSecondaire?.url) && (
+          <p class="prestation__liens">
+            {lienPrincipal?.url && (
+              <a class="prestation__lien" href={lien(lienPrincipal.url)}>
+                {lienPrincipal.libelle || 'En savoir plus'}
+                <Icone nom="fleche" taille={18} />
+              </a>
+            )}
+            {lienSecondaire?.url && (
+              <a class="prestation__lien prestation__lien--secondaire" href={lien(lienSecondaire.url)}>
+                {lienSecondaire.libelle || 'En savoir plus'}
+                <Icone nom="fleche" taille={18} />
+              </a>
+            )}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>

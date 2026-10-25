@@ -19,6 +19,8 @@ import DerniereActu from './DerniereActu.astro';
 import Ancres from './Ancres.astro';
 import ListeFormations from './ListeFormations.astro';
 import BandeauLien from './BandeauLien.astro';
+import Prestation from './Prestation.astro';
+import Etapes from './Etapes.astro';
 
 interface Props {
   blocs: Blocs;
@@ -69,6 +71,10 @@ const premierHero = blocs.findIndex((b) => b.discriminant === 'hero');
         return <Ancres {...bloc.value} />;
       case 'listeFormations':
         return <ListeFormations {...bloc.value} />;
+      case 'prestation':
+        return <Prestation {...bloc.value} />;
+      case 'etapes':
+        return <Etapes {...bloc.value} />;
       case 'bandeauLien':
         return <BandeauLien {...bloc.value} />;
       default:

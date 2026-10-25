@@ -3,14 +3,14 @@ import type { Bloc } from '../../lib/content';
 import { typo } from '../../lib/content';
 import Icone from '../Icone.astro';
 type Props = Extract<Bloc, { discriminant: 'temoignages' }>['value'];
-const { titre, items = [] } = Astro.props;
+const { titre, style = 'bulle', items = [] } = Astro.props;
 // Un avis sans texte s'affiche comme un emplacement réservé (en attendant de vrais avis vérifiés).
 ---
 
 <section class="section section--serree section--temoignages">
   <div class="conteneur">
     {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
-    <ul class="temoignages" role="list">
+    <ul class:list={['temoignages', `temoignages--${style}`]} role="list">
       {
         items.map((t) =>
           t.citation ? (
@@ -28,8 +28,15 @@ const { titre, items = [] } = Astro.props;
             </li>
           ) : (
             <li class="temoignage temoignage--vide">
-              <Icone nom="message" taille={30} epaisseur={1.5} />
-              <span>Emplacement pour un avis client vérifié</span>
+              {style === 'guillemets' ? (
+                <span class="temoignage__guillemets" aria-hidden="true">”</span>
+              ) : (
+                <Icone nom="message" taille={30} epaisseur={1.5} />
+              )}
+              <span>
+                Emplacement pour un avis client vérifié
+                {t.contexte && <small class="temoignage__contexte">{t.contexte}</small>}
+              </span>
             </li>
           ),
         )

@@ -3,10 +3,10 @@ import type { Bloc } from '../../lib/content';
 import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'ancres' }>['value'];
-const { liens = [] } = Astro.props;
+const { liens = [], style = 'superpose' } = Astro.props;
 ---
 
-<nav class="ancres" aria-label="Sections de la page">
+<nav class:list={['ancres', `ancres--${style}`]} aria-label="Sections de la page">
   <ul class="conteneur ancres__liste" role="list">
     {
       liens.map((l) => (

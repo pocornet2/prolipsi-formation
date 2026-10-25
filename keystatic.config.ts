@@ -89,6 +89,11 @@ const icones = [
   { label: 'Engrenage', value: 'engrenage' },
   { label: 'Message', value: 'message' },
   { label: 'Pédagogie (tableau)', value: 'pedagogie' },
+  { label: 'Idée (ampoule)', value: 'idee' },
+  { label: 'Validé (coche)', value: 'valide' },
+  { label: 'Échange (bulles)', value: 'echange' },
+  { label: 'Liste / rapport', value: 'liste' },
+  { label: 'Recherche (loupe)', value: 'recherche' },
 ] as const;
 
 const champIcone = (label = 'Pictogramme') =>
@@ -104,6 +109,7 @@ const lienBouton = fields.object(
         { label: 'Principal (rouge)', value: 'principal' },
         { label: 'Secondaire (contour bleu)', value: 'secondaire' },
         { label: 'Contour rouge', value: 'contour' },
+        { label: 'Contour blanc (sur fond foncé)', value: 'contour-blanc' },
         { label: 'Blanc', value: 'blanc' },
       ],
       defaultValue: 'principal',
@@ -159,6 +165,7 @@ const blocs = (dossier: string) =>
           }),
           texte: fields.text({ label: 'Texte d’accroche', multiline: true }),
           sousTexte: fields.text({ label: 'Petite ligne sous l’accroche (facultatif)', description: 'Ex. Dans vos locaux ou en inter-entreprises.' }),
+          lieu: fields.text({ label: 'Zone avec pictogramme de localisation (facultatif)', description: 'Ex. Loire-Atlantique · Presqu’île guérandaise' }),
           annotation: fields.text({
             label: 'Phrase manuscrite sur la photo (facultatif)',
             multiline: true,
@@ -309,6 +316,14 @@ const blocs = (dossier: string) =>
         itemLabel: () => 'Témoignages',
         schema: fields.object({
           titre: fields.text({ label: 'Titre (H2)' }),
+          style: fields.select({
+            label: 'Style',
+            options: [
+              { label: 'Encadrés bleus (bulle)', value: 'bulle' },
+              { label: 'Cartes blanches avec guillemets', value: 'guillemets' },
+            ],
+            defaultValue: 'bulle',
+          }),
           items: fields.array(
             fields.object({
               citation: fields.text({ label: 'Avis', multiline: true }),
@@ -365,6 +380,10 @@ const blocs = (dossier: string) =>
             defaultValue: 'bandeau',
           }),
           image: imageField(dossier, 'Photo à droite du bandeau (facultative)'),
+          pictos: fields.array(
+            fields.object({ icone: champIcone(), libelle: fields.text({ label: 'Libellé' }) }),
+            { label: 'Pictogrammes sous le texte (facultatif)', itemLabel: (p) => p.fields.libelle.value || 'Pictogramme', validation: { length: { max: 4 } } },
+          ),
           boutons: fields.array(lienBouton, {
             label: 'Boutons',
             itemLabel: (p) => p.fields.libelle.value || 'Bouton',
@@ -489,12 +508,25 @@ const blocs = (dossier: string) =>
             defaultValue: 'simple',
           }),
           zone: fields.text({ label: 'Ligne de localisation (variante devis)', description: 'Ex. La Baule · Saint-Nazaire · Loire-Atlantique' }),
+          besoins: fields.text({
+            label: 'Choix de la liste « Votre besoin » (variante devis)',
+            description: 'Un choix par ligne. Laisser vide pour proposer le catalogue de formations.',
+            multiline: true,
+          }),
         }),
       },
       ancres: {
         label: 'Onglets vers les sections de la page',
         itemLabel: () => 'Onglets de navigation',
         schema: fields.object({
+          style: fields.select({
+            label: 'Style',
+            options: [
+              { label: 'Superposés au bas du bandeau', value: 'superpose' },
+              { label: 'Cartes blanches sur une bande bleue', value: 'bande' },
+            ],
+            defaultValue: 'superpose',
+          }),
           liens: fields.array(
             fields.object({
               libelle: fields.text({ label: 'Texte' }),
@@ -534,6 +566,54 @@ const blocs = (dossier: string) =>
             ],
             defaultValue: 'blanc',
           }),
+        }),
+      },
+      prestation: {
+        label: 'Prestation (photo + points clés)',
+        itemLabel: (p) => `Prestation · ${p.fields.titre.value || 'sans titre'}`,
+        schema: fields.object({
+          ancre: fields.text({ label: 'Identifiant de la section (pour les onglets)', description: 'Ex. commission-securite' }),
+          surtitre: fields.text({ label: 'Surtitre', description: 'Ex. 01 · Commission de sécurité' }),
+          titre: fields.text({ label: 'Titre (H2)' }),
+          texte: fields.text({ label: 'Texte', multiline: true }),
+          points: fields.array(fields.text({ label: 'Point' }), { label: 'Points clés (coches rouges)', itemLabel: (p) => p.value || 'Point' }),
+          note: fields.text({ label: 'Encadré « ampoule » (facultatif)' }),
+          lien: fields.object({ libelle: fields.text({ label: 'Texte' }), url: fields.text({ label: 'Lien' }) }, { label: 'Lien principal (rouge)' }),
+          lienSecondaire: fields.object({ libelle: fields.text({ label: 'Texte' }), url: fields.text({ label: 'Lien' }) }, { label: 'Lien secondaire (bleu, facultatif)' }),
+          image: imageField(dossier),
+          alt: fields.text({ label: 'Texte alternatif de l’image' }),
+          position: fields.select({
+            label: 'Position de l’image',
+            options: [
+              { label: 'À gauche', value: 'gauche' },
+              { label: 'À droite', value: 'droite' },
+            ],
+            defaultValue: 'gauche',
+          }),
+          fond: fields.select({
+            label: 'Fond',
+            options: [
+              { label: 'Blanc', value: 'blanc' },
+              { label: 'Bleu clair', value: 'bleu' },
+            ],
+            defaultValue: 'blanc',
+          }),
+        }),
+      },
+      etapes: {
+        label: 'Étapes numérotées (démarche)',
+        itemLabel: (p) => `Étapes · ${p.fields.titre.value || 'sans titre'}`,
+        schema: fields.object({
+          titre: fields.text({ label: 'Titre (H2)' }),
+          intro: fields.text({ label: 'Texte sous le titre' }),
+          etapes: fields.array(
+            fields.object({
+              icone: champIcone(),
+              titre: fields.text({ label: 'Titre de l’étape' }),
+              texte: fields.text({ label: 'Texte court' }),
+            }),
+            { label: 'Étapes', itemLabel: (p) => p.fields.titre.value || 'Étape', validation: { length: { max: 6 } } },
+          ),
         }),
       },
       bandeauLien: {

@@ -1,11 +1,203 @@
-titre: Conseil en prévention
+titre: Conseil & prévention
 seo:
-  description: 'Audit, commission de sécurité, DUERP et notices incendie : accompagnement à la mise en conformité.'
+  titre: Conseil en prévention incendie et DUERP · La Baule, Saint-Nazaire
+  description: 'Commission de sécurité, notice incendie et accessibilité, DUERP : un accompagnement en prévention pour votre établissement à La Baule et Saint-Nazaire.'
   noindex: false
 blocs:
-  - discriminant: texte
+  - discriminant: hero
     value:
-      titre: ''
-      contenu: |-
-        Contenu à venir : offre d’accompagnement.
-      largeur: etroite
+      surtitre: ''
+      titre: Conseil en prévention incendie et sécurité au travail à La Baule et Saint-Nazaire
+      titreAccent: ''
+      texte: 'Commission de sécurité, notice incendie, DUERP : un accompagnement adapté à votre établissement.'
+      sousTexte: ''
+      lieu: Loire-Atlantique · Presqu’île guérandaise
+      annotation: ''
+      disposition: droite
+      image: /src/assets/images/pages/conseil/blocs/0/value/image.jpg
+      alt: Consultant en prévention échangeant avec une responsable d’établissement dans un couloir équipé d’un extincteur
+      boutons:
+        - libelle: Demander un audit ou un devis
+          url: '#devis'
+          style: principal
+          icone: ''
+          fleche: false
+        - libelle: Nos formations
+          url: /formations/
+          style: secondaire
+          icone: ''
+          fleche: false
+  - discriminant: ancres
+    value:
+      style: bande
+      liens:
+        - libelle: Commission de sécurité
+          icone: accompagnement
+          ancre: commission-securite
+        - libelle: Notice incendie & accessibilité
+          icone: devis
+          ancre: notice-securite
+        - libelle: DUERP
+          icone: devis
+          ancre: duerp
+  - discriminant: prestation
+    value:
+      ancre: commission-securite
+      surtitre: 01 · Commission de sécurité
+      titre: Préparez votre commission de sécurité incendie
+      texte: Anticipez la visite et identifiez les points à améliorer dans votre ERP.
+      points:
+        - Audit préalable de l’établissement
+        - Préparation des documents et des équipes
+        - Pré-visite avec simulation
+      note: Une préparation structurée pour aborder la visite avec sérénité.
+      lien:
+        libelle: Découvrir l’accompagnement
+        url: '#devis'
+      lienSecondaire:
+        libelle: ''
+        url: ''
+      image: /src/assets/images/pages/conseil/blocs/2/value/image.jpg
+      alt: Consultant vérifiant un extincteur avec le responsable d’un établissement
+      position: gauche
+      fond: blanc
+  - discriminant: prestation
+    value:
+      ancre: notice-securite
+      surtitre: 02 · Notice de sécurité
+      titre: Votre dossier de sécurité incendie et d’accessibilité
+      texte: Un accompagnement pour préparer l’ouverture de votre établissement recevant du public.
+      points:
+        - Rédaction de la notice de sécurité
+        - Prise en compte de l’accessibilité
+        - Accompagnement dans vos démarches
+      note: ''
+      lien:
+        libelle: Découvrir la prestation
+        url: '#devis'
+      lienSecondaire:
+        libelle: Besoin de matériel ? Découvrez notre offre
+        url: /materiel/
+      image: /src/assets/images/pages/conseil/blocs/3/value/image.jpg
+      alt: Plans d’un établissement annotés à côté d’un dossier sécurité incendie et accessibilité
+      position: droite
+      fond: bleu
+  - discriminant: prestation
+    value:
+      ancre: duerp
+      surtitre: 03 · Document unique
+      titre: Réalisez ou mettez à jour votre DUERP
+      texte: Identifiez les risques de votre activité et définissez vos priorités de prévention.
+      points:
+        - Évaluation des risques professionnels
+        - Document adapté à votre entreprise
+        - Plan d’action et sensibilisation des équipes
+      note: Un accompagnement concret, complété par la formation de vos équipes.
+      lien:
+        libelle: Découvrir l’accompagnement DUERP
+        url: '#devis'
+      lienSecondaire:
+        libelle: ''
+        url: ''
+      image: /src/assets/images/pages/conseil/blocs/4/value/image.jpg
+      alt: Consultant et salariée évaluant les risques dans un atelier
+      position: gauche
+      fond: blanc
+  - discriminant: appel
+    value:
+      titre: 'Conseil, formation et matériel : un seul interlocuteur'
+      texte: Du diagnostic à la formation de vos équipes, jusqu’au choix du matériel.
+      style: bandeau
+      image: /src/assets/images/pages/conseil/blocs/5/value/image.jpg
+      pictos:
+        - icone: message
+          libelle: Conseiller
+        - icone: accompagnement
+          libelle: Former
+        - icone: extincteur
+          libelle: Équiper
+      boutons:
+        - libelle: Voir nos formations
+          url: /formations/
+          style: principal
+          icone: ''
+          fleche: false
+        - libelle: Découvrir le matériel
+          url: /materiel/
+          style: contour-blanc
+          icone: ''
+          fleche: false
+  - discriminant: etapes
+    value:
+      titre: Comment se déroule un accompagnement
+      intro: Une démarche adaptée à votre établissement.
+      etapes:
+        - icone: echange
+          titre: Premier contact
+          texte: Votre activité et votre besoin
+        - icone: recherche
+          titre: Visite et audit
+          texte: Identifier les risques
+        - icone: liste
+          titre: Restitution
+          texte: Partager les constats
+        - icone: engrenage
+          titre: Plan d’action
+          texte: Définir les priorités
+        - icone: accompagnement
+          titre: Formation et matériel
+          texte: Mettre en œuvre les actions
+  - discriminant: reassurance
+    value:
+      style: bleue
+      items:
+        - icone: incendie
+          titre: Prévention incendie en ERP
+          texte: ''
+        - icone: localisation
+          titre: Approche terrain
+          texte: ''
+        - icone: accompagnement
+          titre: Accompagnement personnalisé
+          texte: ''
+  - discriminant: temoignages
+    value:
+      titre: Ce que disent nos clients
+      style: guillemets
+      items:
+        - citation: ''
+          auteur: ''
+          contexte: Audit de sécurité incendie
+        - citation: ''
+          auteur: ''
+          contexte: Accompagnement DUERP
+  - discriminant: faq
+    value:
+      titre: Vos questions sur le conseil et la prévention
+      intro: ''
+      disposition: colonnes
+      marqueur: plus
+      questions:
+        - question: Qu’est-ce qu’une commission de sécurité incendie ?
+          reponse: C’est la commission qui visite les établissements recevant du public (ERP) pour vérifier le respect des règles de sécurité incendie, avant l’ouverture puis périodiquement selon le type et la catégorie de l’établissement. Elle rend un avis au maire, qui autorise ou non l’ouverture ou la poursuite de l’exploitation.
+        - question: Qui doit avoir un DUERP ?
+          reponse: Tout employeur doit évaluer les risques professionnels et consigner les résultats dans le document unique d’évaluation des risques professionnels (DUERP), dès le premier salarié. Le document doit être tenu à jour, notamment lors de changements importants dans l’organisation ou les conditions de travail.
+        - question: Quand faut-il une notice de sécurité incendie ?
+          reponse: La notice de sécurité est jointe au dossier de demande de permis de construire ou d’autorisation de travaux d’un ERP. Elle décrit les dispositions prises pour la sécurité incendie de l’établissement. Nous vous aidons à la rédiger, avec la prise en compte de l’accessibilité.
+        - question: Peut-on préparer la visite de la commission ?
+          reponse: Oui. Nous réalisons un audit préalable, vérifions avec vous les documents et registres demandés, préparons les équipes et pouvons organiser une pré-visite qui simule le passage de la commission.
+        - question: Le DUERP est-il un accompagnement ou une formation ?
+          reponse: 'C’est un accompagnement : nous évaluons avec vous les risques de votre activité et construisons le document et le plan d’action. Il peut être complété par la formation de vos équipes (SST, incendie, gestes et postures…).'
+        - question: Quel budget et quels délais prévoir ?
+          reponse: Ils dépendent de la taille de l’établissement et de la prestation. Après un premier échange, nous vous adressons une proposition détaillée avec le calendrier d’intervention.
+  - discriminant: contact
+    value:
+      titre: Parlons de votre établissement
+      texte: Décrivez-nous votre activité et ce que vous souhaitez préparer. Nous vous proposons un accompagnement adapté.
+      variante: devis
+      zone: La Baule · Saint-Nazaire · Loire-Atlantique
+      besoins: |-
+        Préparation de la commission de sécurité
+        Notice de sécurité incendie et accessibilité
+        DUERP : création ou mise à jour
+        Autre besoin de conseil en prévention
