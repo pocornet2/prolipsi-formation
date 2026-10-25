@@ -5,19 +5,32 @@ import { Picture } from 'astro:assets';
 import Bouton from '../Bouton.astro';
 import { resolveImage } from '../../lib/images';
 import { renderMarkdoc } from '../../lib/markdoc';
+import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'texteImage' }>['value'];
-const { surtitre, titre, contenu, image, alt = '', position = 'droite', bouton } = Astro.props;
+const { surtitre, titre, contenu, image, alt = '', position = 'droite', bouton, encadre } = Astro.props;
 const img = resolveImage(image);
 ---
 
-<section class="section">
+<section class:list={['section', { 'section--texte-image-encadre': encadre?.titre }]}>
   <div class:list={['conteneur', 'duo', { 'duo--inverse': position === 'gauche' }]}>
     <div class="duo__texte">
       {surtitre && <p class="surtitre">{surtitre}</p>}
-      {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+      {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
       <div class="prose" set:html={renderMarkdoc(contenu)} />
       <Bouton bouton={bouton} class="duo__btn" />
+      {
+        encadre?.titre && (
+          <div class="encadre">
+            {encadre.icone && <Icone nom={encadre.icone} taille={44} epaisseur={1.5} class="encadre__icone" />}
+            <div>
+              <h3 class="encadre__titre">{typo(encadre.titre)}</h3>
+              {encadre.texte && <p class="encadre__texte">{typo(encadre.texte)}</p>}
+              <Bouton bouton={encadre.bouton} class="encadre__btn" />
+            </div>
+          </div>
+        )
+      }
     </div>
     {
       img && (

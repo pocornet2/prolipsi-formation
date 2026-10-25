@@ -5,8 +5,12 @@ import { typo } from '../../lib/content';
 import Bouton from '../Bouton.astro';
 import { resolveImage } from '../../lib/images';
 
-type Props = Extract<Bloc, { discriminant: 'hero' }>['value'] & { principal?: boolean };
-const { surtitre, titre, titreAccent, texte, annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
+type Props = Extract<Bloc, { discriminant: 'hero' }>['value'] & {
+  principal?: boolean;
+  /** Fil d'Ariane affiché dans le bandeau (pages internes). */
+  fil?: { nom: string; url: string }[];
+};
+const { surtitre, titre, titreAccent, texte, sousTexte, fil = [], annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
 const img = resolveImage(image);
 const Titre = principal ? 'h1' : 'h2';
 ---
@@ -28,12 +32,30 @@ const Titre = principal ? 'h1' : 'h2';
   }
   <div class="conteneur hero__contenu">
     <div class="hero__texte-bloc">
+      {
+        fil.length > 0 && (
+          <nav class="fil fil--hero" aria-label="Fil d’Ariane">
+            <ol>
+              {fil.map((item, i) =>
+                i < fil.length - 1 ? (
+                  <li>
+                    <a href={item.url}>{item.nom}</a>
+                  </li>
+                ) : (
+                  <li aria-current="page">{item.nom}</li>
+                ),
+              )}
+            </ol>
+          </nav>
+        )
+      }
       {surtitre && <p class="surtitre">{surtitre}</p>}
       <Titre class="hero__titre">
         {typo(titre)}
         {titreAccent && (<> <span class="hero__accent">{typo(titreAccent)}</span></>)}
       </Titre>
       {texte && <p class="hero__texte">{typo(texte)}</p>}
+      {sousTexte && <p class="hero__sous-texte">{typo(sousTexte)}</p>}
       {
         boutons.length > 0 && (
           <div class="boutons">

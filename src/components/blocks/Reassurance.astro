@@ -5,10 +5,11 @@ import { resolveImage } from '../../lib/images';
 import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'reassurance' }>['value'];
-const { items = [] } = Astro.props;
+const { items = [], style = 'blanche' } = Astro.props;
+const bleue = style === 'bleue';
 ---
 
-<section class="reassurance" aria-label="Nos garanties">
+<section class:list={['reassurance', { 'reassurance--bleue': bleue }]} aria-label="Nos points forts">
   <ul class="conteneur reassurance__liste" role="list">
     {
       items.map((item) => {
@@ -16,7 +17,7 @@ const { items = [] } = Astro.props;
         return (
           <li class="reassurance__item">
             <span class="reassurance__visuel">
-              {logo ? <Image src={logo} alt="" height={56} /> : <Icone nom={item.icone || 'qualite'} taille={34} epaisseur={1.8} />}
+              {logo ? <Image src={logo} alt="" height={56} /> : <Icone nom={item.icone || 'qualite'} taille={bleue ? 40 : 34} epaisseur={bleue ? 1.5 : 1.8} />}
             </span>
             <span>
               <strong class="reassurance__titre">{item.titre}</strong>

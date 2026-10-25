@@ -1,0 +1,79 @@
+---
+import { typo } from '../lib/content';
+import Icone from './Icone.astro';
+
+interface Props {
+  slug: string;
+  formation: {
+    titre: string;
+    icone?: string | null;
+    certifiant?: boolean;
+    sigle?: string | null;
+    accroche?: string | null;
+    duree?: string | null;
+    effectif?: string | null;
+    modalite?: string | null;
+  };
+  disposition?: 'grille' | 'compacte' | 'large' | string;
+  /** Niveau du titre de la carte. */
+  niveau?: 'h3' | 'h4';
+}
+const { slug, formation: f, disposition = 'grille', niveau = 'h3' } = Astro.props;
+const Titre = niveau;
+const url = `/formations/${slug}/`;
+// En disposition compacte, durée et effectif tiennent sur une ligne.
+const compacte = disposition === 'compacte';
+---
+
+<li class:list={['fcarte', `fcarte--${disposition}`]}>
+  <span class="fcarte__icone"><Icone nom={f.icone || 'formation'} taille={disposition === 'grille' ? 40 : 38} epaisseur={1.6} /></span>
+  <div class="fcarte__corps">
+    {f.certifiant && <span class="fcarte__badge">Certifiant</span>}
+    <Titre class="fcarte__titre">{typo(f.titre)}</Titre>
+    {f.sigle && <span class="fcarte__sigle">{f.sigle}</span>}
+    {
+      disposition === 'large' ? (
+        <>
+          {f.accroche && <p class="fcarte__accroche">{typo(f.accroche)}</p>}
+          {f.modalite && <p class="fcarte__note">{typo(f.modalite)}</p>}
+        </>
+      ) : (
+        <ul class="fcarte__infos" role="list">
+          {compacte ? (
+            (f.duree || f.effectif) && (
+              <li>
+                <Icone nom="duree" taille={17} />
+                {[f.duree, f.effectif].filter(Boolean).join(' · ')}
+              </li>
+            )
+          ) : (
+            <>
+              {f.duree && (
+                <li>
+                  <Icone nom="duree" taille={17} />
+                  {f.duree}
+                </li>
+              )}
+              {f.effectif && (
+                <li>
+                  <Icone nom="groupe" taille={17} />
+                  {f.effectif}
+                </li>
+              )}
+            </>
+          )}
+          {f.modalite && (
+            <li>
+              <Icone nom="etablissement" taille={17} />
+              {f.modalite}
+            </li>
+          )}
+        </ul>
+      )
+    }
+    <a class="fcarte__lien" href={url}>
+      Voir la formation<span class="visually-hidden"> {f.titre}</span>
+      <Icone nom="fleche" taille={17} />
+    </a>
+  </div>
+</li>

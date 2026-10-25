@@ -1,0 +1,22 @@
+---
+import type { Bloc } from '../../lib/content';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'ancres' }>['value'];
+const { liens = [] } = Astro.props;
+---
+
+<nav class="ancres" aria-label="Sections de la page">
+  <ul class="conteneur ancres__liste" role="list">
+    {
+      liens.map((l) => (
+        <li>
+          <a class="ancres__lien" href={`#${(l.ancre ?? '').replace(/^#/, '')}`}>
+            <Icone nom={l.icone} taille={34} epaisseur={1.6} />
+            <span>{l.libelle}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

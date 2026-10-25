@@ -1,11 +1,189 @@
 titre: Formations
 seo:
-  description: 'Formations SST, incendie, habilitations électriques et évacuation à La Baule et Saint-Nazaire.'
+  titre: Formations santé-sécurité au travail · La Baule, Saint-Nazaire
+  description: 'Formations SST, MAC SST, incendie, évacuation, habilitation électrique et gestes et postures à La Baule et Saint-Nazaire, dans vos locaux ou en inter-entreprises.'
   noindex: false
 blocs:
-  - discriminant: texte
+  - discriminant: hero
     value:
-      titre: ''
+      surtitre: ''
+      titre: Formations santé-sécurité au travail à La Baule et Saint-Nazaire
+      titreAccent: ''
+      texte: 'Secourisme, incendie, évacuation, habilitation électrique : formez vos équipes aux bons réflexes.'
+      sousTexte: Dans vos locaux ou en inter-entreprises.
+      annotation: ''
+      disposition: droite
+      image: /src/assets/images/pages/formations/blocs/0/value/image.jpg
+      alt: Formateur montrant le massage cardiaque sur un mannequin à un groupe de stagiaires
+      boutons:
+        - libelle: Demander un devis
+          url: '#devis'
+          style: principal
+          icone: ''
+          fleche: false
+        - libelle: Une session dans vos locaux
+          url: '#devis'
+          style: contour
+          icone: ''
+          fleche: false
+  - discriminant: ancres
+    value:
+      liens:
+        - libelle: Secourisme
+          icone: secourisme
+          ancre: secourisme
+        - libelle: Incendie et évacuation
+          icone: incendie
+          ancre: incendie
+        - libelle: Prévention des risques
+          icone: prevention
+          ancre: prevention
+  - discriminant: listeFormations
+    value:
+      titre: Formations secourisme
+      intro: Les bons gestes, au bon moment.
+      categorie: secourisme
+      ancre: secourisme
+      disposition: grille
+      fond: blanc
+  - discriminant: listeFormations
+    value:
+      titre: Formations incendie et évacuation
+      intro: Prévenir, intervenir et évacuer en sécurité.
+      categorie: incendie
+      ancre: incendie
+      disposition: compacte
+      fond: bleu
+  - discriminant: listeFormations
+    value:
+      titre: Prévention des risques professionnels
+      intro: ''
+      categorie: prevention
+      ancre: prevention
+      disposition: large
+      fond: blanc
+  - discriminant: bandeauLien
+    value:
+      texte: Besoin d’un accompagnement ?
+      lienLibelle: Découvrez notre offre Conseil & prévention
+      url: /conseil/
+      icone: ''
+      style: clair
+  - discriminant: reassurance
+    value:
+      style: bleue
+      items:
+        - icone: accompagnement
+          titre: Pédagogie pratique
+          texte: ''
+        - icone: engrenage
+          titre: Mises en situation
+          texte: ''
+        - icone: groupe
+          titre: Des formations adaptées à vos équipes
+          texte: ''
+  - discriminant: texteImage
+    value:
+      surtitre: ''
+      titre: 'En intra ou en inter : à vous de choisir'
       contenu: |-
-        Contenu à venir : catalogue des formations.
-      largeur: etroite
+        ### Dans vos locaux
+
+        Nous nous déplaçons dans votre entreprise pour des formations adaptées à votre environnement, vos équipements et vos risques.
+
+        ### En inter-entreprises
+
+        Rejoignez nos sessions dans nos centres à La Baule ou Saint-Nazaire et échangez avec d’autres professionnels.
+      image: /src/assets/images/pages/formations/blocs/7/value/image.jpg
+      alt: Formateur présentant un extincteur à un groupe de stagiaires
+      position: gauche
+      bouton:
+        libelle: ''
+        url: ''
+        style: principal
+        icone: ''
+        fleche: false
+      encadre:
+        icone: financement
+        titre: Financer votre formation
+        texte: Une prise en charge OPCO peut être possible selon votre situation.
+        bouton:
+          libelle: Envoyer ma demande
+          url: '#devis'
+          style: principal
+          icone: ''
+          fleche: false
+  - discriminant: cartes
+    value:
+      surtitre: ''
+      titre: Pourquoi former vos salariés à la sécurité ?
+      intro: ''
+      alignement: gauche
+      style: simple
+      cartes:
+        - image: null
+          alt: ''
+          icone: accompagnement
+          titre: Organiser les secours
+          texte: Des collaborateurs formés peuvent agir efficacement en cas d’accident et sécuriser l’arrivée des secours.
+          lien: ''
+          lienLibelle: ''
+        - image: null
+          alt: ''
+          icone: incendie
+          titre: Prévenir l’incendie
+          texte: La formation permet d’identifier les risques, d’adopter les bons comportements et de limiter les conséquences d’un départ de feu.
+          lien: ''
+          lienLibelle: ''
+        - image: null
+          alt: ''
+          icone: electricite
+          titre: Maîtriser le risque électrique
+          texte: Vos équipes apprennent à travailler en sécurité et à éviter les situations dangereuses liées à l’électricité.
+          lien: ''
+          lienLibelle: ''
+  - discriminant: bandeauLien
+    value:
+      texte: Le matériel et la formation, un même interlocuteur.
+      lienLibelle: Découvrir notre matériel
+      url: /materiel/
+      icone: engrenage
+      style: marine
+  - discriminant: temoignages
+    value:
+      titre: Ils nous font confiance
+      items:
+        - citation: ''
+          auteur: ''
+          contexte: ''
+        - citation: ''
+          auteur: ''
+          contexte: ''
+  - discriminant: faq
+    value:
+      titre: Vos questions sur nos formations
+      intro: ''
+      disposition: colonnes
+      marqueur: chevron
+      questions:
+        - question: Quelle formation choisir pour mes salariés ?
+          reponse: |-
+            Tout dépend de votre activité, de vos risques et de vos obligations. Le SST est la base pour organiser les secours ; les formations incendie (premier témoin, équipier de première intervention, guide-file et serre-file) préparent à réagir face à un départ de feu ; l’habilitation électrique est nécessaire dès qu’un salarié intervient sur ou à proximité d’installations électriques.
+
+            Décrivez-nous votre besoin : nous vous conseillons le parcours adapté.
+        - question: Quand renouveler le SST ?
+          reponse: Le certificat SST est valable 24 mois. Pour le conserver, le sauveteur secouriste suit un MAC SST (maintien et actualisation des compétences) de 7 heures avant l’échéance.
+        - question: Comment organiser un exercice d’évacuation ?
+          reponse: Nous préparons le scénario avec vous, animons l’exercice dans vos locaux, puis réalisons un débriefing et un compte rendu avec des pistes d’amélioration. Comptez une à deux heures selon la taille de l’établissement.
+        - question: Quelle différence entre intra et inter ?
+          reponse: En intra, la formation a lieu dans vos locaux, pour vos seuls salariés, avec un contenu adapté à vos équipements. En inter-entreprises, vos salariés rejoignent une session dans nos centres de La Baule ou Saint-Nazaire avec des stagiaires d’autres entreprises.
+        - question: Ma formation peut-elle être financée ?
+          reponse: Une prise en charge par votre OPCO peut être possible selon votre situation. Nous vous remettons les documents nécessaires à votre demande de financement.
+        - question: Quelles adaptations en situation de handicap ?
+          reponse: Signalez-nous toute situation de handicap dès votre demande. Nous étudions avec vous les adaptations possibles du lieu, du rythme et des supports.
+  - discriminant: contact
+    value:
+      titre: Parlons de vos besoins de formation
+      texte: Une proposition adaptée à votre activité, votre équipe et vos locaux.
+      variante: devis
+      zone: La Baule · Saint-Nazaire · Loire-Atlantique

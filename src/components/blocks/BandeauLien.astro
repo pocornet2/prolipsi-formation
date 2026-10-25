@@ -1,0 +1,40 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo, lien } from '../../lib/content';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'bandeauLien' }>['value'];
+const { texte, lienLibelle, url, icone, style = 'clair' } = Astro.props;
+---
+
+{
+  style === 'marine' ? (
+    <section class="bandeau-lien bandeau-lien--marine">
+      <div class="conteneur bandeau-lien__inner">
+        <p class="bandeau-lien__texte">
+          <Icone nom={icone} taille={36} epaisseur={1.6} />
+          <span>{typo(texte)}</span>
+        </p>
+        {url && (
+          <a class="bandeau-lien__lien" href={lien(url)}>
+            {lienLibelle || 'En savoir plus'}
+            <Icone nom="fleche" taille={18} />
+          </a>
+        )}
+      </div>
+    </section>
+  ) : (
+    <div class="conteneur bandeau-lien bandeau-lien--clair">
+      <p class="bandeau-lien__texte">
+        <Icone nom={icone} taille={20} />
+        <span>{typo(texte)}</span>
+        {url && (
+          <a href={lien(url)}>
+            {lienLibelle || 'En savoir plus'}
+            <Icone nom="fleche" taille={16} />
+          </a>
+        )}
+      </p>
+    </div>
+  )
+}

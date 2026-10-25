@@ -19,12 +19,14 @@ interface Props {
   noindex?: boolean;
   /** Fil d'Ariane (hors accueil, ajouté automatiquement). */
   fil?: { nom: string; url: string }[];
+  /** false : le fil est affiché par la page elle-même (ex. dans le bandeau). */
+  filVisible?: boolean;
   /** Schémas JSON-LD supplémentaires propres à la page. */
   schemas?: (Record<string, unknown> | undefined)[];
   type?: 'website' | 'article';
 }
 
-const { titre, titreSeo, description, image, noindex = false, fil = [], schemas = [], type = 'website' } =
+const { titre, titreSeo, description, image, noindex = false, fil = [], filVisible = true, schemas = [], type = 'website' } =
   Astro.props;
 
 const reglages = await getReglages();
@@ -87,7 +89,7 @@ const jsonLd = graphe(
     <Header reglages={reglages} navigation={navigation} />
 
     {
-      filComplet.length > 0 && (
+      filVisible && filComplet.length > 0 && (
         <nav class="fil conteneur" aria-label="Fil d’Ariane">
           <ol>
             {filComplet.map((item, i) =>

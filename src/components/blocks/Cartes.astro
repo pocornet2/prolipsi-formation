@@ -6,21 +6,22 @@ import { resolveImage } from '../../lib/images';
 import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'cartes' }>['value'];
-const { surtitre, titre, intro, alignement = 'centre', cartes = [] } = Astro.props;
+const { surtitre, titre, intro, alignement = 'centre', style = 'cartes', cartes = [] } = Astro.props;
+const simple = style === 'simple';
 ---
 
-<section class="section section--douce">
+<section class:list={['section', simple ? 'section--cartes-simples' : 'section--douce']}>
   <div class="conteneur">
     {
       (surtitre || titre || intro) && (
         <header class:list={['section__tete', { 'section__tete--centre': alignement === 'centre' }]}>
           {surtitre && <p class="surtitre">{surtitre}</p>}
-          {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+          {titre && <h2 class:list={['section__titre', { 'section__titre--souligne': simple }]}>{typo(titre)}</h2>}
           {intro && <p class="section__intro">{typo(intro)}</p>}
         </header>
       )
     }
-    <ul class="cartes" role="list">
+    <ul class:list={['cartes', { 'cartes--simples': simple }]} role="list">
       {
         cartes.map((c) => {
           const img = resolveImage(c.image);
@@ -32,7 +33,7 @@ const { surtitre, titre, intro, alignement = 'centre', cartes = [] } = Astro.pro
               <div class="carte__corps">
                 {c.icone && (
                   <span class="carte__pastille">
-                    <Icone nom={c.icone} taille={24} />
+                    <Icone nom={c.icone} taille={simple ? 40 : 24} epaisseur={simple ? 1.5 : 2} />
                   </span>
                 )}
                 <h3 class="carte__titre">{typo(c.titre)}</h3>

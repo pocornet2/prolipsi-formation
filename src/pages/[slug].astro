@@ -18,6 +18,9 @@ export const getStaticPaths = (async () => {
 const { page } = Astro.props;
 const { slug } = Astro.params;
 const aUnHero = page.blocs.some((b) => b.discriminant === 'hero');
+const fil = [{ nom: page.titre, url: `/${slug}/` }];
+// Quand la page commence par un bandeau, le fil d'Ariane s'affiche dedans.
+const filDansHero = page.blocs[0]?.discriminant === 'hero';
 ---
 
 <Base
@@ -26,9 +29,10 @@ const aUnHero = page.blocs.some((b) => b.discriminant === 'hero');
   description={page.seo.description}
   image={page.seo.image}
   noindex={page.seo.noindex}
-  fil={[{ nom: page.titre, url: `/${slug}/` }]}
+  fil={fil}
+  filVisible={!filDansHero}
   schemas={[schemaFaq(page.blocs)]}
 >
   {!aUnHero && <EntetePage titre={page.titre} />}
-  <Blocs blocs={page.blocs} />
+  <Blocs blocs={page.blocs} fil={filDansHero ? [{ nom: 'Accueil', url: '/' }, ...fil] : []} />
 </Base>

@@ -1,0 +1,26 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo, getFormations } from '../../lib/content';
+import CarteFormation from '../CarteFormation.astro';
+
+type Props = Extract<Bloc, { discriminant: 'listeFormations' }>['value'];
+const { titre, intro, categorie, ancre, disposition = 'grille', fond = 'blanc' } = Astro.props;
+const formations = await getFormations(categorie);
+const id = (ancre ?? '').replace(/^#/, '') || undefined;
+---
+
+{
+  formations.length > 0 && (
+    <section class:list={['section', 'section--formations', { 'section--bleue': fond === 'bleu' }]} id={id}>
+      <div class="conteneur">
+        {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
+        {intro && <p class="section__intro section__intro--court">{typo(intro)}</p>}
+        <ul class:list={['fcartes', `fcartes--${disposition}`]} role="list">
+          {formations.map((f) => (
+            <CarteFormation slug={f.slug} formation={f.entry} disposition={disposition} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

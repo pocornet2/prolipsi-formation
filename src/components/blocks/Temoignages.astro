@@ -1,28 +1,38 @@
 ---
 import type { Bloc } from '../../lib/content';
 import { typo } from '../../lib/content';
+import Icone from '../Icone.astro';
 type Props = Extract<Bloc, { discriminant: 'temoignages' }>['value'];
 const { titre, items = [] } = Astro.props;
+// Un avis sans texte s'affiche comme un emplacement réservé (en attendant de vrais avis vérifiés).
 ---
 
-<section class="section section--teinte">
+<section class="section section--serree section--temoignages">
   <div class="conteneur">
-    {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+    {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
     <ul class="temoignages" role="list">
       {
-        items.map((t) => (
-          <li>
-            <figure class="temoignage">
-              <blockquote>
-                <p>{t.citation}</p>
-              </blockquote>
-              <figcaption>
-                <strong>{t.auteur}</strong>
-                {t.contexte && <span>{t.contexte}</span>}
-              </figcaption>
-            </figure>
-          </li>
-        ))
+        items.map((t) =>
+          t.citation ? (
+            <li>
+              <figure class="temoignage">
+                <Icone nom="citation" taille={28} class="temoignage__guillemet" />
+                <blockquote>
+                  <p>{typo(t.citation)}</p>
+                </blockquote>
+                <figcaption>
+                  <strong>{t.auteur}</strong>
+                  {t.contexte && <span>{t.contexte}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          ) : (
+            <li class="temoignage temoignage--vide">
+              <Icone nom="message" taille={30} epaisseur={1.5} />
+              <span>Emplacement pour un avis client vérifié</span>
+            </li>
+          ),
+        )
       }
     </ul>
   </div>

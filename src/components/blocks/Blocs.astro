@@ -16,11 +16,16 @@ import MiseEnAvant from './MiseEnAvant.astro';
 import AvisSessions from './AvisSessions.astro';
 import Logos from './Logos.astro';
 import DerniereActu from './DerniereActu.astro';
+import Ancres from './Ancres.astro';
+import ListeFormations from './ListeFormations.astro';
+import BandeauLien from './BandeauLien.astro';
 
 interface Props {
   blocs: Blocs;
+  /** Fil d'Ariane complet, affiché dans le premier bandeau. */
+  fil?: { nom: string; url: string }[];
 }
-const { blocs } = Astro.props;
+const { blocs, fil = [] } = Astro.props;
 // Seul le premier bandeau porte le H1 et charge son image en priorité.
 const premierHero = blocs.findIndex((b) => b.discriminant === 'hero');
 ---
@@ -29,7 +34,7 @@ const premierHero = blocs.findIndex((b) => b.discriminant === 'hero');
   blocs.map((bloc, i) => {
     switch (bloc.discriminant) {
       case 'hero':
-        return <Hero {...bloc.value} principal={i === premierHero} />;
+        return <Hero {...bloc.value} principal={i === premierHero} fil={i === premierHero ? fil : []} />;
       case 'texte':
         return <Texte {...bloc.value} />;
       case 'texteImage':
@@ -60,6 +65,12 @@ const premierHero = blocs.findIndex((b) => b.discriminant === 'hero');
         return <Logos {...bloc.value} />;
       case 'derniereActu':
         return <DerniereActu {...bloc.value} />;
+      case 'ancres':
+        return <Ancres {...bloc.value} />;
+      case 'listeFormations':
+        return <ListeFormations {...bloc.value} />;
+      case 'bandeauLien':
+        return <BandeauLien {...bloc.value} />;
       default:
         return null;
     }

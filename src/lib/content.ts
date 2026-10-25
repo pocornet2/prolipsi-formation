@@ -56,6 +56,22 @@ export async function getServices() {
   );
 }
 
+/** Catalogue de formations, trié par ordre puis par nom. */
+export async function getFormations(categorie?: string) {
+  const formations = (await reader.collections.formations.all())
+    .filter((f) => !categorie || f.entry.categorie === categorie)
+    .sort(
+      (a, b) => (a.entry.ordre ?? 10) - (b.entry.ordre ?? 10) || a.entry.titre.localeCompare(b.entry.titre, 'fr'),
+    );
+  return formations;
+}
+
+export const CATEGORIES_FORMATION: Record<string, string> = {
+  secourisme: 'Secourisme',
+  incendie: 'Incendie et évacuation',
+  prevention: 'Prévention des risques professionnels',
+};
+
 /** Sessions à venir (la date du jour comprise), de la plus proche à la plus lointaine. */
 export async function getSessions(nombre?: number) {
   const aujourdhui = new Date().toISOString().slice(0, 10);

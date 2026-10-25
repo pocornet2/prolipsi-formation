@@ -71,6 +71,24 @@ const icones = [
   { label: 'Calendrier', value: 'calendrier' },
   { label: 'Téléphone', value: 'telephone' },
   { label: 'E-mail', value: 'email' },
+  { label: 'Secourisme (cœur)', value: 'secourisme' },
+  { label: 'Incendie (flamme)', value: 'incendie' },
+  { label: 'Prévention (casque)', value: 'prevention' },
+  { label: 'Trousse de secours', value: 'trousse' },
+  { label: 'Recyclage (flèches)', value: 'recyclage' },
+  { label: 'Secours à la personne', value: 'secours' },
+  { label: 'Extincteur', value: 'extincteur' },
+  { label: 'Évacuation (porte)', value: 'evacuation' },
+  { label: 'Déplacement (pas)', value: 'deplacement' },
+  { label: 'Postures (silhouette)', value: 'postures' },
+  { label: 'Alarme / SSI', value: 'alarme' },
+  { label: 'Électricité (éclair)', value: 'electricite' },
+  { label: 'Durée (horloge)', value: 'duree' },
+  { label: 'Groupe', value: 'groupe' },
+  { label: 'Financement (pièces)', value: 'financement' },
+  { label: 'Engrenage', value: 'engrenage' },
+  { label: 'Message', value: 'message' },
+  { label: 'Pédagogie (tableau)', value: 'pedagogie' },
 ] as const;
 
 const champIcone = (label = 'Pictogramme') =>
@@ -84,7 +102,8 @@ const lienBouton = fields.object(
       label: 'Style',
       options: [
         { label: 'Principal (rouge)', value: 'principal' },
-        { label: 'Secondaire (contour)', value: 'secondaire' },
+        { label: 'Secondaire (contour bleu)', value: 'secondaire' },
+        { label: 'Contour rouge', value: 'contour' },
         { label: 'Blanc', value: 'blanc' },
       ],
       defaultValue: 'principal',
@@ -117,6 +136,13 @@ const seo = fields.object(
   { label: 'Référencement (SEO)', layout: [12, 12, 12, 12] },
 );
 
+/** Catégories du catalogue de formations. */
+const categoriesFormation = [
+  { label: 'Secourisme', value: 'secourisme' },
+  { label: 'Incendie et évacuation', value: 'incendie' },
+  { label: 'Prévention des risques professionnels', value: 'prevention' },
+] as const;
+
 /** Blocs de mise en page disponibles pour toutes les pages. */
 const blocs = (dossier: string) =>
   fields.blocks(
@@ -132,6 +158,7 @@ const blocs = (dossier: string) =>
             description: 'Affichée en rouge à la suite du titre. Ex. « à La Baule et Saint-Nazaire »',
           }),
           texte: fields.text({ label: 'Texte d’accroche', multiline: true }),
+          sousTexte: fields.text({ label: 'Petite ligne sous l’accroche (facultatif)', description: 'Ex. Dans vos locaux ou en inter-entreprises.' }),
           annotation: fields.text({
             label: 'Phrase manuscrite sur la photo (facultatif)',
             multiline: true,
@@ -187,6 +214,15 @@ const blocs = (dossier: string) =>
             defaultValue: 'droite',
           }),
           bouton: lienBouton,
+          encadre: fields.object(
+            {
+              icone: champIcone(),
+              titre: fields.text({ label: 'Titre de l’encadré' }),
+              texte: fields.text({ label: 'Texte', multiline: true }),
+              bouton: lienBouton,
+            },
+            { label: 'Encadré sous le texte (facultatif)', description: 'Ex. Financer votre formation. Laisser le titre vide pour ne rien afficher.' },
+          ),
         }),
       },
       cartes: {
@@ -203,6 +239,14 @@ const blocs = (dossier: string) =>
               { label: 'À gauche', value: 'gauche' },
             ],
             defaultValue: 'centre',
+          }),
+          style: fields.select({
+            label: 'Style',
+            options: [
+              { label: 'Cartes encadrées sur fond clair', value: 'cartes' },
+              { label: 'Simple : pictogramme à gauche, sans cadre', value: 'simple' },
+            ],
+            defaultValue: 'cartes',
           }),
           cartes: fields.array(
             fields.object({
@@ -289,6 +333,14 @@ const blocs = (dossier: string) =>
             ],
             defaultValue: 'colonnes',
           }),
+          marqueur: fields.select({
+            label: 'Signe d’ouverture',
+            options: [
+              { label: 'Plus (+)', value: 'plus' },
+              { label: 'Chevron (˅)', value: 'chevron' },
+            ],
+            defaultValue: 'plus',
+          }),
           questions: fields.array(
             fields.object({
               question: fields.text({ label: 'Question' }),
@@ -324,6 +376,14 @@ const blocs = (dossier: string) =>
         label: 'Bande de réassurance (labels, avis, zone…)',
         itemLabel: () => 'Bande de réassurance',
         schema: fields.object({
+          style: fields.select({
+            label: 'Style',
+            options: [
+              { label: 'Blanche, pictogrammes en pastille, séparateurs', value: 'blanche' },
+              { label: 'Bande bleue compacte, pictogrammes rouges', value: 'bleue' },
+            ],
+            defaultValue: 'blanche',
+          }),
           items: fields.array(
             fields.object({
               logo: imageField(dossier, 'Logo (facultatif, sinon pictogramme)'),
@@ -420,6 +480,78 @@ const blocs = (dossier: string) =>
         schema: fields.object({
           titre: fields.text({ label: 'Titre (H2)', defaultValue: 'Parlons de votre projet' }),
           texte: fields.text({ label: 'Texte', multiline: true }),
+          variante: fields.select({
+            label: 'Présentation',
+            options: [
+              { label: 'Simple : coordonnées + message', value: 'simple' },
+              { label: 'Demande de devis formation (panneau bleu + formulaire détaillé)', value: 'devis' },
+            ],
+            defaultValue: 'simple',
+          }),
+          zone: fields.text({ label: 'Ligne de localisation (variante devis)', description: 'Ex. La Baule · Saint-Nazaire · Loire-Atlantique' }),
+        }),
+      },
+      ancres: {
+        label: 'Onglets vers les sections de la page',
+        itemLabel: () => 'Onglets de navigation',
+        schema: fields.object({
+          liens: fields.array(
+            fields.object({
+              libelle: fields.text({ label: 'Texte' }),
+              icone: champIcone(),
+              ancre: fields.text({ label: 'Section visée', description: 'Identifiant de la section, ex. secourisme (sans #)' }),
+            }),
+            { label: 'Onglets', itemLabel: (p) => p.fields.libelle.value || 'Onglet', validation: { length: { max: 4 } } },
+          ),
+        }),
+      },
+      listeFormations: {
+        label: 'Liste de formations (automatique)',
+        itemLabel: (p) => `Formations · ${p.fields.titre.value || 'sans titre'}`,
+        schema: fields.object({
+          titre: fields.text({ label: 'Titre (H2)' }),
+          intro: fields.text({ label: 'Texte sous le titre' }),
+          categorie: fields.select({
+            label: 'Catégorie affichée',
+            options: categoriesFormation,
+            defaultValue: 'secourisme',
+          }),
+          ancre: fields.text({ label: 'Identifiant de la section (pour les onglets)', description: 'Ex. secourisme' }),
+          disposition: fields.select({
+            label: 'Disposition des cartes',
+            options: [
+              { label: 'Grille (pictogramme au-dessus)', value: 'grille' },
+              { label: 'Compacte (pictogramme à gauche)', value: 'compacte' },
+              { label: 'Large (2 cartes par ligne)', value: 'large' },
+            ],
+            defaultValue: 'grille',
+          }),
+          fond: fields.select({
+            label: 'Fond',
+            options: [
+              { label: 'Blanc', value: 'blanc' },
+              { label: 'Bleu clair', value: 'bleu' },
+            ],
+            defaultValue: 'blanc',
+          }),
+        }),
+      },
+      bandeauLien: {
+        label: 'Bandeau lien (une ligne)',
+        itemLabel: (p) => `Bandeau lien · ${p.fields.texte.value || 'sans texte'}`,
+        schema: fields.object({
+          texte: fields.text({ label: 'Texte' }),
+          lienLibelle: fields.text({ label: 'Texte du lien' }),
+          url: fields.text({ label: 'Lien' }),
+          icone: champIcone(),
+          style: fields.select({
+            label: 'Style',
+            options: [
+              { label: 'Encadré bleu clair', value: 'clair' },
+              { label: 'Bandeau bleu marine pleine largeur', value: 'marine' },
+            ],
+            defaultValue: 'clair',
+          }),
         }),
       },
     },
@@ -439,7 +571,7 @@ export default config({
     brand: { name: 'Espace de gestion' },
     navigation: {
       'Pages': ['accueil', 'pages', 'actualites'],
-      'Formations': ['sessions'],
+      'Formations': ['formations', 'sessions'],
       'Réglages': ['reglages', 'navigation'],
     },
   },
@@ -619,6 +751,43 @@ export default config({
         alt: fields.text({ label: 'Texte alternatif de l’image' }),
         seo,
         blocs: blocs('services'),
+      },
+    }),
+
+    formations: collection({
+      label: 'Fiches formation',
+      slugField: 'titre',
+      path: 'src/content/formations/*/',
+      entryLayout: 'content',
+      format: { contentField: 'contenu' },
+      columns: ['titre', 'categorie', 'ordre'],
+      schema: {
+        titre: fields.slug({
+          name: { label: 'Nom de la formation' },
+          slug: { label: 'Adresse (URL)', description: 'Ex. sst → /formations/sst/' },
+        }),
+        categorie: fields.select({ label: 'Catégorie', options: categoriesFormation, defaultValue: 'secourisme' }),
+        ordre: fields.integer({ label: 'Ordre d’affichage dans la catégorie', defaultValue: 10 }),
+        icone: champIcone(),
+        certifiant: fields.checkbox({ label: 'Formation certifiante (badge « Certifiant »)', defaultValue: false }),
+        sigle: fields.text({ label: 'Sigle (facultatif)', description: 'Ex. SST' }),
+        accroche: fields.text({ label: 'Accroche courte (facultatif)', description: 'Ex. Formation initiale et recyclage' }),
+        duree: fields.text({ label: 'Durée', description: 'Ex. 14 h · 2 jours' }),
+        effectif: fields.text({ label: 'Effectif', description: 'Ex. 4 à 10 stagiaires' }),
+        modalite: fields.text({ label: 'Lieu / modalité', description: 'Ex. Intra ou inter, Dans vos locaux uniquement', defaultValue: 'Intra ou inter' }),
+        resume: fields.text({
+          label: 'Résumé',
+          description: 'Deux ou trois phrases : affiché en tête de la fiche et utilisé par Google.',
+          multiline: true,
+        }),
+        seo,
+        contenu: fields.markdoc({
+          label: 'Fiche détaillée (objectifs, public, programme…)',
+          options: {
+            heading: [2, 3],
+            image: { directory: 'public/images/contenu', publicPath: '/images/contenu/' },
+          },
+        }),
       },
     }),
 

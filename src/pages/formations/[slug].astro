@@ -1,0 +1,169 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+import CarteFormation from '../../components/CarteFormation.astro';
+import Contact from '../../components/blocks/Contact.astro';
+import { getFormations, getSessions, getReglages, typo, formatDate, CATEGORIES_FORMATION } from '../../lib/content';
+import { renderMarkdoc } from '../../lib/markdoc';
+
+export const getStaticPaths = (async () => {
+  const formations = await getFormations();
+  return formations.map((f) => ({ params: { slug: f.slug }, props: { formation: f.entry } }));
+}) satisfies GetStaticPaths;
+
+const { formation: f } = Astro.props;
+const { slug } = Astro.params;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const url = `/formations/${slug}/`;
+const r = await getReglages();
+const html = renderMarkdoc(await f.contenu());
+const categorie = CATEGORIES_FORMATION[f.categorie] ?? 'Formations';
+
+// Sessions à venir rattachées à cette fiche (champ « Lien » de la session).
+const sessions = (await getSessions()).filter((s) => (s.entry.lien ?? '').replace(/\/$/, '') === url.replace(/\/$/, ''));
+const autres = (await getFormations(f.categorie)).filter((x) => x.slug !== slug).slice(0, 3);
+
+const fil = [
+  { nom: 'Formations', url: '/formations/' },
+  { nom: f.titre, url },
+];
+
+// Données structurées Course (organisme = l'entreprise déclarée dans les réglages).
+const schemaCours = {
+  '@type': 'Course',
+  '@id': new URL(`${url}#formation`, site).href,
+  name: f.titre,
+  ...(f.resume && { description: f.resume }),
+  url: new URL(url, site).href,
+  inLanguage: 'fr-FR',
+  ...(f.certifiant && { educationalCredentialAwarded: f.sigle ? `Certificat ${f.sigle}` : 'Certificat' }),
+  provider: { '@id': new URL('/#entreprise', site).href },
+  ...(sessions.length && {
+    hasCourseInstance: sessions.map(({ entry }) => ({
+      '@type': 'CourseInstance',
+      courseMode: 'Onsite',
+      startDate: entry.date,
+      location: { '@type': 'Place', name: entry.lieu, address: { '@type': 'PostalAddress', addressLocality: entry.lieu, addressCountry: 'FR' } },
+    })),
+  }),
+};
+const infos = [
+  { icone: 'duree', libelle: 'Durée', valeur: f.duree },
+  { icone: 'groupe', libelle: 'Effectif', valeur: f.effectif },
+  { icone: 'etablissement', libelle: 'Lieu', valeur: f.modalite },
+  { icone: 'certification', libelle: 'Validation', valeur: f.certifiant ? `Formation certifiante${f.sigle ? ` (${f.sigle})` : ''}` : '' },
+].filter((i) => i.valeur);
+---
+
+<Base
+  titre={f.titre}
+  titreSeo={f.seo.titre}
+  description={f.seo.description || f.resume}
+  image={f.seo.image}
+  noindex={f.seo.noindex}
+  fil={fil}
+  filVisible={false}
+  schemas={[schemaCours]}
+>
+  <article>
+    <header class="fiche-tete">
+      <div class="conteneur fiche-tete__grille">
+        <div>
+          <nav class="fil fil--hero" aria-label="Fil d’Ariane">
+            <ol>
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/formations/">Formations</a></li>
+              <li aria-current="page">{f.titre}</li>
+            </ol>
+          </nav>
+          <p class="fiche-tete__categorie">
+            <Icone nom={f.icone || 'formation'} taille={22} epaisseur={1.8} />
+            {categorie}
+          </p>
+          <h1 class="fiche-tete__titre">
+            {typo(f.titre)}
+            {f.sigle && <span class="fcarte__sigle fcarte__sigle--grand">{f.sigle}</span>}
+          </h1>
+          {f.accroche && <p class="fiche-tete__accroche">{typo(f.accroche)}</p>}
+          {f.resume && <p class="fiche-tete__resume">{typo(f.resume)}</p>}
+          <div class="boutons">
+            <a class="btn btn--principal" href="#devis"><Icone nom="devis" taille={19} />Demander un devis</a>
+            <a class="btn btn--contour" href="/calendrier/"><Icone nom="calendrier" taille={19} />Voir les prochaines sessions</a>
+          </div>
+        </div>
+        {
+          infos.length > 0 && (
+            <aside class="fiche-infos" aria-label="En bref">
+              {f.certifiant && <span class="fcarte__badge">Certifiant</span>}
+              <h2 class="fiche-infos__titre">En bref</h2>
+              <dl>
+                {infos.map((i) => (
+                  <div>
+                    <dt>
+                      <Icone nom={i.icone} taille={20} />
+                      {i.libelle}
+                    </dt>
+                    <dd>{i.valeur}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p class="fiche-infos__note">
+                <Icone nom="financement" taille={20} />
+                Prise en charge OPCO possible selon votre situation.
+              </p>
+            </aside>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="section section--serre">
+      <div class="conteneur fiche-corps">
+        <div class="prose" set:html={html} />
+        {
+          sessions.length > 0 && (
+            <aside class="fiche-sessions">
+              <h2 class="fiche-sessions__titre">Prochaines sessions en inter-entreprises</h2>
+              <ul role="list">
+                {sessions.map(({ entry }) => (
+                  <li>
+                    <Icone nom="calendrier" taille={18} />
+                    <span>
+                      <strong>{formatDate(entry.date)}</strong> · {entry.lieu}
+                      {entry.places === 'dernieres' && <em> · dernières places</em>}
+                      {entry.places === 'complet' && <em> · complet</em>}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )
+        }
+      </div>
+    </div>
+  </article>
+
+  {
+    autres.length > 0 && (
+      <section class="section section--bleue section--serree">
+        <div class="conteneur">
+          <h2 class="section__titre section__titre--souligne">Dans la même thématique</h2>
+          <ul class="fcartes fcartes--compacte" role="list">
+            {autres.map((x) => (
+              <CarteFormation slug={x.slug} formation={x.entry} disposition="compacte" />
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <Contact
+    titre="Parlons de vos besoins de formation"
+    texte="Une proposition adaptée à votre activité, votre équipe et vos locaux."
+    variante="devis"
+    zone={(r.zone ?? '').split('\n').filter(Boolean).slice(0, 2).concat('Loire-Atlantique').join(' · ')}
+    besoin={f.titre}
+  />
+</Base>
