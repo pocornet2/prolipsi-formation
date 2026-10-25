@@ -1,0 +1,8 @@
+{
+  // Configuration Cloudflare Workers (offre gratuite suffisante).
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "prolipsi-formation",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true }
+}

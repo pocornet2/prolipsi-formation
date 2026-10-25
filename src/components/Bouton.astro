@@ -1,0 +1,20 @@
+---
+import { lien } from '../lib/content';
+import Icone from './Icone.astro';
+
+interface Props {
+  bouton?: { libelle: string; url: string; style?: string; icone?: string; fleche?: boolean } | null;
+  class?: string;
+}
+const { bouton, class: classe = '' } = Astro.props;
+---
+
+{
+  bouton?.libelle && bouton?.url && (
+    <a class:list={['btn', `btn--${bouton.style || 'principal'}`, classe]} href={lien(bouton.url)}>
+      <Icone nom={bouton.icone} taille={19} />
+      <span>{bouton.libelle}</span>
+      {bouton.fleche && <Icone nom="fleche" taille={18} class="btn__fleche" />}
+    </a>
+  )
+}

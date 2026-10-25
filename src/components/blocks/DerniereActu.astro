@@ -1,0 +1,40 @@
+---
+import { Picture } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo, getActualites, formatDate } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'derniereActu' }>['value'];
+const { titre, texte } = Astro.props;
+const [derniere] = await getActualites();
+const img = derniere ? resolveImage(derniere.entry.image) : undefined;
+---
+
+{
+  derniere && (
+    <section class="section section--serree colonnes">
+      <div class="conteneur colonnes__grille">
+        <div>
+          <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>
+          {texte && <p class="section__texte">{typo(texte)}</p>}
+        </div>
+        <article class="actu-carte">
+          {img && <Picture src={img} alt={derniere.entry.alt ?? ''} formats={['avif', 'webp']} widths={[320, 480]} sizes="(min-width: 900px) 220px, 100vw" loading="lazy" pictureAttributes={{ class: 'actu-carte__image' }} />}
+          <div class="actu-carte__corps">
+            <p class="actu-carte__meta">
+              {derniere.entry.etiquette && <span class="etiquette etiquette--petite">{derniere.entry.etiquette}</span>}
+              <time datetime={derniere.entry.date ?? undefined}>{formatDate(derniere.entry.date)}</time>
+            </p>
+            <h3 class="actu-carte__titre">{typo(derniere.entry.titre)}</h3>
+            {derniere.entry.extrait && <p class="actu-carte__texte">{typo(derniere.entry.extrait)}</p>}
+            <a href={`/actualites/${derniere.slug}/`} class="carte__lien actu-carte__lien">
+              Lire l’article<span class="visually-hidden"> : {derniere.entry.titre}</span>
+              <Icone nom="fleche" taille={18} />
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+  )
+}

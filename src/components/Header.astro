@@ -1,0 +1,68 @@
+---
+import type { Reglages, Navigation } from '../lib/content';
+import { lien } from '../lib/content';
+import Logo from './Logo.astro';
+import Bouton from './Bouton.astro';
+
+interface Props {
+  reglages: Reglages;
+  navigation: Navigation;
+}
+const { reglages, navigation } = Astro.props;
+const chemin = Astro.url.pathname;
+const actif = (url: string) => {
+  const u = lien(url);
+  return u === '/' ? chemin === '/' : chemin.startsWith(u);
+};
+---
+
+<header class="entete">
+  <div class="conteneur entete__inner">
+    <a class="marque" href="/" aria-label={`${reglages.nom}, retour à l’accueil`}>
+      <Logo reglages={reglages} />
+    </a>
+
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-principal" data-menu-btn>
+      <span class="menu-btn__barres" aria-hidden="true"></span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+
+    <nav class="menu" id="menu-principal" aria-label="Menu principal" data-menu>
+      <ul role="list">
+        {
+          navigation.liens.map((l) => (
+            <li>
+              <a href={lien(l.url)} aria-current={actif(l.url) ? 'page' : undefined}>
+                {l.libelle}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <Bouton bouton={navigation.bouton} class="menu__cta" />
+    </nav>
+  </div>
+</header>
+
+<script>
+  const bouton = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  if (bouton && menu) {
+    const fermer = () => {
+      bouton.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('is-open');
+    };
+    bouton.addEventListener('click', () => {
+      const ouvert = bouton.getAttribute('aria-expanded') === 'true';
+      bouton.setAttribute('aria-expanded', String(!ouvert));
+      menu.classList.toggle('is-open', !ouvert);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+        fermer();
+        bouton.focus();
+      }
+    });
+    window.matchMedia('(min-width: 1100px)').addEventListener('change', fermer);
+  }
+</script>

@@ -1,0 +1,30 @@
+---
+import type { Reglages } from '../lib/content';
+
+interface Props {
+  reglages: Reglages;
+  variante?: 'entete' | 'pied';
+}
+const { reglages, variante = 'entete' } = Astro.props;
+---
+
+<span class:list={['logo', `logo--${variante}`]}>
+  {
+    reglages.logo ? (
+      <img src={reglages.logo} alt="" class="logo__image" />
+    ) : (
+      <svg class="logo__signe" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect y="2" width="40" height="5" rx="1" fill="var(--rouge)" />
+        <rect y="10" width="40" height="5" rx="1" fill="var(--rouge)" />
+        <rect y="18" width="40" height="5" rx="1" fill="var(--rouge)" />
+        <rect y="26" width="40" height="5" rx="1" fill="var(--rouge)" opacity=".75" />
+        <rect y="34" width="40" height="4" rx="1" fill="var(--rouge)" opacity=".45" />
+      </svg>
+    )
+  }
+  <span class="logo__texte">
+    <span class="logo__nom">{reglages.nom}</span>
+    {reglages.logoLigne1 && <span class="logo__ligne1">{reglages.logoLigne1}</span>}
+    {reglages.logoLigne2 && <span class="logo__ligne2">{reglages.logoLigne2}</span>}
+  </span>
+</span>

@@ -1,0 +1,21 @@
+---
+import type { Bloc } from '../../lib/content';
+type Props = Extract<Bloc, { discriminant: 'chiffres' }>['value'];
+const { titre, items = [] } = Astro.props;
+---
+
+<section class="section section--teinte">
+  <div class="conteneur">
+    {titre && <h2 class="section__titre section__titre--centre">{titre}</h2>}
+    <dl class="chiffres">
+      {
+        items.map((c) => (
+          <div class="chiffre">
+            <dt>{c.libelle}</dt>
+            <dd>{c.valeur}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

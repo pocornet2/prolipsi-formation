@@ -1,0 +1,102 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import { getReglages } from '../../lib/content';
+
+type Props = Extract<Bloc, { discriminant: 'contact' }>['value'];
+const { titre, texte } = Astro.props;
+const r = await getReglages();
+const site = Astro.site ?? new URL(Astro.url.origin);
+
+// Trois modes d'envoi :
+// - Netlify Forms : hébergement Netlify, aucune adresse saisie ;
+// - service externe (Web3Forms, Formspree…) : adresse saisie dans les réglages ;
+// - aucun : hébergement sans service de formulaire configuré → on affiche
+//   un lien e-mail plutôt qu'un formulaire qui ne mènerait nulle part.
+const action = r.formulaire?.action?.trim();
+const cle = r.formulaire?.cle?.trim();
+const netlify = !action && import.meta.env.DEPLOY_TARGET !== 'cloudflare';
+const web3forms = !!action && action.includes('web3forms.com');
+const formspree = !!action && action.includes('formspree.io');
+const formulaireActif = netlify || (!!action && (!web3forms || !!cle));
+if (!formulaireActif) {
+  console.warn(
+    '[contact] Aucun service d’envoi configuré pour le formulaire : un lien e-mail est affiché à la place. ' +
+      'Renseignez « Formulaire de contact » dans Coordonnées et réglages.',
+  );
+}
+const champPiege = web3forms ? 'botcheck' : formspree ? '_gotcha' : 'site-web';
+const sujet = `Nouveau message depuis le site ${r.nom}`;
+const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
+---
+
+<section class="section" id="contact">
+  <div class="conteneur duo duo--contact">
+    <div class="duo__texte">
+      {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+      {texte && <p class="section__intro">{texte}</p>}
+      <ul class="coordonnees" role="list">
+        {r.telephone && <li><span>Téléphone</span><a href={telLien}>{r.telephone}</a></li>}
+        {r.email && <li><span>E-mail</span><a href={`mailto:${r.email}`}>{r.email}</a></li>}
+        {r.adresse.ville && <li><span>Adresse</span>{[r.adresse.rue, `${r.adresse.codePostal} ${r.adresse.ville}`].filter(Boolean).join(', ')}</li>}
+        {r.horaires && <li><span>Horaires</span>{r.horaires}</li>}
+      </ul>
+    </div>
+
+    {
+      !formulaireActif && (
+        <div class="formulaire formulaire--simple">
+          <p>Écrivez-nous directement, nous vous répondons rapidement.</p>
+          {r.email && (
+            <a class="btn btn--principal" href={`mailto:${r.email}?subject=${encodeURIComponent('Demande depuis le site')}`}>
+              Nous écrire
+            </a>
+          )}
+        </div>
+      )
+    }
+
+    {formulaireActif && (
+    <form
+      class="formulaire"
+      name="contact"
+      method="POST"
+      action={action || '/merci/'}
+      data-netlify={netlify ? 'true' : undefined}
+      netlify-honeypot={netlify ? champPiege : undefined}
+    >
+      {netlify && <input type="hidden" name="form-name" value="contact" />}
+      {web3forms && <input type="hidden" name="access_key" value={cle} />}
+      {web3forms && <input type="hidden" name="subject" value={sujet} />}
+      {web3forms && <input type="hidden" name="from_name" value={r.nom} />}
+      {web3forms && <input type="hidden" name="redirect" value={new URL('/merci/', site).href} />}
+      {formspree && <input type="hidden" name="_subject" value={sujet} />}
+      <p class="visually-hidden" aria-hidden="true">
+        <label>Ne pas remplir <input name={champPiege} tabindex="-1" autocomplete="off" /></label>
+      </p>
+      <div class="champ">
+        <label for="contact-nom">Nom</label>
+        <input id="contact-nom" name="nom" autocomplete="name" required />
+      </div>
+      <div class="champ-ligne">
+        <div class="champ">
+          <label for="contact-email">E-mail</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="champ">
+          <label for="contact-tel">Téléphone <span class="facultatif">(facultatif)</span></label>
+          <input id="contact-tel" name="telephone" type="tel" autocomplete="tel" />
+        </div>
+      </div>
+      <div class="champ">
+        <label for="contact-message">Votre message</label>
+        <textarea id="contact-message" name="message" rows="6" required></textarea>
+      </div>
+      <p class="formulaire__rgpd">
+        Vos informations servent uniquement à répondre à votre demande. Elles ne sont ni revendues ni utilisées à d’autres fins.
+      </p>
+      <button class="btn btn--principal" type="submit">Envoyer le message</button>
+    </form>
+    )}
+  </div>
+</section>

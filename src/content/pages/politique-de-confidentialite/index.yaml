@@ -1,0 +1,11 @@
+titre: Politique de confidentialité
+seo:
+  description: 'Politique de confidentialité du site Prolipsi Formation.'
+  noindex: true
+blocs:
+  - discriminant: texte
+    value:
+      titre: ''
+      contenu: |-
+        À compléter.
+      largeur: etroite

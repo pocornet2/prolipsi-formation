@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Cache long pour les fichiers générés (leur nom change à chaque modification).
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Les en-têtes de sécurité sont dans public/_headers (lu par Netlify et Cloudflare).

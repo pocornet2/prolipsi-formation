@@ -1,0 +1,18 @@
+---
+import { typo } from '../lib/content';
+interface Props {
+  titre: string;
+  surtitre?: string;
+  intro?: string | null;
+}
+const { titre, surtitre, intro } = Astro.props;
+---
+
+<header class="entete-page">
+  <div class="conteneur">
+    {surtitre && <p class="surtitre">{surtitre}</p>}
+    <h1 class="entete-page__titre">{typo(titre)}</h1>
+    {intro && <p class="entete-page__intro">{typo(intro)}</p>}
+    <slot />
+  </div>
+</header>

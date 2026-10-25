@@ -1,0 +1,30 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import { Picture } from 'astro:assets';
+import Bouton from '../Bouton.astro';
+import { resolveImage } from '../../lib/images';
+import { renderMarkdoc } from '../../lib/markdoc';
+
+type Props = Extract<Bloc, { discriminant: 'texteImage' }>['value'];
+const { surtitre, titre, contenu, image, alt = '', position = 'droite', bouton } = Astro.props;
+const img = resolveImage(image);
+---
+
+<section class="section">
+  <div class:list={['conteneur', 'duo', { 'duo--inverse': position === 'gauche' }]}>
+    <div class="duo__texte">
+      {surtitre && <p class="surtitre">{surtitre}</p>}
+      {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+      <div class="prose" set:html={renderMarkdoc(contenu)} />
+      <Bouton bouton={bouton} class="duo__btn" />
+    </div>
+    {
+      img && (
+        <div class="duo__media">
+          <Picture src={img} alt={alt} formats={['avif', 'webp']} widths={[480, 720, 960]} sizes="(min-width: 900px) 50vw, 100vw" loading="lazy" />
+        </div>
+      )
+    }
+  </div>
+</section>

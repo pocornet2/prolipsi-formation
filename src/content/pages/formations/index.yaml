@@ -1,0 +1,11 @@
+titre: Formations
+seo:
+  description: 'Formations SST, incendie, habilitations électriques et évacuation à La Baule et Saint-Nazaire.'
+  noindex: false
+blocs:
+  - discriminant: texte
+    value:
+      titre: ''
+      contenu: |-
+        Contenu à venir : catalogue des formations.
+      largeur: etroite

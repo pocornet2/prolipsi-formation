@@ -1,0 +1,113 @@
+---
+import '@fontsource-variable/figtree';
+import '@fontsource/caveat/600.css';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getReglages, getNavigation } from '../lib/content';
+import { resolveImage } from '../lib/images';
+import { graphe, schemaEntreprise, schemaSiteWeb, schemaFilAriane } from '../lib/seo';
+
+interface Props {
+  titre: string;
+  /** Balise title personnalisée (sinon « Titre · Nom du site »). */
+  titreSeo?: string | null;
+  description?: string | null;
+  /** Chemin Keystatic d'une image de partage. */
+  image?: string | null;
+  noindex?: boolean;
+  /** Fil d'Ariane (hors accueil, ajouté automatiquement). */
+  fil?: { nom: string; url: string }[];
+  /** Schémas JSON-LD supplémentaires propres à la page. */
+  schemas?: (Record<string, unknown> | undefined)[];
+  type?: 'website' | 'article';
+}
+
+const { titre, titreSeo, description, image, noindex = false, fil = [], schemas = [], type = 'website' } =
+  Astro.props;
+
+const reglages = await getReglages();
+const navigation = await getNavigation();
+const site = Astro.site ?? new URL(Astro.url.origin);
+
+const estAccueil = Astro.url.pathname === '/';
+const titreComplet = titreSeo?.trim() || (estAccueil ? `${reglages.nom}${reglages.baseline ? ` · ${reglages.baseline}` : ''}` : `${titre} · ${reglages.nom}`);
+const canonical = new URL(Astro.url.pathname, site).href;
+
+// Image de partage : celle de la page, sinon celle des réglages.
+const sourcePartage = resolveImage(image) ?? resolveImage(reglages.imagePartage);
+const ogImage = sourcePartage
+  ? new URL((await getImage({ src: sourcePartage, width: 1200, height: 630, format: 'jpg', fit: 'cover' })).src, site).href
+  : undefined;
+
+const logoAbsolu = reglages.logo ? new URL(reglages.logo, site).href : undefined;
+
+const couleur = /^#[0-9a-f]{3,8}$/i.test(reglages.couleur ?? '') ? reglages.couleur : '#1f5f4a';
+
+const filComplet = fil.length ? [{ nom: 'Accueil', url: '/' }, ...fil] : [];
+const jsonLd = graphe(
+  schemaEntreprise(reglages, site, logoAbsolu),
+  schemaSiteWeb(reglages, site),
+  filComplet.length ? schemaFilAriane(filComplet, site) : undefined,
+  ...schemas,
+);
+---
+
+<!doctype html>
+<html lang="fr" style={`--accent: ${couleur};`}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titreComplet}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <meta name="theme-color" content={couleur} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={reglages.nom} />
+    <meta property="og:title" content={titreComplet} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+
+    <script type="application/ld+json" set:html={jsonLd} />
+    {reglages.analytics && <Fragment set:html={reglages.analytics} />}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <Header reglages={reglages} navigation={navigation} />
+
+    {
+      filComplet.length > 0 && (
+        <nav class="fil conteneur" aria-label="Fil d’Ariane">
+          <ol>
+            {filComplet.map((item, i) =>
+              i < filComplet.length - 1 ? (
+                <li>
+                  <a href={item.url}>{item.nom}</a>
+                </li>
+              ) : (
+                <li aria-current="page">{item.nom}</li>
+              ),
+            )}
+          </ol>
+        </nav>
+      )
+    }
+
+    <main id="contenu" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer reglages={reglages} navigation={navigation} />
+  </body>
+</html>

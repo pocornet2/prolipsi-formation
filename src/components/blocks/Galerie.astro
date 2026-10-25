@@ -1,0 +1,28 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import { Picture } from 'astro:assets';
+import { resolveImage } from '../../lib/images';
+
+type Props = Extract<Bloc, { discriminant: 'galerie' }>['value'];
+const { titre, images = [] } = Astro.props;
+const photos = images.map((p) => ({ ...p, img: resolveImage(p.image) })).filter((p) => p.img);
+---
+
+<section class="section">
+  <div class="conteneur">
+    {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+    <ul class="galerie" role="list">
+      {
+        photos.map((p) => (
+          <li>
+            <figure>
+              <Picture src={p.img!} alt={p.alt} formats={['avif', 'webp']} widths={[400, 640, 960]} sizes="(min-width: 900px) 33vw, 50vw" loading="lazy" />
+              {p.legende && <figcaption>{p.legende}</figcaption>}
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

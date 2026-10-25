@@ -1,0 +1,65 @@
+---
+/**
+ * Pictogrammes du site (bibliothèque Lucide, licence ISC).
+ * Les noms correspondent aux choix proposés dans le back-office.
+ */
+import {
+  GraduationCap,
+  Users,
+  ShoppingCart,
+  FileText,
+  FileCheck,
+  ShieldCheck,
+  BadgeCheck,
+  Star,
+  MapPin,
+  Building,
+  Building2,
+  Calendar,
+  Phone,
+  Mail,
+  Search,
+  ArrowRight,
+  Quote,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+} from '@lucide/astro';
+
+const ICONES = {
+  formation: GraduationCap,
+  accompagnement: Users,
+  materiel: ShoppingCart,
+  devis: FileText,
+  conformite: FileCheck,
+  certification: ShieldCheck,
+  qualite: BadgeCheck,
+  avis: Star,
+  localisation: MapPin,
+  entreprise: Building,
+  etablissement: Building2,
+  calendrier: Calendar,
+  telephone: Phone,
+  email: Mail,
+  recherche: Search,
+  fleche: ArrowRight,
+  citation: Quote,
+  precedent: ChevronLeft,
+  suivant: ChevronRight,
+  plus: Plus,
+} as const;
+
+export type NomIcone = keyof typeof ICONES;
+
+interface Props {
+  nom?: string | null;
+  taille?: number;
+  epaisseur?: number;
+  class?: string;
+}
+
+const { nom, taille = 20, epaisseur = 2, class: classe } = Astro.props;
+const Composant = nom ? ICONES[nom as NomIcone] : undefined;
+---
+
+{Composant && <Composant size={taille} stroke-width={epaisseur} class:list={['icone', classe]} aria-hidden="true" focusable="false" />}

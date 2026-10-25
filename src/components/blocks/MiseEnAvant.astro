@@ -1,0 +1,38 @@
+---
+import { Picture } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo, lien } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+import Bouton from '../Bouton.astro';
+
+type Props = Extract<Bloc, { discriminant: 'miseEnAvant' }>['value'];
+const { etiquette, titre, texte, bouton, produits = [] } = Astro.props;
+---
+
+<section class="section section--bleue mise-en-avant">
+  <div class="conteneur mise-en-avant__grille">
+    <div class="mise-en-avant__texte">
+      {etiquette && <p class="etiquette">{etiquette}</p>}
+      <h2 class="section__titre">{typo(titre)}</h2>
+      {texte && <p class="mise-en-avant__intro">{typo(texte)}</p>}
+      <Bouton bouton={bouton} />
+    </div>
+    <ul class="produits" role="list">
+      {
+        produits.map((p) => {
+          const img = resolveImage(p.image);
+          const contenu = (
+            <>
+              {img && <Picture src={img} alt={p.alt ?? ''} formats={['avif', 'webp']} widths={[240, 360, 480]} sizes="(min-width: 1100px) 200px, (min-width: 600px) 25vw, 50vw" loading="lazy" pictureAttributes={{ class: 'produit__image' }} />}
+              <span class="produit__corps">
+                <strong class="produit__titre">{p.titre}</strong>
+                {p.texte && <span class="produit__texte">{p.texte}</span>}
+              </span>
+            </>
+          );
+          return <li class="produit">{p.lien ? <a href={lien(p.lien)} class="produit__lien">{contenu}</a> : contenu}</li>;
+        })
+      }
+    </ul>
+  </div>
+</section>

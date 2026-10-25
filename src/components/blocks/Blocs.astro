@@ -1,0 +1,67 @@
+---
+import type { Blocs } from '../../lib/content';
+import Hero from './Hero.astro';
+import Texte from './Texte.astro';
+import TexteImage from './TexteImage.astro';
+import Cartes from './Cartes.astro';
+import ListeServices from './ListeServices.astro';
+import Chiffres from './Chiffres.astro';
+import Galerie from './Galerie.astro';
+import Temoignages from './Temoignages.astro';
+import Faq from './Faq.astro';
+import Appel from './Appel.astro';
+import Contact from './Contact.astro';
+import Reassurance from './Reassurance.astro';
+import MiseEnAvant from './MiseEnAvant.astro';
+import AvisSessions from './AvisSessions.astro';
+import Logos from './Logos.astro';
+import DerniereActu from './DerniereActu.astro';
+
+interface Props {
+  blocs: Blocs;
+}
+const { blocs } = Astro.props;
+// Seul le premier bandeau porte le H1 et charge son image en priorité.
+const premierHero = blocs.findIndex((b) => b.discriminant === 'hero');
+---
+
+{
+  blocs.map((bloc, i) => {
+    switch (bloc.discriminant) {
+      case 'hero':
+        return <Hero {...bloc.value} principal={i === premierHero} />;
+      case 'texte':
+        return <Texte {...bloc.value} />;
+      case 'texteImage':
+        return <TexteImage {...bloc.value} />;
+      case 'cartes':
+        return <Cartes {...bloc.value} />;
+      case 'listeServices':
+        return <ListeServices {...bloc.value} />;
+      case 'chiffres':
+        return <Chiffres {...bloc.value} />;
+      case 'galerie':
+        return <Galerie {...bloc.value} />;
+      case 'temoignages':
+        return <Temoignages {...bloc.value} />;
+      case 'faq':
+        return <Faq {...bloc.value} />;
+      case 'appel':
+        return <Appel {...bloc.value} />;
+      case 'contact':
+        return <Contact {...bloc.value} />;
+      case 'reassurance':
+        return <Reassurance {...bloc.value} />;
+      case 'miseEnAvant':
+        return <MiseEnAvant {...bloc.value} />;
+      case 'avisSessions':
+        return <AvisSessions {...bloc.value} />;
+      case 'logos':
+        return <Logos {...bloc.value} />;
+      case 'derniereActu':
+        return <DerniereActu {...bloc.value} />;
+      default:
+        return null;
+    }
+  })
+}

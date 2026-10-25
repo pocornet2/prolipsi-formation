@@ -1,0 +1,16 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import { renderMarkdoc } from '../../lib/markdoc';
+
+type Props = Extract<Bloc, { discriminant: 'texte' }>['value'];
+const { titre, contenu, largeur = 'etroite' } = Astro.props;
+const html = renderMarkdoc(contenu);
+---
+
+<section class="section">
+  <div class:list={['conteneur', { 'conteneur--etroit': largeur === 'etroite' }]}>
+    {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+    <div class="prose" set:html={html} />
+  </div>
+</section>

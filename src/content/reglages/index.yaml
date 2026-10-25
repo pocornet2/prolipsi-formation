@@ -1,0 +1,31 @@
+nom: PROLIPSI Formation
+baseline: Formation, conseil et matériel de sécurité au travail
+logoLigne1: Conseil en Prévention
+logoLigne2: Formation Santé & Sécurité au Travail
+signature: Des environnements de travail plus sûrs
+couleur: '#de222b'
+telephone: 02 40 00 00 00
+email: contact@prolipsi-formation.fr
+adresse:
+  rue: ''
+  codePostal: '44500'
+  ville: La Baule – Saint-Nazaire
+zone: |-
+  La Baule-Escoublac
+  Saint-Nazaire
+  Presqu'île guérandaise
+  Loire-Atlantique
+horaires: ''
+typeEntreprise: ProfessionalService
+reseaux:
+  - nom: LinkedIn
+    url: https://www.linkedin.com/
+  - nom: Facebook
+    url: https://www.facebook.com/
+  - nom: YouTube
+    url: https://www.youtube.com/
+formulaire:
+  action: ''
+  cle: ''
+  merci: Merci, votre demande est bien partie. Nous vous répondons sous 48 heures ouvrées.
+analytics: ''

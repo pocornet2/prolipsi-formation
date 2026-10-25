@@ -1,0 +1,148 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo, lien, getSessions } from '../../lib/content';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'avisSessions' }>['value'];
+const { titreAvis, note, nombreAvis, lienAvis, avis = [], titreSessions, nombreSessions, lienCalendrier } = Astro.props;
+const sessions = await getSessions(nombreSessions ?? 4);
+
+const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+const jour = (iso: string) => Number(iso.slice(8, 10));
+const mois = (iso: string) => MOIS[Number(iso.slice(5, 7)) - 1];
+const dateLongue = (iso: string) =>
+  new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${iso}T12:00:00`));
+const PLACES: Record<string, string> = {
+  disponibles: 'Places disponibles',
+  dernieres: 'Dernières places',
+  complet: 'Complet',
+};
+const valeurNote = Number((note ?? '').replace(',', '.'));
+const etoilesPleines = Number.isFinite(valeurNote) ? Math.round(valeurNote) : 0;
+---
+
+<section class="section avis-sessions">
+  <div class="conteneur avis-sessions__grille">
+    <div class="avis">
+      <h2 class="section__titre section__titre--souligne">{typo(titreAvis)}</h2>
+      {
+        note && (
+          <p class="avis__note">
+            <span class="avis__source">Google</span>
+            <strong class="avis__valeur">{note}/5</strong>
+            <span class="avis__detail">
+              <span class="etoiles" aria-label={`Note de ${note} sur 5`}>
+                {Array.from({ length: 5 }, (_, i) => (
+                  <span class:list={['etoile', { 'etoile--vide': i >= etoilesPleines }]} aria-hidden="true">★</span>
+                ))}
+              </span>
+              {lienAvis ? (
+                <a href={lienAvis} rel="noopener" target="_blank">{nombreAvis || 'Voir les avis'}</a>
+              ) : (
+                nombreAvis && <span>{nombreAvis}</span>
+              )}
+            </span>
+          </p>
+        )
+      }
+      {
+        avis.length > 0 && (
+          <div class="carrousel" data-carrousel>
+            <ul class="carrousel__piste" role="list" data-piste tabindex="0" aria-label="Avis clients">
+              {avis.map((a) => (
+                <li class="avis__carte">
+                  <figure>
+                    <Icone nom="citation" taille={22} class="avis__guillemet" />
+                    <blockquote>
+                      <p>« {typo(a.citation)} »</p>
+                    </blockquote>
+                    <figcaption>
+                      <Icone nom={a.icone || 'entreprise'} taille={22} epaisseur={1.6} />
+                      <span>{a.auteur}</span>
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+            {avis.length > 2 && (
+              <div class="carrousel__nav">
+                <button type="button" class="carrousel__btn" data-prec aria-label="Avis précédents">
+                  <Icone nom="precedent" taille={20} />
+                </button>
+                <span class="carrousel__points" data-points aria-hidden="true">
+                  {avis.map((_, i) => (
+                    <span class:list={['carrousel__point', { 'is-actif': i === 0 }]} />
+                  ))}
+                </span>
+                <button type="button" class="carrousel__btn" data-suiv aria-label="Avis suivants">
+                  <Icone nom="suivant" taille={20} />
+                </button>
+              </div>
+            )}
+          </div>
+        )
+      }
+    </div>
+
+    <div class="sessions">
+      <div class="sessions__tete">
+        <h2 class="section__titre section__titre--souligne">{typo(titreSessions)}</h2>
+        {
+          lienCalendrier?.url && (
+            <a class="btn btn--petit" href={lien(lienCalendrier.url)}>
+              {lienCalendrier.libelle || 'Voir tout le calendrier'}
+              <Icone nom="fleche" taille={16} />
+            </a>
+          )
+        }
+      </div>
+      {sessions.length === 0 && <p class="sessions__vide">Les prochaines dates seront bientôt annoncées.</p>}
+      <ol class="sessions__liste" role="list">
+        {
+          sessions.map(({ entry }) => {
+            const date = entry.date as string;
+            const corps = (
+              <>
+                <time class="session__date" datetime={date}>
+                  <span class="session__jour">{jour(date)}</span>
+                  <span class="session__mois">{mois(date)}</span>
+                  <span class="visually-hidden">{dateLongue(date)}</span>
+                </time>
+                <span class="session__infos">
+                  <strong class="session__titre">{entry.titre}</strong>
+                  {entry.lieu && (
+                    <span class="session__lieu">
+                      <Icone nom="localisation" taille={15} />
+                      {entry.lieu}
+                    </span>
+                  )}
+                </span>
+                <span class:list={['session__places', `session__places--${entry.places}`]}>{PLACES[entry.places] ?? ''}</span>
+              </>
+            );
+            return <li class="session">{entry.lien ? <a href={lien(entry.lien)} class="session__lien">{corps}</a> : corps}</li>;
+          })
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carrousel]').forEach((c) => {
+    const piste = c.querySelector<HTMLElement>('[data-piste]');
+    const points = c.querySelectorAll<HTMLElement>('.carrousel__point');
+    if (!piste) return;
+    const pas = () => (piste.firstElementChild as HTMLElement | null)?.getBoundingClientRect().width ?? piste.clientWidth;
+    c.querySelector('[data-prec]')?.addEventListener('click', () => piste.scrollBy({ left: -pas() - 16, behavior: 'smooth' }));
+    c.querySelector('[data-suiv]')?.addEventListener('click', () => piste.scrollBy({ left: pas() + 16, behavior: 'smooth' }));
+    piste.addEventListener(
+      'scroll',
+      () => {
+        const i = Math.round(piste.scrollLeft / (pas() + 16));
+        points.forEach((p, n) => p.classList.toggle('is-actif', n === i));
+      },
+      { passive: true },
+    );
+  });
+</script>

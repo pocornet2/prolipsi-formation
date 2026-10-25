@@ -1,0 +1,41 @@
+liens:
+  - libelle: Formations
+    url: /formations/
+  - libelle: Conseil
+    url: /conseil/
+  - libelle: Matériel
+    url: /materiel/
+  - libelle: Calendrier
+    url: /calendrier/
+  - libelle: Actualités
+    url: /actualites/
+  - libelle: À propos
+    url: /a-propos/
+  - libelle: Contact
+    url: /contact/
+bouton:
+  libelle: Demander un devis
+  url: /contact/
+  style: principal
+  icone: devis
+  fleche: false
+piedDePage:
+  - libelle: Formations
+    url: /formations/
+  - libelle: Conseil
+    url: /conseil/
+  - libelle: Matériel
+    url: /materiel/
+  - libelle: Calendrier
+    url: /calendrier/
+  - libelle: Actualités
+    url: /actualites/
+  - libelle: À propos
+    url: /a-propos/
+  - libelle: Contact
+    url: /contact/
+liensLegaux:
+  - libelle: Mentions légales
+    url: /mentions-legales/
+  - libelle: Politique de confidentialité
+    url: /politique-de-confidentialite/

@@ -1,0 +1,44 @@
+---
+import { Picture } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+import Bouton from '../Bouton.astro';
+
+type Props = Extract<Bloc, { discriminant: 'appel' }>['value'];
+const { titre, texte, style = 'bandeau', image, boutons = [] } = Astro.props;
+const img = resolveImage(image);
+---
+
+{
+  style === 'bandeau' ? (
+    <section class="appel-bandeau">
+      {img && <Picture src={img} alt="" formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(min-width: 900px) 45vw, 100vw" loading="lazy" pictureAttributes={{ class: 'appel-bandeau__image' }} />}
+      <div class="conteneur appel-bandeau__contenu">
+        <h2 class="appel-bandeau__titre">{typo(titre)}</h2>
+        {texte && <p class="appel-bandeau__texte">{typo(texte)}</p>}
+        {boutons.length > 0 && (
+          <div class="appel-bandeau__boutons">
+            {boutons.map((b) => (
+              <Bouton bouton={b} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  ) : (
+    <section class="section">
+      <div class="conteneur">
+        <div class="appel">
+          <h2 class="appel__titre">{typo(titre)}</h2>
+          {texte && <p class="appel__texte">{typo(texte)}</p>}
+          <div class="boutons boutons--centre">
+            {boutons.map((b) => (
+              <Bouton bouton={b} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

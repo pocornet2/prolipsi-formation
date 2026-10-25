@@ -1,0 +1,11 @@
+titre: Conseil en prévention
+seo:
+  description: 'Audit, commission de sécurité, DUERP et notices incendie : accompagnement à la mise en conformité.'
+  noindex: false
+blocs:
+  - discriminant: texte
+    value:
+      titre: ''
+      contenu: |-
+        Contenu à venir : offre d’accompagnement.
+      largeur: etroite

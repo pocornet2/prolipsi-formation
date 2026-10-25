@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import EntetePage from '../components/EntetePage.astro';
+---
+
+<Base titre="Page introuvable" noindex>
+  <EntetePage surtitre="Erreur 404" titre="Cette page n’existe pas (ou plus)" intro="Le lien est peut-être ancien, ou l’adresse a été mal saisie.">
+    <p><a class="btn btn--principal" href="/">Retour à l’accueil</a></p>
+  </EntetePage>
+</Base>

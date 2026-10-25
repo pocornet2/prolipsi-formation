@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import Bouton from '../Bouton.astro';
+import { resolveImage } from '../../lib/images';
+
+type Props = Extract<Bloc, { discriminant: 'hero' }>['value'] & { principal?: boolean };
+const { surtitre, titre, titreAccent, texte, annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
+const img = resolveImage(image);
+const Titre = principal ? 'h1' : 'h2';
+---
+
+<section class:list={['hero', `hero--${disposition}`, { 'hero--image': img }]}>
+  {
+    img && (
+      <Picture
+        src={img}
+        alt={alt}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280, 1920]}
+        sizes={disposition === 'droite' ? '(min-width: 900px) 62vw, 100vw' : '100vw'}
+        pictureAttributes={{ class: 'hero__image' }}
+        loading={principal ? 'eager' : 'lazy'}
+        fetchpriority={principal ? 'high' : 'auto'}
+      />
+    )
+  }
+  <div class="conteneur hero__contenu">
+    <div class="hero__texte-bloc">
+      {surtitre && <p class="surtitre">{surtitre}</p>}
+      <Titre class="hero__titre">
+        {typo(titre)}
+        {titreAccent && (<> <span class="hero__accent">{typo(titreAccent)}</span></>)}
+      </Titre>
+      {texte && <p class="hero__texte">{typo(texte)}</p>}
+      {
+        boutons.length > 0 && (
+          <div class="boutons">
+            {boutons.map((b) => (
+              <Bouton bouton={b} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+    {annotation && <p class="hero__annotation" aria-hidden="true">{annotation}</p>}
+  </div>
+</section>

@@ -1,0 +1,53 @@
+---
+import { Picture } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo, lien } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'cartes' }>['value'];
+const { surtitre, titre, intro, alignement = 'centre', cartes = [] } = Astro.props;
+---
+
+<section class="section section--douce">
+  <div class="conteneur">
+    {
+      (surtitre || titre || intro) && (
+        <header class:list={['section__tete', { 'section__tete--centre': alignement === 'centre' }]}>
+          {surtitre && <p class="surtitre">{surtitre}</p>}
+          {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+          {intro && <p class="section__intro">{typo(intro)}</p>}
+        </header>
+      )
+    }
+    <ul class="cartes" role="list">
+      {
+        cartes.map((c) => {
+          const img = resolveImage(c.image);
+          return (
+            <li class:list={['carte', { 'carte--photo': img }]}>
+              {img && (
+                <Picture src={img} alt={c.alt ?? ''} formats={['avif', 'webp']} widths={[400, 640, 800]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" pictureAttributes={{ class: 'carte__image' }} />
+              )}
+              <div class="carte__corps">
+                {c.icone && (
+                  <span class="carte__pastille">
+                    <Icone nom={c.icone} taille={24} />
+                  </span>
+                )}
+                <h3 class="carte__titre">{typo(c.titre)}</h3>
+                {c.texte && <p class="carte__texte">{typo(c.texte)}</p>}
+                {c.lien && (
+                  <a href={lien(c.lien)} class="carte__lien">
+                    {c.lienLibelle || 'En savoir plus'}
+                    <Icone nom="fleche" taille={18} />
+                  </a>
+                )}
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>

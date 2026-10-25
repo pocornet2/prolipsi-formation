@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Blocs from '../components/blocks/Blocs.astro';
+import EntetePage from '../components/EntetePage.astro';
+import { reader, getReglages } from '../lib/content';
+import { schemaFaq } from '../lib/seo';
+
+const accueil = await reader.singletons.accueil.read();
+const reglages = await getReglages();
+const blocs = accueil?.blocs ?? [];
+const aUnHero = blocs.some((b) => b.discriminant === 'hero');
+---
+
+<Base
+  titre={reglages.nom}
+  titreSeo={accueil?.seo.titre}
+  description={accueil?.seo.description}
+  image={accueil?.seo.image}
+  noindex={accueil?.seo.noindex}
+  schemas={[schemaFaq(blocs)]}
+>
+  {!aUnHero && <EntetePage titre={reglages.nom} intro={reglages.baseline} />}
+  <Blocs blocs={blocs} />
+</Base>

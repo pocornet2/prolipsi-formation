@@ -1,0 +1,11 @@
+titre: Mentions légales
+seo:
+  description: 'Mentions légales du site Prolipsi Formation.'
+  noindex: true
+blocs:
+  - discriminant: texte
+    value:
+      titre: ''
+      contenu: |-
+        À compléter : éditeur, directeur de publication, hébergeur.
+      largeur: etroite

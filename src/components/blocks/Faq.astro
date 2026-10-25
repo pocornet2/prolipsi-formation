@@ -1,0 +1,35 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+import Icone from '../Icone.astro';
+
+type Props = Extract<Bloc, { discriminant: 'faq' }>['value'];
+const { titre, intro, disposition = 'colonnes', questions = [] } = Astro.props;
+// Les données structurées FAQPage sont ajoutées par la page (lib/seo.ts).
+---
+
+<section class:list={['section', { 'section--serree colonnes': disposition === 'colonnes' }]}>
+  <div class:list={['conteneur', disposition === 'colonnes' ? 'colonnes__grille' : 'conteneur--etroit']}>
+    <div>
+      {titre && <h2 class:list={['section__titre', { 'section__titre--souligne': disposition === 'colonnes' }]}>{typo(titre)}</h2>}
+      {intro && <p class="section__texte">{typo(intro)}</p>}
+    </div>
+    <div class="faq">
+      {
+        questions.map((q) => (
+          <details class="faq__item">
+            <summary>
+              <h3>{typo(q.question)}</h3>
+              <Icone nom="plus" taille={20} class="faq__plus" />
+            </summary>
+            <div class="faq__reponse">
+              {q.reponse.split(/\n{2,}/).map((p) => (
+                <p>{typo(p)}</p>
+              ))}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

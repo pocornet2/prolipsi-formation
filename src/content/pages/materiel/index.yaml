@@ -1,0 +1,11 @@
+titre: Matériel de sécurité
+seo:
+  description: 'Extincteurs, signalétique, détection, alarmes et équipements de protection, avec formation à leur utilisation.'
+  noindex: false
+blocs:
+  - discriminant: texte
+    value:
+      titre: ''
+      contenu: |-
+        Contenu à venir : gamme de matériel.
+      largeur: etroite

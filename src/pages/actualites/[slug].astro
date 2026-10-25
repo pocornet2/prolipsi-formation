@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Picture, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import EntetePage from '../../components/EntetePage.astro';
+import { getActualites, formatDate } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+import { renderMarkdoc } from '../../lib/markdoc';
+import { schemaArticle } from '../../lib/seo';
+
+export const getStaticPaths = (async () => {
+  const articles = await getActualites();
+  return articles.map((a) => ({ params: { slug: a.slug }, props: { article: a.entry } }));
+}) satisfies GetStaticPaths;
+
+const { article } = Astro.props;
+const { slug } = Astro.params;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const url = `/actualites/${slug}/`;
+const html = renderMarkdoc(await article.contenu());
+const img = resolveImage(article.image);
+const imageAbsolue = img ? new URL((await getImage({ src: img, width: 1200, format: 'jpg' })).src, site).href : undefined;
+---
+
+<Base
+  titre={article.titre}
+  titreSeo={article.seo.titre}
+  description={article.seo.description || article.extrait}
+  image={article.seo.image || article.image}
+  noindex={article.seo.noindex}
+  type="article"
+  fil={[{ nom: 'Actualités', url: '/actualites/' }, { nom: article.titre, url }]}
+  schemas={[schemaArticle({ titre: article.titre, description: article.extrait, url, date: article.date, image: imageAbsolue }, site)]}
+>
+  <article>
+    <EntetePage titre={article.titre} intro={article.extrait}>
+      <p class="entete-page__meta"><time datetime={article.date ?? undefined}>{formatDate(article.date)}</time></p>
+    </EntetePage>
+    {
+      img && (
+        <div class="conteneur conteneur--etroit article__image">
+          <Picture src={img} alt={article.alt ?? ''} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(min-width: 800px) 760px, 100vw" loading="eager" fetchpriority="high" />
+        </div>
+      )
+    }
+    <div class="section section--serre">
+      <div class="conteneur conteneur--etroit prose" set:html={html} />
+    </div>
+  </article>
+</Base>

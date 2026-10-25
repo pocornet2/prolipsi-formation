@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import EntetePage from '../components/EntetePage.astro';
+import Icone from '../components/Icone.astro';
+import { getSessions, lien } from '../lib/content';
+
+const sessions = await getSessions();
+const PLACES: Record<string, string> = {
+  disponibles: 'Places disponibles',
+  dernieres: 'Dernières places',
+  complet: 'Complet',
+};
+const moisDe = (iso: string) =>
+  new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(new Date(`${iso}T12:00:00`));
+const groupes = new Map<string, typeof sessions>();
+for (const s of sessions) {
+  const cle = moisDe(s.entry.date as string);
+  groupes.set(cle, [...(groupes.get(cle) ?? []), s]);
+}
+const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+
+// Données structurées : une entrée Event par session à venir.
+const site = Astro.site ?? new URL(Astro.url.origin);
+const evenements = sessions.map(({ entry }) => ({
+  '@type': 'EducationEvent',
+  name: entry.titre,
+  startDate: entry.date,
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: { '@type': 'Place', name: entry.lieu, address: { '@type': 'PostalAddress', addressLocality: entry.lieu, addressCountry: 'FR' } },
+  organizer: { '@id': new URL('/#entreprise', site).href },
+}));
+---
+
+<Base
+  titre="Calendrier des formations"
+  description="Prochaines sessions de formation en sécurité au travail à La Baule et Saint-Nazaire : SST, incendie, habilitations électriques, évacuation."
+  fil={[{ nom: 'Calendrier', url: '/calendrier/' }]}
+  schemas={evenements}
+>
+  <EntetePage titre="Calendrier des formations" intro="Les prochaines sessions inter-entreprises. Une date ne vous convient pas ? Nous organisons aussi des sessions dans vos locaux." />
+  <section class="section section--serre">
+    <div class="conteneur conteneur--etroit">
+      {sessions.length === 0 && <p>Les prochaines dates seront bientôt annoncées.</p>}
+      {
+        [...groupes].map(([moisLabel, liste]) => (
+          <section class="calendrier__mois">
+            <h2 class="calendrier__titre">{moisLabel}</h2>
+            <ol class="sessions__liste" role="list">
+              {liste.map(({ entry }) => {
+                const d = entry.date as string;
+                const corps = (
+                  <>
+                    <time class="session__date" datetime={d}>
+                      <span class="session__jour">{Number(d.slice(8, 10))}</span>
+                      <span class="session__mois">{MOIS[Number(d.slice(5, 7)) - 1]}</span>
+                    </time>
+                    <span class="session__infos">
+                      <strong class="session__titre">{entry.titre}</strong>
+                      <span class="session__lieu">
+                        <Icone nom="localisation" taille={15} />
+                        {entry.lieu}
+                      </span>
+                    </span>
+                    <span class:list={['session__places', `session__places--${entry.places}`]}>{PLACES[entry.places]}</span>
+                  </>
+                );
+                return <li class="session">{entry.lien ? <a href={lien(entry.lien)} class="session__lien">{corps}</a> : corps}</li>;
+              })}
+            </ol>
+          </section>
+        ))
+      }
+      <p class="boutons"><a class="btn btn--principal" href="/contact/">S’inscrire ou demander un devis</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .calendrier__mois + .calendrier__mois {
+    margin-top: 2.5rem;
+  }
+  .calendrier__titre {
+    margin-bottom: 1rem;
+    font-size: 1.35rem;
+    text-transform: capitalize;
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import type { Bloc } from '../../lib/content';
+import { typo, lien } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+
+type Props = Extract<Bloc, { discriminant: 'logos' }>['value'];
+const { titre, texte, logos = [] } = Astro.props;
+---
+
+<section class="section section--serree logos">
+  <div class="conteneur logos__grille">
+    <div>
+      <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>
+      {texte && <p class="section__texte">{typo(texte)}</p>}
+    </div>
+    <ul class="logos__liste" role="list">
+      {
+        logos.map((l) => {
+          const img = resolveImage(l.image);
+          const visuel = img ? <Image src={img} alt={l.nom} height={64} class="logos__image" /> : <span class="logos__provisoire">{l.nom}</span>;
+          return <li>{l.lien ? <a href={lien(l.lien)} rel="noopener" target="_blank">{visuel}</a> : visuel}</li>;
+        })
+      }
+    </ul>
+  </div>
+</section>

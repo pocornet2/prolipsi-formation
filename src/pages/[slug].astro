@@ -1,0 +1,34 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../layouts/Base.astro';
+import Blocs from '../components/blocks/Blocs.astro';
+import EntetePage from '../components/EntetePage.astro';
+import { reader } from '../lib/content';
+import { schemaFaq } from '../lib/seo';
+
+export const getStaticPaths = (async () => {
+  // Adresses déjà utilisées par d'autres gabarits.
+  const RESERVEES = new Set(['services', 'actualites', 'calendrier', 'merci', 'keystatic', 'api']);
+  const pages = await reader.collections.pages.all();
+  return pages
+    .filter((p) => !RESERVEES.has(p.slug))
+    .map((p) => ({ params: { slug: p.slug }, props: { page: p.entry } }));
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { slug } = Astro.params;
+const aUnHero = page.blocs.some((b) => b.discriminant === 'hero');
+---
+
+<Base
+  titre={page.titre}
+  titreSeo={page.seo.titre}
+  description={page.seo.description}
+  image={page.seo.image}
+  noindex={page.seo.noindex}
+  fil={[{ nom: page.titre, url: `/${slug}/` }]}
+  schemas={[schemaFaq(page.blocs)]}
+>
+  {!aUnHero && <EntetePage titre={page.titre} />}
+  <Blocs blocs={page.blocs} />
+</Base>

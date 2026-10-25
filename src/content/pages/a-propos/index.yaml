@@ -1,0 +1,11 @@
+titre: À propos
+seo:
+  description: 'Prolipsi Formation, organisme de formation et de conseil en prévention à La Baule et Saint-Nazaire.'
+  noindex: false
+blocs:
+  - discriminant: texte
+    value:
+      titre: ''
+      contenu: |-
+        Contenu à venir : présentation de l’équipe.
+      largeur: etroite

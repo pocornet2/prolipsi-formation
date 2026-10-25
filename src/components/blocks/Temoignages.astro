@@ -1,0 +1,29 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo } from '../../lib/content';
+type Props = Extract<Bloc, { discriminant: 'temoignages' }>['value'];
+const { titre, items = [] } = Astro.props;
+---
+
+<section class="section section--teinte">
+  <div class="conteneur">
+    {titre && <h2 class="section__titre">{typo(titre)}</h2>}
+    <ul class="temoignages" role="list">
+      {
+        items.map((t) => (
+          <li>
+            <figure class="temoignage">
+              <blockquote>
+                <p>{t.citation}</p>
+              </blockquote>
+              <figcaption>
+                <strong>{t.auteur}</strong>
+                {t.contexte && <span>{t.contexte}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

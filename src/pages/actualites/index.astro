@@ -1,0 +1,38 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import EntetePage from '../../components/EntetePage.astro';
+import { getActualites, getReglages, formatDate } from '../../lib/content';
+import { resolveImage } from '../../lib/images';
+
+const articles = await getActualites();
+const r = await getReglages();
+---
+
+<Base titre="Actualités" description={`Les dernières nouvelles de ${r.nom}.`} fil={[{ nom: 'Actualités', url: '/actualites/' }]}>
+  <EntetePage titre="Actualités" />
+  <section class="section">
+    <div class="conteneur">
+      {articles.length === 0 && <p>Aucune actualité pour le moment.</p>}
+      <ul class="cartes cartes--media" role="list">
+        {
+          articles.map(({ slug, entry }) => {
+            const img = resolveImage(entry.image);
+            return (
+              <li class="carte carte--media">
+                {img && <Picture src={img} alt={entry.alt ?? ''} formats={['avif', 'webp']} widths={[400, 640, 800]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" pictureAttributes={{ class: 'carte__image' }} />}
+                <div class="carte__corps">
+                  <time class="carte__date" datetime={entry.date ?? undefined}>{formatDate(entry.date)}</time>
+                  <h2 class="carte__titre">
+                    <a href={`/actualites/${slug}/`} class="carte__lien">{entry.titre}</a>
+                  </h2>
+                  {entry.extrait && <p>{entry.extrait}</p>}
+                </div>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

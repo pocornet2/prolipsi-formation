@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import EntetePage from '../components/EntetePage.astro';
+import { getReglages } from '../lib/content';
+const r = await getReglages();
+---
+
+<Base titre="Message envoyé" noindex>
+  <EntetePage titre="Message envoyé" intro={r.formulaire?.merci}>
+    <p><a class="btn btn--principal" href="/">Retour à l’accueil</a></p>
+  </EntetePage>
+</Base>

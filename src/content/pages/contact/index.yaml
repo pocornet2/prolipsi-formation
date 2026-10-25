@@ -1,0 +1,9 @@
+titre: Contact
+seo:
+  description: 'Demandez un devis formation, conseil ou matériel de sécurité à Prolipsi Formation, La Baule et Saint-Nazaire.'
+  noindex: false
+blocs:
+  - discriminant: contact
+    value:
+      titre: Parlons de votre besoin
+      texte: 'Formation, mise en conformité ou matériel : décrivez votre besoin, nous vous répondons sous 48 heures ouvrées.'
