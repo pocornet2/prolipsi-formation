@@ -94,6 +94,7 @@ const icones = [
   { label: 'Échange (bulles)', value: 'echange' },
   { label: 'Liste / rapport', value: 'liste' },
   { label: 'Recherche (loupe)', value: 'recherche' },
+  { label: 'Signalétique (panneau)', value: 'signaletique' },
 ] as const;
 
 const champIcone = (label = 'Pictogramme') =>
@@ -252,9 +253,11 @@ const blocs = (dossier: string) =>
             options: [
               { label: 'Cartes encadrées sur fond clair', value: 'cartes' },
               { label: 'Simple : pictogramme à gauche, sans cadre', value: 'simple' },
+              { label: 'Simple avec séparateurs verticaux', value: 'separees' },
             ],
             defaultValue: 'cartes',
           }),
+          note: fields.text({ label: 'Petite note centrée sous les cartes (facultatif)' }),
           cartes: fields.array(
             fields.object({
               image: imageField(dossier, 'Photo (facultative)'),
@@ -508,6 +511,7 @@ const blocs = (dossier: string) =>
             defaultValue: 'simple',
           }),
           zone: fields.text({ label: 'Ligne de localisation (variante devis)', description: 'Ex. La Baule · Saint-Nazaire · Loire-Atlantique' }),
+          champProduits: fields.text({ label: 'Champ supplémentaire (variante devis, facultatif)', description: 'Ex. Produits recherchés / quantités' }),
           besoins: fields.text({
             label: 'Choix de la liste « Votre besoin » (variante devis)',
             description: 'Un choix par ligne. Laisser vide pour proposer le catalogue de formations.',
@@ -524,6 +528,7 @@ const blocs = (dossier: string) =>
             options: [
               { label: 'Superposés au bas du bandeau', value: 'superpose' },
               { label: 'Cartes blanches sur une bande bleue', value: 'bande' },
+              { label: 'Pictogrammes au-dessus, séparateurs, bande bleue', value: 'pictos' },
             ],
             defaultValue: 'superpose',
           }),
@@ -578,6 +583,12 @@ const blocs = (dossier: string) =>
           texte: fields.text({ label: 'Texte', multiline: true }),
           points: fields.array(fields.text({ label: 'Point' }), { label: 'Points clés (coches rouges)', itemLabel: (p) => p.value || 'Point' }),
           note: fields.text({ label: 'Encadré « ampoule » (facultatif)' }),
+          titreAssocies: fields.text({ label: 'Titre de l’encadré de liens (facultatif)', description: 'Ex. La formation associée' }),
+          liensAssocies: fields.array(
+            fields.object({ libelle: fields.text({ label: 'Texte' }), url: fields.text({ label: 'Lien' }) }),
+            { label: 'Liens de l’encadré (ex. formations associées)', itemLabel: (p) => p.fields.libelle.value || 'Lien' },
+          ),
+          bouton: lienBouton,
           lien: fields.object({ libelle: fields.text({ label: 'Texte' }), url: fields.text({ label: 'Lien' }) }, { label: 'Lien principal (rouge)' }),
           lienSecondaire: fields.object({ libelle: fields.text({ label: 'Texte' }), url: fields.text({ label: 'Lien' }) }, { label: 'Lien secondaire (bleu, facultatif)' }),
           image: imageField(dossier),
@@ -606,6 +617,14 @@ const blocs = (dossier: string) =>
         schema: fields.object({
           titre: fields.text({ label: 'Titre (H2)' }),
           intro: fields.text({ label: 'Texte sous le titre' }),
+          style: fields.select({
+            label: 'Présentation',
+            options: [
+              { label: 'Cartes centrées, fond blanc', value: 'centre' },
+              { label: 'Cartes en ligne (numéro et pictogramme à gauche), fond bleu', value: 'ligne' },
+            ],
+            defaultValue: 'centre',
+          }),
           etapes: fields.array(
             fields.object({
               icone: champIcone(),

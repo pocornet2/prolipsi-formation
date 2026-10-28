@@ -6,8 +6,8 @@ import { resolveImage } from '../../lib/images';
 import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'cartes' }>['value'];
-const { surtitre, titre, intro, alignement = 'centre', style = 'cartes', cartes = [] } = Astro.props;
-const simple = style === 'simple';
+const { surtitre, titre, intro, alignement = 'centre', style = 'cartes', note, cartes = [] } = Astro.props;
+const simple = style === 'simple' || style === 'separees';
 ---
 
 <section class:list={['section', simple ? 'section--cartes-simples' : 'section--douce']}>
@@ -21,7 +21,7 @@ const simple = style === 'simple';
         </header>
       )
     }
-    <ul class:list={['cartes', { 'cartes--simples': simple }]} role="list">
+    <ul class:list={['cartes', { 'cartes--simples': simple, 'cartes--separees': style === 'separees' }]} role="list">
       {
         cartes.map((c) => {
           const img = resolveImage(c.image);
@@ -50,5 +50,6 @@ const simple = style === 'simple';
         })
       }
     </ul>
+    {note && <p class="cartes__note">{typo(note)}</p>}
   </div>
 </section>

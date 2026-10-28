@@ -4,21 +4,23 @@ import { typo } from '../../lib/content';
 import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'etapes' }>['value'];
-const { titre, intro, etapes = [] } = Astro.props;
+const { titre, intro, style = 'centre', etapes = [] } = Astro.props;
 ---
 
-<section class="section section--etapes">
+<section class:list={['section', 'section--etapes', { 'section--bleue': style === 'ligne' }]}>
   <div class="conteneur">
     {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
     {intro && <p class="section__intro section__intro--court">{typo(intro)}</p>}
-    <ol class="etapes" role="list">
+    <ol class:list={['etapes', `etapes--${style}`]} role="list">
       {
         etapes.map((e, i) => (
           <li class="etape">
             <Icone nom={e.icone} taille={36} epaisseur={1.5} class="etape__icone" />
             <span class="etape__numero">{String(i + 1).padStart(2, '0')}</span>
-            <h3 class="etape__titre">{typo(e.titre)}</h3>
-            {e.texte && <p class="etape__texte">{typo(e.texte)}</p>}
+            <div class="etape__corps">
+              <h3 class="etape__titre">{typo(e.titre)}</h3>
+              {e.texte && <p class="etape__texte">{typo(e.texte)}</p>}
+            </div>
           </li>
         ))
       }

@@ -4,9 +4,10 @@ import type { Bloc } from '../../lib/content';
 import { typo, lien } from '../../lib/content';
 import { resolveImage } from '../../lib/images';
 import Icone from '../Icone.astro';
+import Bouton from '../Bouton.astro';
 
 type Props = Extract<Bloc, { discriminant: 'prestation' }>['value'];
-const { ancre, surtitre, titre, texte, points = [], note, lien: lienPrincipal, lienSecondaire, image, alt = '', position = 'gauche', fond = 'blanc' } = Astro.props;
+const { ancre, surtitre, titre, texte, points = [], note, titreAssocies, liensAssocies = [], bouton, lien: lienPrincipal, lienSecondaire, image, alt = '', position = 'gauche', fond = 'blanc' } = Astro.props;
 const img = resolveImage(image);
 const id = (ancre ?? '').replace(/^#/, '') || undefined;
 ---
@@ -44,6 +45,27 @@ const id = (ancre ?? '').replace(/^#/, '') || undefined;
           </p>
         )
       }
+      {
+        liensAssocies.length > 0 && (
+          <div class="prestation__associes">
+            <Icone nom="pedagogie" taille={34} epaisseur={1.4} class="prestation__associes-icone" />
+            <div>
+              {titreAssocies && <p class="prestation__associes-titre">{typo(titreAssocies)}</p>}
+              <ul role="list">
+                {liensAssocies.map((l) => (
+                  <li>
+                    <a href={lien(l.url)}>
+                      {l.libelle}
+                      <Icone nom="fleche" taille={15} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )
+      }
+      <Bouton bouton={bouton} class="prestation__btn" />
       {
         (lienPrincipal?.url || lienSecondaire?.url) && (
           <p class="prestation__liens">

@@ -47,6 +47,7 @@ import {
   CircleCheck,
   MessagesSquare,
   ClipboardList,
+  SquareArrowRight,
 } from '@lucide/astro';
 
 const ICONES = {
@@ -93,6 +94,7 @@ const ICONES = {
   valide: CircleCheck,
   echange: MessagesSquare,
   liste: ClipboardList,
+  signaletique: SquareArrowRight,
 } as const;
 
 export type NomIcone = keyof typeof ICONES;

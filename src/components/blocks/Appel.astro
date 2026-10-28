@@ -38,7 +38,7 @@ const img = resolveImage(image);
           </div>
         ) : (
           boutons.length > 0 && (
-            <div class="appel-bandeau__boutons">
+            <div class:list={['appel-bandeau__boutons', { 'appel-bandeau__boutons--ligne': boutons.length < 3 }]}>
               {boutons.map((b) => (
                 <Bouton bouton={b} />
               ))}

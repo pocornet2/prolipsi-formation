@@ -3213,3 +3213,196 @@ address {
 .section--temoignages + .colonnes {
   padding-top: clamp(2.5rem, 5vw, 3.5rem);
 }
+
+/* ==========================================================================
+   Page Matériel
+   ========================================================================== */
+
+/* Onglets : pictogramme au-dessus, séparateurs */
+.ancres--pictos {
+  margin-top: 0;
+  background: var(--fond-bleu);
+}
+
+.ancres--pictos .ancres__liste {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 0;
+  background: none;
+}
+
+.ancres--pictos li + li {
+  border-left: 1px solid #b9cbe0;
+}
+
+.ancres--pictos li {
+  margin-block: 1rem;
+}
+
+.ancres--pictos .ancres__lien,
+.ancres--pictos .ancres__liste li .ancres__lien {
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 0;
+  padding: 0.25rem 1rem;
+  border-radius: 0;
+  background: none;
+  font-size: var(--t-s);
+  backdrop-filter: none;
+}
+
+.ancres--pictos .ancres__lien:hover {
+  background: none;
+}
+
+.hero:has(+ .ancres--pictos) .hero__contenu {
+  padding-bottom: clamp(3rem, 7vw, 5rem);
+}
+
+@media (max-width: 899px) {
+  .ancres--pictos .ancres__liste {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ancres--pictos li:nth-child(3) {
+    border-left: 0;
+  }
+
+  .ancres--pictos .ancres__lien,
+  .ancres--pictos .ancres__liste li .ancres__lien {
+    justify-content: center;
+    padding: 0.4rem;
+  }
+}
+
+/* Prestation : encadré « formation associée » et bouton */
+.prestation__associes {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  margin: 0.25rem 0 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--rayon);
+  background: var(--fond-bleu);
+}
+
+.section--bleue .prestation__associes {
+  background: rgb(255 255 255 / 0.6);
+}
+
+.prestation__associes-icone {
+  margin-top: 0.15rem;
+  color: var(--rouge);
+}
+
+.prestation__associes-titre {
+  margin: 0 0 0.3rem;
+  color: var(--marine);
+  font-size: var(--t-s);
+  font-weight: 800;
+}
+
+.prestation__associes ul {
+  display: grid;
+  gap: 0.2rem;
+  font-size: var(--t-s);
+}
+
+.prestation__associes a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--marine);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.prestation__associes a:hover {
+  color: var(--rouge);
+}
+
+.prestation__btn {
+  min-height: 46px;
+  margin-bottom: 1rem;
+}
+
+.prestation__liens:has(.prestation__lien--secondaire:only-child) {
+  margin-top: 0.25rem;
+}
+
+/* Cartes simples séparées + note */
+.cartes--separees {
+  gap: 1.5rem 0;
+}
+
+@media (min-width: 900px) {
+  .cartes--separees .carte {
+    padding-inline: 2rem;
+  }
+
+  .cartes--separees .carte:first-child {
+    padding-left: 0;
+  }
+
+  .cartes--separees .carte + .carte {
+    border-left: 1px solid var(--ligne);
+  }
+}
+
+.cartes__note {
+  margin: 2rem 0 0;
+  color: var(--texte);
+  font-size: var(--t-xs);
+  text-align: center;
+}
+
+/* Étapes en ligne, fond bleu */
+.etapes--ligne {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+}
+
+.etapes--ligne .etape {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: start;
+  gap: 0 0.9rem;
+  padding: 1.4rem 1.25rem;
+  text-align: left;
+}
+
+.etapes--ligne .etape__numero {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--rouge);
+  font-size: var(--t-s);
+  line-height: 2;
+}
+
+.etapes--ligne .etape__icone {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.etapes--ligne .etape__corps {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.etapes--ligne .etape__titre {
+  margin-top: 0.2rem;
+  font-size: var(--t-s);
+}
+
+.etapes--ligne .etape__texte {
+  font-size: var(--t-xs);
+}
+
+.section--etapes.section--bleue + .colonnes {
+  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.appel-bandeau__boutons--ligne .btn {
+  min-width: 200px;
+}

@@ -1,11 +1,262 @@
-titre: Matériel de sécurité
+titre: Matériel
 seo:
-  description: 'Extincteurs, signalétique, détection, alarmes et équipements de protection, avec formation à leur utilisation.'
+  titre: Matériel de sécurité incendie et premiers secours · La Baule
+  description: Extincteurs, défibrillateurs, trousses de secours et signalétique à La Baule et Saint-Nazaire, avec la formation de vos équipes. Sur devis.
   noindex: false
 blocs:
-  - discriminant: texte
-    value:
-      titre: ''
-      contenu: |-
-        Contenu à venir : gamme de matériel.
-      largeur: etroite
+- discriminant: hero
+  value:
+    surtitre: ''
+    titre: Matériel de sécurité incendie et de premiers secours à La Baule et Saint-Nazaire
+    titreAccent: ''
+    texte: Équipez vos locaux et préparez vos équipes à utiliser leur matériel de sécurité.
+    sousTexte: Un conseil adapté à votre besoin, une proposition sur devis.
+    lieu: ''
+    annotation: ''
+    disposition: droite
+    image: /src/assets/images/pages/materiel/blocs/0/value/image.jpg
+    alt: Extincteur, défibrillateur, trousse de secours et panneau de sortie de secours
+    boutons:
+    - libelle: Demander un devis
+      url: '#devis'
+      style: principal
+      icone: ''
+      fleche: false
+    - libelle: Nos formations
+      url: /formations/
+      style: secondaire
+      icone: ''
+      fleche: false
+- discriminant: ancres
+  value:
+    style: pictos
+    liens:
+    - libelle: Extincteurs
+      icone: extincteur
+      ancre: extincteurs
+    - libelle: Défibrillateurs
+      icone: secourisme
+      ancre: defibrillateurs
+    - libelle: Premiers secours
+      icone: trousse
+      ancre: premiers-secours
+    - libelle: Signalétique
+      icone: signaletique
+      ancre: signaletique
+- discriminant: prestation
+  value:
+    ancre: extincteurs
+    surtitre: 01 · Incendie
+    titre: Extincteurs et matériel de sécurité incendie
+    texte: Prévoir un équipement adapté à vos locaux, et préparer vos équipes à l’utiliser.
+    points: []
+    note: ''
+    titreAssocies: La formation associée
+    liensAssocies:
+    - libelle: Premier témoin incendie
+      url: /formations/premier-temoin-incendie/
+    - libelle: Équipier de première intervention
+      url: /formations/equipier-premiere-intervention/
+    bouton:
+      libelle: Devis extincteurs
+      url: '#devis'
+      style: principal
+      icone: ''
+      fleche: false
+    lien:
+      libelle: ''
+      url: ''
+    lienSecondaire:
+      libelle: ''
+      url: ''
+    image: /src/assets/images/pages/materiel/blocs/2/value/image.jpg
+    alt: Extincteurs rouges de différentes tailles
+    position: gauche
+    fond: blanc
+- discriminant: prestation
+  value:
+    ancre: defibrillateurs
+    surtitre: 02 · Défibrillation
+    titre: Défibrillateurs (DAE)
+    texte: Associer l’équipement aux bons réflexes pour réagir face à un arrêt cardiaque.
+    points: []
+    note: ''
+    titreAssocies: La formation associée
+    liensAssocies:
+    - libelle: Défibrillateur (DAE)
+      url: /formations/defibrillateur-dae/
+    - libelle: Sauveteur Secouriste du Travail
+      url: /formations/sst/
+    bouton:
+      libelle: Devis défibrillateur
+      url: '#devis'
+      style: principal
+      icone: ''
+      fleche: false
+    lien:
+      libelle: ''
+      url: ''
+    lienSecondaire:
+      libelle: ''
+      url: ''
+    image: /src/assets/images/pages/materiel/blocs/3/value/image.jpg
+    alt: Défibrillateur automatisé externe dans son boîtier mural avec signalétique DAE
+    position: droite
+    fond: bleu
+- discriminant: prestation
+  value:
+    ancre: premiers-secours
+    surtitre: 03 · Premiers secours
+    titre: Trousses et armoires de premiers secours
+    texte: Un matériel accessible et adapté aux risques de votre activité.
+    points: []
+    note: ''
+    titreAssocies: La formation associée
+    liensAssocies:
+    - libelle: SST et premiers secours
+      url: /formations/premiers-secours/
+    bouton:
+      libelle: Devis premiers secours
+      url: '#devis'
+      style: principal
+      icone: ''
+      fleche: false
+    lien:
+      libelle: ''
+      url: ''
+    lienSecondaire:
+      libelle: ''
+      url: ''
+    image: /src/assets/images/pages/materiel/blocs/4/value/image.jpg
+    alt: Trousse de secours ouverte et armoire à pharmacie murale
+    position: gauche
+    fond: blanc
+- discriminant: prestation
+  value:
+    ancre: signaletique
+    surtitre: 04 · Signalétique
+    titre: Signalétique de sécurité et plans d’évacuation
+    texte: Aider chacun à repérer les sorties et les moyens de secours.
+    points: []
+    note: ''
+    titreAssocies: La formation associée
+    liensAssocies:
+    - libelle: Exercice d’évacuation
+      url: /formations/exercice-evacuation/
+    bouton:
+      libelle: Devis signalétique
+      url: '#devis'
+      style: principal
+      icone: ''
+      fleche: false
+    lien:
+      libelle: ''
+      url: ''
+    lienSecondaire:
+      libelle: Notre accompagnement sécurité incendie
+      url: /conseil/
+    image: /src/assets/images/pages/materiel/blocs/5/value/image.jpg
+    alt: Panneaux de sortie de secours et d’extincteur à côté d’un plan d’évacuation
+    position: droite
+    fond: bleu
+- discriminant: appel
+  value:
+    titre: On vous forme au matériel qu’on vous fournit
+    texte: 'Conseil, équipement et formation : une approche cohérente pour vos équipes.'
+    style: bandeau
+    image: /src/assets/images/pages/materiel/blocs/6/value/image.jpg
+    pictos: []
+    boutons:
+    - libelle: Voir nos formations
+      url: /formations/
+      style: principal
+      icone: ''
+      fleche: false
+    - libelle: Conseil & prévention
+      url: /conseil/
+      style: contour-blanc
+      icone: ''
+      fleche: false
+- discriminant: cartes
+  value:
+    surtitre: ''
+    titre: Choisir un équipement adapté à vos locaux
+    intro: Votre activité, vos locaux et les risques identifiés guident le choix du matériel.
+    alignement: gauche
+    style: separees
+    note: Les obligations varient selon votre établissement. Étudions votre situation ensemble.
+    cartes:
+    - image: null
+      alt: ''
+      icone: engrenage
+      titre: Votre activité
+      texte: Des risques spécifiques selon votre secteur.
+      lien: ''
+      lienLibelle: ''
+    - image: null
+      alt: ''
+      icone: etablissement
+      titre: Vos locaux
+      texte: Une configuration qui influence les équipements.
+      lien: ''
+      lienLibelle: ''
+    - image: null
+      alt: ''
+      icone: accompagnement
+      titre: Vos équipes
+      texte: Un niveau de préparation à prendre en compte.
+      lien: ''
+      lienLibelle: ''
+- discriminant: etapes
+  value:
+    titre: Comment se passe votre demande
+    intro: Une proposition sur devis, adaptée à votre besoin.
+    style: ligne
+    etapes:
+    - icone: devis
+      titre: Votre demande
+      texte: Décrivez vos locaux et votre besoin
+    - icone: echange
+      titre: Le conseil
+      texte: Précisons l’équipement recherché
+    - icone: liste
+      titre: Votre devis
+      texte: Une proposition adaptée
+    - icone: accompagnement
+      titre: La formation
+      texte: Préparez vos équipes à l’utilisation
+- discriminant: faq
+  value:
+    titre: Vos questions sur le matériel
+    intro: ''
+    disposition: colonnes
+    marqueur: plus
+    questions:
+    - question: Quel matériel proposez-vous ?
+      reponse: Extincteurs et matériel de sécurité incendie, défibrillateurs (DAE), trousses et armoires de premiers secours, signalétique de sécurité et plans d’évacuation. Nous vous orientons vers l’équipement adapté à vos locaux et à votre activité.
+    - question: Puis-je commander en ligne ?
+      reponse: 'Le matériel est proposé sur devis : décrivez-nous vos locaux et votre besoin via le formulaire, nous vous adressons une proposition adaptée.'
+    - question: Formez-vous à l’utilisation du matériel ?
+      reponse: 'Oui. Nous formons vos équipes à l’utilisation du matériel fourni : manipulation des extincteurs, défibrillateur, gestes de premiers secours, évacuation.'
+    - question: Quels services sont disponibles selon le matériel ?
+      reponse: 'Selon l’équipement : conseil sur le choix et l’implantation, fourniture, mise en place et formation de vos équipes. Précisez votre besoin dans votre demande, nous vous indiquons ce qui est possible pour votre établissement.'
+    - question: À qui s’adresse votre offre ?
+      reponse: Aux entreprises, commerces, établissements recevant du public, associations et collectivités de La Baule, Saint-Nazaire et de Loire-Atlantique.
+    - question: Comment définir les besoins de mes locaux ?
+      reponse: Le nombre et le type d’équipements dépendent de la surface, de l’activité, des risques et du type d’établissement. Nous pouvons étudier votre situation avec vous, et si besoin réaliser une visite dans le cadre de notre offre Conseil & prévention.
+- discriminant: contact
+  value:
+    titre: Demander un devis matériel
+    texte: Indiquez-nous vos locaux, les produits recherchés et les quantités souhaitées.
+    variante: devis
+    zone: La Baule · Saint-Nazaire · Loire-Atlantique
+    champProduits: Produits recherchés / quantités
+    besoins: 'Extincteurs et matériel incendie
+
+      Défibrillateur (DAE)
+
+      Trousses et armoires de premiers secours
+
+      Signalétique et plans d’évacuation
+
+      Plusieurs équipements / je ne sais pas encore'

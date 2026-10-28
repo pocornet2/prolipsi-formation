@@ -8,7 +8,7 @@ type Props = Extract<Bloc, { discriminant: 'contact' }>['value'] & {
   /** Formation présélectionnée dans « Votre besoin ». */
   besoin?: string;
 };
-const { titre, texte, variante = 'simple', zone, besoins, besoin } = Astro.props;
+const { titre, texte, variante = 'simple', zone, besoins, champProduits, besoin } = Astro.props;
 const choixLibres = (besoins ?? '').split('\n').map((l) => l.trim()).filter(Boolean);
 const devis = variante === 'devis';
 // Liste « Votre besoin » : le catalogue de formations, par catégorie.
@@ -94,14 +94,16 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
       </div>
     </div>
     <div class="champ-ligne">
-      <div class="champ">
-        <label for="devis-nombre">Nombre de personnes</label>
-        <input id="devis-nombre" name="participants" type="number" min="1" inputmode="numeric" placeholder="Nombre de participants" />
-      </div>
+      {!choixLibres.length && (
+        <div class="champ">
+          <label for="devis-nombre">Nombre de personnes</label>
+          <input id="devis-nombre" name="participants" type="number" min="1" inputmode="numeric" placeholder="Nombre de participants" />
+        </div>
+      )}
       <div class="champ">
         <label for="devis-besoin">Votre besoin <span class="requis" aria-hidden="true">*</span></label>
         <select id="devis-besoin" name="besoin" required>
-          <option value="">{choixLibres.length ? 'Sélectionnez une prestation' : 'Sélectionnez une formation'}</option>
+          <option value="">{choixLibres.length ? 'Sélectionnez votre besoin' : 'Sélectionnez une formation'}</option>
           {choixLibres.map((c) => <option>{c}</option>)}
           {parCategorie.filter((c) => c.items.length).map((c) => (
             <optgroup label={c.nom}>
@@ -112,6 +114,12 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
         </select>
       </div>
     </div>
+    {champProduits && (
+      <div class="champ">
+        <label for="devis-produits">{champProduits}</label>
+        <input id="devis-produits" name="produits" placeholder="Ex. 4 extincteurs eau 6 L, 1 défibrillateur" />
+      </div>
+    )}
     <div class="champ">
       <label for="devis-message">Message</label>
       <textarea id="devis-message" name="message" rows="3" placeholder="Décrivez votre besoin…"></textarea>
@@ -211,6 +219,7 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
         email: 'Email',
         telephone: 'Téléphone',
         participants: 'Nombre de personnes',
+        produits: 'Produits / quantités',
         besoin: 'Besoin',
         message: 'Message',
       };
