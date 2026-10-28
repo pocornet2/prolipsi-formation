@@ -3814,3 +3814,19 @@ address {
   margin-top: 1.8em;
   font-size: 1.45rem;
 }
+
+/* Champs conditionnels du formulaire */
+.formulaire-devis [hidden] {
+  display: none !important;
+}
+
+.champ--conditionnel:not([hidden]) {
+  animation: champ-apparait 0.2s ease-out;
+}
+
+@keyframes champ-apparait {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

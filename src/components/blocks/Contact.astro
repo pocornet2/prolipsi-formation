@@ -1,7 +1,7 @@
 ---
 import type { Bloc } from '../../lib/content';
 import { typo } from '../../lib/content';
-import { getReglages } from '../../lib/content';
+import { getReglages, getFormations, reader, CATEGORIES_FORMATION } from '../../lib/content';
 import Icone from '../Icone.astro';
 import FormulaireDevis from '../FormulaireDevis.astro';
 
@@ -12,6 +12,34 @@ type Props = Extract<Bloc, { discriminant: 'contact' }>['value'] & {
 const { titre, texte, variante = 'simple', zone, besoins, champProduits, champNombre, titreAside, texteAdaptation, besoin } = Astro.props;
 const choixLibres = (besoins ?? '').split('\n').map((l) => l.trim()).filter(Boolean);
 const devis = variante === 'devis';
+
+// Page Contact : le choix du type de demande fait apparaître la liste de la
+// page correspondante (catalogue de formations, liste « Votre besoin » des
+// pages Conseil et Matériel, modifiables dans le back-office).
+const listeDePage = async (slug: string) => {
+  const page = await reader.collections.pages.read(slug);
+  const bloc = page?.blocs.find((b) => b.discriminant === 'contact');
+  return bloc && bloc.discriminant === 'contact'
+    ? (bloc.value.besoins ?? '').split('\n').map((l) => l.trim()).filter(Boolean)
+    : [];
+};
+const aiguillage =
+  variante === 'complet'
+    ? await (async () => {
+        const formations = await getFormations();
+        const groupes = Object.entries(CATEGORIES_FORMATION)
+          .map(([cle, nom]) => ({ nom, options: formations.filter((f) => f.entry.categorie === cle).map((f) => f.entry.titre) }))
+          .filter((g) => g.options.length);
+        const listeFormations = { label: 'Quelle formation ?', groupes, options: [] as string[] };
+        return [
+          { valeur: 'formation', libelle: 'Formation', liste: listeFormations, nombre: true },
+          { valeur: 'inscription', libelle: 'Inscription à une session inter-entreprises', liste: listeFormations, nombre: true },
+          { valeur: 'conseil', libelle: 'Conseil & prévention', liste: { label: 'Quelle prestation ?', options: await listeDePage('conseil') } },
+          { valeur: 'materiel', libelle: 'Matériel de sécurité', liste: { label: 'Quel équipement ?', options: await listeDePage('materiel') }, produits: true },
+          { valeur: 'autre', libelle: 'Autre demande' },
+        ];
+      })()
+    : [];
 const r = await getReglages();
 const site = Astro.site ?? new URL(Astro.url.origin);
 
@@ -46,10 +74,8 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
       <FormulaireDevis
         id="contact"
         sujet="Nouvelle demande depuis la page Contact"
-        besoinsLibres={choixLibres}
+        aiguillage={aiguillage}
         avecFormations={false}
-        champNombre={champNombre ? 'Nombre de personnes à former' : false}
-        champProduits={champProduits || false}
         entrepriseLabel="Entreprise ou structure"
         entrepriseRequis={false}
         besoinRequis={false}

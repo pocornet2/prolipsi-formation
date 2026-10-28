@@ -28,6 +28,17 @@ interface Props {
   /** Affiche le lien vers la politique de confidentialité et la mention des champs obligatoires. */
   mentions?: boolean;
   class?: string;
+  /**
+   * Formulaire « aiguillé » : le premier choix (Formation, Conseil, Matériel…)
+   * fait apparaître la liste et les champs propres à ce type de demande.
+   */
+  aiguillage?: {
+    valeur: string;
+    libelle: string;
+    liste?: { label: string; options?: string[]; groupes?: { nom: string; options: string[] }[] };
+    nombre?: boolean;
+    produits?: boolean;
+  }[];
 }
 
 const {
@@ -44,7 +55,9 @@ const {
   messageRequis = false,
   mentions = false,
   class: classe,
+  aiguillage = [],
 } = Astro.props;
+const pour = (cle: 'nombre' | 'produits') => aiguillage.filter((a) => a[cle]).map((a) => a.valeur).join(' ');
 
 const r = await getReglages();
 const site = Astro.site ?? new URL(Astro.url.origin);
@@ -110,6 +123,52 @@ const etoile = (requis: boolean) => (requis ? '<span class="requis" aria-hidden=
     </div>
   </div>
 
+  {aiguillage.length > 0 ? (
+  <>
+  <div class="champ">
+    <label for={`${id}-besoin`}>Votre besoin <Fragment set:html={etoile(besoinRequis)} /></label>
+    <select id={`${id}-besoin`} name="besoin" required={besoinRequis} data-aiguillage>
+      <option value="">Sélectionnez votre besoin</option>
+      {aiguillage.map((a) => <option value={a.libelle} data-cle={a.valeur}>{a.libelle}</option>)}
+    </select>
+  </div>
+  {aiguillage.filter((a) => a.liste).map((a) => (
+    <div class="champ champ--conditionnel" data-pour={a.valeur}>
+      <label for={`${id}-precision-${a.valeur}`}>{a.liste!.label}</label>
+      <select id={`${id}-precision-${a.valeur}`} name="precision">
+        <option value="">Sélectionnez</option>
+        {(a.liste!.options ?? []).map((o) => <option>{o}</option>)}
+        {(a.liste!.groupes ?? []).map((g) => (
+          <optgroup label={g.nom}>
+            {g.options.map((o) => <option>{o}</option>)}
+          </optgroup>
+        ))}
+      </select>
+    </div>
+  ))}
+  {(pour('nombre') || pour('produits')) && (
+    <div class="champ-ligne champ-ligne--conditionnelle">
+      {pour('nombre') && (
+        <div class="champ champ--conditionnel" data-pour={pour('nombre')}>
+          <label for={`${id}-nombre`}>
+            Nombre de personnes à former {mentions && <span class="facultatif">(facultatif)</span>}
+          </label>
+          <input id={`${id}-nombre`} name="participants" type="number" min="1" inputmode="numeric" placeholder="Nombre de participants" />
+        </div>
+      )}
+      {pour('produits') && (
+        <div class="champ champ--conditionnel" data-pour={pour('produits')}>
+          <label for={`${id}-produits`}>
+            Produits recherchés / quantités {mentions && <span class="facultatif">(facultatif)</span>}
+          </label>
+          <input id={`${id}-produits`} name="produits" placeholder="Ex. 4 extincteurs, 1 défibrillateur" />
+        </div>
+      )}
+    </div>
+  )}
+  </>
+  ) : (
+  <>
   <div class="champ">
     <label for={`${id}-besoin`}>Votre besoin <Fragment set:html={etoile(besoinRequis)} /></label>
     <select id={`${id}-besoin`} name="besoin" required={besoinRequis}>
@@ -150,6 +209,8 @@ const etoile = (requis: boolean) => (requis ? '<span class="requis" aria-hidden=
       </div>
     )
   }
+  </>
+  )}
 
   <div class="champ">
     <label for={`${id}-message`}>Message <Fragment set:html={etoile(messageRequis)} /></label>
@@ -184,12 +245,32 @@ const etoile = (requis: boolean) => (requis ? '<span class="requis" aria-hidden=
     email: 'Email',
     telephone: 'Téléphone',
     besoin: 'Besoin',
+    precision: 'Précision',
     participants: 'Nombre de personnes',
     produits: 'Produits / quantités',
     message: 'Message',
   };
 
   document.querySelectorAll<HTMLFormElement>('form.formulaire-devis').forEach((form) => {
+    // Champs conditionnels : visibles sans JavaScript, masqués et désactivés
+    // (donc non envoyés) tant que le type de demande ne les concerne pas.
+    const choix = form.querySelector<HTMLSelectElement>('select[data-aiguillage]');
+    if (choix) {
+      const maj = () => {
+        const cle = choix.selectedOptions[0]?.dataset.cle ?? '';
+        form.querySelectorAll<HTMLElement>('[data-pour]').forEach((bloc) => {
+          const visible = !!cle && (bloc.dataset.pour ?? '').split(' ').includes(cle);
+          bloc.hidden = !visible;
+          bloc.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select').forEach((c) => (c.disabled = !visible));
+        });
+        form.querySelectorAll<HTMLElement>('.champ-ligne--conditionnelle').forEach((ligne) => {
+          ligne.hidden = ![...ligne.querySelectorAll<HTMLElement>('[data-pour]')].some((b) => !b.hidden);
+        });
+      };
+      choix.addEventListener('change', maj);
+      maj();
+    }
+
     const retour = form.querySelector<HTMLElement>('.formulaire-devis__retour');
     const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const afficher = (texte: string, etat: 'ok' | 'erreur') => {
@@ -230,6 +311,7 @@ const etoile = (requis: boolean) => (requis ? '<span class="requis" aria-hidden=
         const json = await reponse.json().catch(() => ({}));
         if (!reponse.ok || json.success === false) throw new Error(json.message || 'Erreur');
         form.reset();
+        choix?.dispatchEvent(new Event('change'));
         afficher(form.dataset.merci ?? 'Merci, votre demande est bien partie.', 'ok');
       } catch {
         afficher(

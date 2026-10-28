@@ -24,21 +24,13 @@ blocs:
     texte: Décrivez votre besoin en quelques lignes. Nous revenons vers vous avec une proposition adaptée.
     variante: complet
     zone: ''
-    champProduits: Produits recherchés / quantités
-    champNombre: true
+    champProduits: ''
+    champNombre: false
     titreAside: Vous préférez en parler ?
     texteAdaptation: 'Besoin d’une adaptation ?
 
       Échangeons sur votre situation.'
-    besoins: 'Formation (secourisme, incendie, habilitation électrique…)
-
-      Conseil & prévention (commission de sécurité, notice, DUERP)
-
-      Matériel de sécurité (extincteurs, DAE, trousses, signalétique)
-
-      Inscription à une session inter-entreprises
-
-      Autre demande'
+    besoins: ''
 - discriminant: coordonnees
   value:
     titre: Nos coordonnées

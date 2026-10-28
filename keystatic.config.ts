@@ -533,7 +533,7 @@ const blocs = (dossier: string) =>
           }),
           besoins: fields.text({
             label: 'Choix de la liste « Votre besoin » (variante devis)',
-            description: 'Un choix par ligne. Laisser vide pour proposer le catalogue de formations.',
+            description: 'Un choix par ligne. Laisser vide pour proposer le catalogue de formations. Les listes des pages Conseil et Matériel sont aussi reprises dans le formulaire de la page Contact.',
             multiline: true,
           }),
         }),
