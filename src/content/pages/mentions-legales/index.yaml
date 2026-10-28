@@ -1,11 +1,61 @@
 titre: Mentions légales
 seo:
-  description: 'Mentions légales du site Prolipsi Formation.'
+  titre: ''
+  description: 'Mentions légales du site PROLIPSI Formation : éditeur, directeur de la publication, hébergeur, propriété intellectuelle.'
   noindex: true
 blocs:
-  - discriminant: texte
-    value:
-      titre: ''
-      contenu: |-
-        À compléter : éditeur, directeur de publication, hébergeur.
-      largeur: etroite
+- discriminant: texte
+  value:
+    titre: ''
+    contenu: 'Conformément à l’article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, voici les informations relatives à l’éditeur et à l’hébergeur du site.
+
+
+      ## Éditeur du site
+
+
+      - **PROLIPSI Formation** – EURL Tony PRODHOMME
+
+      - Adresse : 1 rue Thomas Edison, 44600 Saint-Nazaire
+
+      - SIRET : 890 408 073 00017
+
+      - Téléphone : 02 49 52 29 26
+
+      - E-mail : [contact@prolipsi-formation.fr](mailto:contact@prolipsi-formation.fr)
+
+
+      Numéro de déclaration d’activité d’organisme de formation : en cours d’attribution.
+
+
+      ## Directeur de la publication
+
+
+      Tony PRODHOMME.
+
+
+      ## Hébergement
+
+
+      Le site est hébergé par **Cloudflare, Inc.**, 101 Townsend Street, San Francisco, CA 94107, États-Unis – [www.cloudflare.com](https://www.cloudflare.com).
+
+
+      ## Propriété intellectuelle
+
+
+      L’ensemble des contenus de ce site (textes, images, logos, mise en page) est la propriété de PROLIPSI Formation ou est utilisé avec l’autorisation de leurs auteurs. Toute reproduction, totale ou partielle, sans autorisation écrite préalable est interdite.
+
+
+      Le plan d’accès est fourni par OpenStreetMap, © contributeurs OpenStreetMap, sous licence ODbL.
+
+
+      ## Données personnelles
+
+
+      Les informations recueillies par les formulaires du site sont traitées conformément au RGPD. Pour en savoir plus sur leur utilisation et l’exercice de vos droits, consultez notre [politique de confidentialité](/politique-de-confidentialite/).
+
+
+      ## Liens
+
+
+      Les liens vers d’autres sites sont proposés à titre d’information. PROLIPSI Formation n’est pas responsable du contenu de ces sites.'
+    largeur: etroite
