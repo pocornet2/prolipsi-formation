@@ -1,0 +1,106 @@
+---
+import type { Bloc } from '../../lib/content';
+import { typo, getReglages } from '../../lib/content';
+import Icone from '../Icone.astro';
+import { RESEAUX } from '../../lib/reseaux';
+
+type Props = Extract<Bloc, { discriminant: 'coordonnees' }>['value'];
+const { titre, zoneTexte, carte = true } = Astro.props;
+const r = await getReglages();
+const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
+const lat = parseFloat(r.latitude ?? '');
+const lon = parseFloat(r.longitude ?? '');
+const aCoords = Number.isFinite(lat) && Number.isFinite(lon);
+// Plan OpenStreetMap : aucun cookie, donc pas de bandeau de consentement.
+const d = 0.006;
+const carteUrl = aCoords
+  ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon - d * 1.6}%2C${lat - d}%2C${lon + d * 1.6}%2C${lat + d}&layer=mapnik&marker=${lat}%2C${lon}`
+  : '';
+const plusGrand = aCoords ? `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}` : '';
+const adresseTexte = [r.adresse.rue, `${r.adresse.codePostal} ${r.adresse.ville}`.trim()].filter(Boolean).join(', ');
+---
+
+<section class="section section--bleue section--coordonnees" id="coordonnees">
+  <div class="conteneur">
+    {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
+    <div class="coordonnees-bloc">
+      <address class="coordonnees-bloc__carte">
+        <ul role="list">
+          {
+            (r.adresse.rue || r.adresse.ville) && (
+              <li>
+                <Icone nom="localisation" taille={26} epaisseur={1.6} />
+                <span>
+                  <strong>{r.nom}</strong>
+                  {r.adresse.rue && <span>{r.adresse.rue}</span>}
+                  <span>
+                    {r.adresse.codePostal} {r.adresse.ville}
+                  </span>
+                </span>
+              </li>
+            )
+          }
+          {
+            r.telephone && (
+              <li>
+                <Icone nom="telephone" taille={26} epaisseur={1.6} />
+                <span>
+                  <a href={telLien}>
+                    <strong>{r.telephone}</strong>
+                  </a>
+                  {r.horaires && <span>{r.horaires}</span>}
+                </span>
+              </li>
+            )
+          }
+          {
+            r.email && (
+              <li>
+                <Icone nom="email" taille={26} epaisseur={1.6} />
+                <a href={`mailto:${r.email}`}>
+                  <strong>{r.email}</strong>
+                </a>
+              </li>
+            )
+          }
+          {
+            zoneTexte && (
+              <li>
+                <Icone nom="deplacement" taille={26} epaisseur={1.6} />
+                <span>{typo(zoneTexte)}</span>
+              </li>
+            )
+          }
+        </ul>
+        {
+          r.reseaux.length > 0 && (
+            <ul class="coordonnees-bloc__reseaux" role="list">
+              {r.reseaux.map((x) => (
+                <li>
+                  <a href={x.url} rel="noopener" target="_blank" aria-label={`${x.nom} (nouvel onglet)`}>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d={RESEAUX[x.nom] ?? RESEAUX.Google} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </address>
+      {
+        carte && carteUrl && (
+          <figure class="coordonnees-bloc__plan">
+            <iframe src={carteUrl} title={`Plan d’accès : ${adresseTexte}`} loading="lazy" referrerpolicy="no-referrer" />
+            <figcaption>
+              <a href={plusGrand} rel="noopener" target="_blank">
+                Agrandir le plan
+              </a>
+              <span> · © contributeurs OpenStreetMap</span>
+            </figcaption>
+          </figure>
+        )
+      }
+    </div>
+  </div>
+</section>

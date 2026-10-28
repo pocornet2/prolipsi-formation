@@ -21,6 +21,7 @@ import ListeFormations from './ListeFormations.astro';
 import BandeauLien from './BandeauLien.astro';
 import Prestation from './Prestation.astro';
 import Etapes from './Etapes.astro';
+import Coordonnees from './Coordonnees.astro';
 
 interface Props {
   blocs: Blocs;
@@ -73,6 +74,8 @@ const premierHero = blocs.findIndex((b) => b.discriminant === 'hero');
         return <ListeFormations {...bloc.value} />;
       case 'prestation':
         return <Prestation {...bloc.value} />;
+      case 'coordonnees':
+        return <Coordonnees {...bloc.value} />;
       case 'etapes':
         return <Etapes {...bloc.value} />;
       case 'bandeauLien':

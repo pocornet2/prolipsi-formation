@@ -3406,3 +3406,397 @@ address {
 .appel-bandeau__boutons--ligne .btn {
   min-width: 200px;
 }
+
+/* ==========================================================================
+   Page Contact et formulaire partagé
+   ========================================================================== */
+
+/* Bandeau avec illustration */
+.hero--illustration {
+  background: linear-gradient(180deg, var(--fond-bleu) 0%, #f3f8fd 100%);
+}
+
+.hero--illustration .hero__contenu {
+  min-height: 0;
+  padding-block: 1.5rem clamp(2rem, 4vw, 2.75rem);
+}
+
+.hero--illustration .hero__texte-bloc {
+  max-width: min(720px, 64%);
+}
+
+.hero--illustration .hero__titre {
+  font-size: clamp(1.9rem, 1.3rem + 2vw, 2.6rem);
+}
+
+.hero--illustration .hero__texte {
+  margin-bottom: 0.5rem;
+}
+
+.hero__illustration {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 270px;
+  height: 160px;
+  color: var(--rouge);
+  transform: translateY(-50%);
+}
+
+.hero__illustration-trait {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: auto;
+}
+
+.hero__illustration span {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 14px;
+}
+
+.hero__illustration-bulle {
+  top: 0;
+  left: 70px;
+  padding: 0.35rem;
+}
+
+.hero__illustration-mail {
+  bottom: 18px;
+  left: 50px;
+  padding: 0.3rem;
+}
+
+.hero__illustration-casque {
+  top: 14px;
+  right: 22px;
+  padding: 0.6rem;
+  border-radius: 50% 50% 46% 46%;
+  box-shadow: 0 0 0 2px var(--rouge);
+}
+
+@media (max-width: 899px) {
+  .hero__illustration {
+    display: none;
+  }
+
+  .hero--illustration .hero__texte-bloc {
+    max-width: none;
+  }
+}
+
+/* Formulaire partagé */
+.formulaire-devis {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.formulaire-devis .champ {
+  gap: 0.25rem;
+}
+
+.formulaire-devis .champ-ligne {
+  gap: 0.9rem 1.5rem;
+}
+
+.formulaire-devis label {
+  font-size: var(--t-xs);
+}
+
+.formulaire-devis input:not([type='checkbox']),
+.formulaire-devis select,
+.formulaire-devis textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid #c9d2de;
+  border-radius: var(--rayon);
+  background: #fff;
+  color: var(--encre);
+  font: inherit;
+  font-size: var(--t-s);
+}
+
+.formulaire-devis input:focus,
+.formulaire-devis select:focus,
+.formulaire-devis textarea:focus {
+  border-color: var(--marine);
+  outline: 2px solid color-mix(in oklab, var(--marine) 25%, transparent);
+  outline-offset: 0;
+}
+
+.formulaire-devis__pied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 0.25rem;
+}
+
+.formulaire-devis__pied .btn {
+  flex: none;
+  min-height: 46px;
+}
+
+.formulaire-devis__pied > div {
+  flex: 1 1 280px;
+}
+
+.formulaire-devis .case a {
+  color: var(--marine);
+}
+
+.formulaire-devis__obligatoires {
+  margin: 0.6rem 0 0;
+  color: var(--discret);
+  font-size: 0.75rem;
+}
+
+.formulaire-devis__retour {
+  margin: 0;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--rayon);
+  font-size: var(--t-s);
+  font-weight: 600;
+}
+
+.formulaire-devis__retour[data-etat='ok'] {
+  background: #e7f6ec;
+  color: #14532d;
+}
+
+.formulaire-devis__retour[data-etat='erreur'] {
+  background: var(--rouge-pale);
+  color: var(--rouge-fonce);
+}
+
+/* Section Contact complète */
+.contact-complet {
+  padding-block: clamp(2rem, 4vw, 2.75rem);
+}
+
+.contact-complet__grille {
+  display: grid;
+  gap: 1.5rem;
+  align-items: stretch;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .contact-complet__grille {
+    grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr);
+  }
+}
+
+.contact-complet__formulaire {
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-l);
+  background: #fff;
+  box-shadow: var(--ombre);
+}
+
+.contact-complet__aside {
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--rayon-l);
+  background: var(--fond-bleu);
+}
+
+.contact-complet__titre {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.contact-complet__aside ul {
+  display: grid;
+}
+
+.contact-complet__aside li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-block: 1.25rem;
+}
+
+.contact-complet__aside li + li {
+  border-top: 1px solid #c4d6ea;
+}
+
+.contact-complet__aside li > .icone {
+  color: var(--rouge);
+}
+
+.contact-complet__aside li:last-child > .icone {
+  color: var(--marine);
+}
+
+.contact-complet__tel {
+  display: block;
+  color: var(--rouge);
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.contact-complet__horaires,
+.contact-complet__adaptation span {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--texte);
+  font-size: var(--t-s);
+}
+
+.contact-complet__email {
+  color: var(--marine);
+  font-weight: 700;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.contact-complet__adaptation strong {
+  color: var(--marine);
+  font-size: var(--t-s);
+}
+
+/* Coordonnées + plan */
+.section--coordonnees {
+  padding-block: clamp(2rem, 4vw, 2.75rem);
+}
+
+.coordonnees-bloc {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .coordonnees-bloc {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.coordonnees-bloc__carte,
+.coordonnees-bloc__plan {
+  margin: 0;
+  padding: 1.5rem;
+  border-radius: var(--rayon-l);
+  background: #fff;
+  box-shadow: var(--ombre);
+}
+
+.coordonnees-bloc__carte > ul:not(.coordonnees-bloc__reseaux) {
+  display: grid;
+  gap: 1rem;
+}
+
+.coordonnees-bloc__carte li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  font-size: var(--t-s);
+}
+
+.coordonnees-bloc__carte li > .icone {
+  color: var(--rouge);
+}
+
+.coordonnees-bloc__carte li > span {
+  display: grid;
+}
+
+.coordonnees-bloc__carte strong {
+  color: var(--marine);
+}
+
+.coordonnees-bloc__carte a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.coordonnees-bloc__reseaux {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.coordonnees-bloc__reseaux a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: var(--marine);
+  color: #fff;
+}
+
+.coordonnees-bloc__reseaux a:hover {
+  background: var(--rouge);
+}
+
+.coordonnees-bloc__plan {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+}
+
+.coordonnees-bloc__plan iframe {
+  flex: 1;
+  width: 100%;
+  min-height: 260px;
+  border: 0;
+  border-radius: var(--rayon);
+}
+
+.coordonnees-bloc__plan figcaption {
+  padding-top: 0.5rem;
+  color: var(--discret);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.coordonnees-bloc__plan figcaption a {
+  color: var(--marine);
+  font-weight: 600;
+}
+
+/* Étapes en grandes cartes */
+.etapes--carte {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.etapes--carte .etape {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 1.25rem;
+  align-items: start;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+}
+
+.etapes--carte .etape__icone {
+  grid-row: span 2;
+  margin: 0.2rem 0 0;
+}
+
+.etapes--carte .etape__numero {
+  color: var(--rouge);
+  font-size: var(--t-s);
+}
+
+.etapes--carte .etape__titre {
+  font-size: 1.05rem;
+}
+
+.section--etapes.section--serree + .reassurance--bleue {
+  margin-top: 0;
+}
+
+/* FAQ : signe moins quand la question est ouverte */
+.faq__item[open] .faq__plus--plus {
+  transform: rotate(45deg);
+}

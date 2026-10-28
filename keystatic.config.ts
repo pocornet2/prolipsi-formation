@@ -95,6 +95,8 @@ const icones = [
   { label: 'Liste / rapport', value: 'liste' },
   { label: 'Recherche (loupe)', value: 'recherche' },
   { label: 'Signalétique (panneau)', value: 'signaletique' },
+  { label: 'Accessibilité', value: 'accessibilite' },
+  { label: 'Région (carte)', value: 'region' },
 ] as const;
 
 const champIcone = (label = 'Pictogramme') =>
@@ -181,6 +183,14 @@ const blocs = (dossier: string) =>
           }),
           image: imageField(dossier, 'Image'),
           alt: fields.text({ label: 'Texte alternatif de l’image' }),
+          illustration: fields.select({
+            label: 'Illustration à droite (si pas d’image)',
+            options: [
+              { label: 'Aucune', value: '' },
+              { label: 'Contact (bulle, enveloppe, casque)', value: 'contact' },
+            ],
+            defaultValue: '',
+          }),
           boutons: fields.array(lienBouton, {
             label: 'Boutons',
             itemLabel: (p) => p.fields.libelle.value || 'Bouton',
@@ -359,6 +369,7 @@ const blocs = (dossier: string) =>
             ],
             defaultValue: 'plus',
           }),
+          premiereOuverte: fields.checkbox({ label: 'Afficher la réponse de la première question ouverte', defaultValue: false }),
           questions: fields.array(
             fields.object({
               question: fields.text({ label: 'Question' }),
@@ -507,11 +518,19 @@ const blocs = (dossier: string) =>
             options: [
               { label: 'Simple : coordonnées + message', value: 'simple' },
               { label: 'Demande de devis formation (panneau bleu + formulaire détaillé)', value: 'devis' },
+              { label: 'Page Contact : formulaire complet + encadré « Vous préférez en parler ? »', value: 'complet' },
             ],
             defaultValue: 'simple',
           }),
           zone: fields.text({ label: 'Ligne de localisation (variante devis)', description: 'Ex. La Baule · Saint-Nazaire · Loire-Atlantique' }),
           champProduits: fields.text({ label: 'Champ supplémentaire (variante devis, facultatif)', description: 'Ex. Produits recherchés / quantités' }),
+          champNombre: fields.checkbox({ label: 'Afficher le champ « Nombre de personnes à former »', defaultValue: false }),
+          titreAside: fields.text({ label: 'Titre de l’encadré de droite (page Contact)', defaultValue: 'Vous préférez en parler ?' }),
+          texteAdaptation: fields.text({
+            label: 'Texte « adaptation / handicap » de l’encadré (page Contact)',
+            description: 'Première ligne en gras. Ex. Besoin d’une adaptation ? (retour à la ligne) Échangeons sur votre situation.',
+            multiline: true,
+          }),
           besoins: fields.text({
             label: 'Choix de la liste « Votre besoin » (variante devis)',
             description: 'Un choix par ligne. Laisser vide pour proposer le catalogue de formations.',
@@ -622,6 +641,7 @@ const blocs = (dossier: string) =>
             options: [
               { label: 'Cartes centrées, fond blanc', value: 'centre' },
               { label: 'Cartes en ligne (numéro et pictogramme à gauche), fond bleu', value: 'ligne' },
+              { label: 'Grandes cartes (pictogramme à gauche, numéro au-dessus du titre)', value: 'carte' },
             ],
             defaultValue: 'centre',
           }),
@@ -633,6 +653,15 @@ const blocs = (dossier: string) =>
             }),
             { label: 'Étapes', itemLabel: (p) => p.fields.titre.value || 'Étape', validation: { length: { max: 6 } } },
           ),
+        }),
+      },
+      coordonnees: {
+        label: 'Coordonnées + plan d’accès (automatique)',
+        itemLabel: (p) => `Coordonnées · ${p.fields.titre.value || 'sans titre'}`,
+        schema: fields.object({
+          titre: fields.text({ label: 'Titre (H2)', defaultValue: 'Nos coordonnées' }),
+          zoneTexte: fields.text({ label: 'Phrase sur la zone d’intervention', description: 'Ex. Nous intervenons à La Baule, Saint-Nazaire et en Loire-Atlantique.' }),
+          carte: fields.checkbox({ label: 'Afficher le plan OpenStreetMap', description: 'Utilise la latitude et la longitude des réglages.', defaultValue: true }),
         }),
       },
       bandeauLien: {
@@ -713,6 +742,8 @@ export default config({
           multiline: true,
         }),
         horaires: fields.text({ label: 'Horaires (affichés tels quels)', multiline: true }),
+        latitude: fields.text({ label: 'Latitude (plan d’accès)', description: 'Ex. 47.294115 — trouvée sur adresse.data.gouv.fr ou OpenStreetMap' }),
+        longitude: fields.text({ label: 'Longitude (plan d’accès)', description: 'Ex. -2.288372' }),
         typeEntreprise: fields.select({
           label: 'Type d’entreprise (données structurées Google)',
           options: [

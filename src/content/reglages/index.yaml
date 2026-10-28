@@ -4,18 +4,20 @@ logoLigne1: Conseil en Prévention
 logoLigne2: Formation Santé & Sécurité au Travail
 signature: Des environnements de travail plus sûrs
 couleur: '#de222b'
-telephone: 02 40 00 00 00
+telephone: 02 49 52 29 26
 email: contact@prolipsi-formation.fr
 adresse:
-  rue: ''
-  codePostal: '44500'
-  ville: La Baule – Saint-Nazaire
+  rue: 1 rue Thomas Edison
+  codePostal: '44600'
+  ville: Saint-Nazaire
 zone: |-
   La Baule-Escoublac
   Saint-Nazaire
   Presqu'île guérandaise
   Loire-Atlantique
-horaires: ''
+horaires: Lundi au vendredi, 9h–18h
+latitude: '47.294115'
+longitude: '-2.288372'
 typeEntreprise: ProfessionalService
 reseaux:
   - nom: LinkedIn

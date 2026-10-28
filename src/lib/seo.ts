@@ -18,6 +18,10 @@ export function schemaEntreprise(r: Reglages, site: URL, logo?: string): JsonLd 
     ...(r.baseline && { description: r.baseline }),
     ...(logo && { logo, image: logo }),
     ...(r.telephone && { telephone: r.telephone.replace(/\s/g, '') }),
+    ...(Number.isFinite(parseFloat(r.latitude ?? '')) &&
+      Number.isFinite(parseFloat(r.longitude ?? '')) && {
+        geo: { '@type': 'GeoCoordinates', latitude: parseFloat(r.latitude!), longitude: parseFloat(r.longitude!) },
+      }),
     ...(r.email && { email: r.email }),
     ...(avecAdresse && {
       address: {

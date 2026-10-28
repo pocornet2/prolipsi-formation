@@ -27,6 +27,8 @@ const REGLAGES_PAR_DEFAUT = {
   adresse: { rue: '', codePostal: '', ville: '' },
   zone: '',
   horaires: '',
+  latitude: '',
+  longitude: '',
   typeEntreprise: 'LocalBusiness',
   reseaux: [],
   imagePartage: null,

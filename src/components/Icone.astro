@@ -48,6 +48,8 @@ import {
   MessagesSquare,
   ClipboardList,
   SquareArrowRight,
+  Accessibility,
+  Map as Carte,
 } from '@lucide/astro';
 
 const ICONES = {
@@ -95,6 +97,8 @@ const ICONES = {
   echange: MessagesSquare,
   liste: ClipboardList,
   signaletique: SquareArrowRight,
+  accessibilite: Accessibility,
+  region: Carte,
 } as const;
 
 export type NomIcone = keyof typeof ICONES;

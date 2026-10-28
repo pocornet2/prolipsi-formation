@@ -4,7 +4,7 @@ import { typo } from '../../lib/content';
 import Icone from '../Icone.astro';
 
 type Props = Extract<Bloc, { discriminant: 'faq' }>['value'];
-const { titre, intro, disposition = 'colonnes', marqueur = 'plus', questions = [] } = Astro.props;
+const { titre, intro, disposition = 'colonnes', marqueur = 'plus', premiereOuverte = false, questions = [] } = Astro.props;
 // Les données structurées FAQPage sont ajoutées par la page (lib/seo.ts).
 ---
 
@@ -16,8 +16,8 @@ const { titre, intro, disposition = 'colonnes', marqueur = 'plus', questions = [
     </div>
     <div class="faq">
       {
-        questions.map((q) => (
-          <details class="faq__item">
+        questions.map((q, i) => (
+          <details class="faq__item" open={premiereOuverte && i === 0}>
             <summary>
               <h3>{typo(q.question)}</h3>
               <Icone nom={marqueur} taille={20} class:list={['faq__plus', `faq__plus--${marqueur}`]} />

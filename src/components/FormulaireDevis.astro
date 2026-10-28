@@ -1,0 +1,247 @@
+---
+/**
+ * Formulaire de demande (devis formation, conseil, matériel, contact).
+ * Envoi : Web3Forms ou Formspree (réglages du back-office), Netlify Forms
+ * sur Netlify, sinon ouverture de la messagerie de l'internaute.
+ * Avec Web3Forms / Formspree, l'envoi se fait sans quitter la page et un
+ * message de confirmation s'affiche sous le formulaire.
+ */
+import { getReglages, getFormations, CATEGORIES_FORMATION } from '../lib/content';
+
+interface Props {
+  /** Préfixe des identifiants (plusieurs formulaires possibles sur le site). */
+  id: string;
+  /** Objet de l'e-mail reçu. */
+  sujet: string;
+  /** Choix libres de la liste « Votre besoin » ; vide = catalogue de formations. */
+  besoinsLibres?: string[];
+  /** Ajoute le catalogue de formations sous forme de groupe, en plus des choix libres. */
+  avecFormations?: boolean;
+  /** Formation présélectionnée. */
+  besoin?: string;
+  champNombre?: string | false;
+  champProduits?: string | false;
+  entrepriseLabel?: string;
+  entrepriseRequis?: boolean;
+  besoinRequis?: boolean;
+  messageRequis?: boolean;
+  /** Affiche le lien vers la politique de confidentialité et la mention des champs obligatoires. */
+  mentions?: boolean;
+  class?: string;
+}
+
+const {
+  id,
+  sujet,
+  besoinsLibres = [],
+  avecFormations = besoinsLibres.length === 0,
+  besoin,
+  champNombre = false,
+  champProduits = false,
+  entrepriseLabel = 'Entreprise',
+  entrepriseRequis = true,
+  besoinRequis = true,
+  messageRequis = false,
+  mentions = false,
+  class: classe,
+} = Astro.props;
+
+const r = await getReglages();
+const site = Astro.site ?? new URL(Astro.url.origin);
+const formations = avecFormations ? await getFormations() : [];
+const parCategorie = Object.entries(CATEGORIES_FORMATION)
+  .map(([cle, nom]) => ({ nom, items: formations.filter((f) => f.entry.categorie === cle) }))
+  .filter((c) => c.items.length);
+
+const action = r.formulaire?.action?.trim();
+const cle = r.formulaire?.cle?.trim();
+const netlify = !action && import.meta.env.DEPLOY_TARGET !== 'cloudflare';
+const web3forms = !!action && action.includes('web3forms.com');
+const formspree = !!action && action.includes('formspree.io');
+const actif = netlify || (!!action && (!web3forms || !!cle));
+const ajax = actif && (web3forms || formspree);
+const champPiege = web3forms ? 'botcheck' : formspree ? '_gotcha' : 'site-web';
+const sujetComplet = `${sujet} · ${r.nom}`;
+const merci = r.formulaire?.merci || 'Merci, votre demande est bien partie. Nous vous répondons rapidement.';
+const etoile = (requis: boolean) => (requis ? '<span class="requis" aria-hidden="true">*</span>' : '');
+---
+
+<form
+  class:list={['formulaire-devis', classe]}
+  name={id}
+  method="POST"
+  action={actif ? action || '/merci/' : undefined}
+  data-netlify={netlify ? 'true' : undefined}
+  netlify-honeypot={netlify ? champPiege : undefined}
+  data-envoi={ajax ? 'ajax' : actif ? undefined : 'mailto'}
+  data-mailto={actif ? undefined : r.email}
+  data-email={r.email}
+  data-sujet={sujetComplet}
+  data-merci={merci}
+>
+  {netlify && <input type="hidden" name="form-name" value={id} />}
+  {web3forms && <input type="hidden" name="access_key" value={cle} />}
+  {web3forms && <input type="hidden" name="subject" value={sujetComplet} />}
+  {web3forms && <input type="hidden" name="from_name" value={r.nom} />}
+  {web3forms && <input type="hidden" name="redirect" value={new URL('/merci/', site).href} />}
+  {formspree && <input type="hidden" name="_subject" value={sujetComplet} />}
+  <p class="visually-hidden" aria-hidden="true">
+    <label>Ne pas remplir <input name={champPiege} tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="champ-ligne">
+    <div class="champ">
+      <label for={`${id}-nom`}>Nom <Fragment set:html={etoile(true)} /></label>
+      <input id={`${id}-nom`} name="nom" autocomplete="name" placeholder="Votre nom" required />
+    </div>
+    <div class="champ">
+      <label for={`${id}-entreprise`}>{entrepriseLabel} <Fragment set:html={etoile(entrepriseRequis)} /></label>
+      <input id={`${id}-entreprise`} name="entreprise" autocomplete="organization" placeholder="Nom de votre structure" required={entrepriseRequis} />
+    </div>
+  </div>
+  <div class="champ-ligne">
+    <div class="champ">
+      <label for={`${id}-email`}>Email <Fragment set:html={etoile(true)} /></label>
+      <input id={`${id}-email`} name="email" type="email" autocomplete="email" placeholder="votre@email.fr" required />
+    </div>
+    <div class="champ">
+      <label for={`${id}-tel`}>Téléphone</label>
+      <input id={`${id}-tel`} name="telephone" type="tel" autocomplete="tel" placeholder="Votre téléphone" />
+    </div>
+  </div>
+
+  <div class="champ">
+    <label for={`${id}-besoin`}>Votre besoin <Fragment set:html={etoile(besoinRequis)} /></label>
+    <select id={`${id}-besoin`} name="besoin" required={besoinRequis}>
+      <option value="">{besoinsLibres.length ? 'Sélectionnez votre besoin' : 'Sélectionnez une formation'}</option>
+      {besoinsLibres.map((c) => <option>{c}</option>)}
+      {
+        parCategorie.map((c) => (
+          <optgroup label={besoinsLibres.length ? `Formation · ${c.nom}` : c.nom}>
+            {c.items.map((f) => (
+              <option selected={f.entry.titre === besoin}>{f.entry.titre}</option>
+            ))}
+          </optgroup>
+        ))
+      }
+      {!besoinsLibres.length && <option>Autre besoin / je ne sais pas encore</option>}
+    </select>
+  </div>
+
+  {
+    (champNombre || champProduits) && (
+      <div class="champ-ligne">
+        {champNombre && (
+          <div class="champ">
+            <label for={`${id}-nombre`}>
+              {champNombre} {mentions && <span class="facultatif">(facultatif)</span>}
+            </label>
+            <input id={`${id}-nombre`} name="participants" type="number" min="1" inputmode="numeric" placeholder="Nombre de participants" />
+          </div>
+        )}
+        {champProduits && (
+          <div class="champ">
+            <label for={`${id}-produits`}>
+              {champProduits} {mentions && <span class="facultatif">(facultatif)</span>}
+            </label>
+            <input id={`${id}-produits`} name="produits" placeholder="Ex. 4 extincteurs, 1 défibrillateur" />
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  <div class="champ">
+    <label for={`${id}-message`}>Message <Fragment set:html={etoile(messageRequis)} /></label>
+    <textarea id={`${id}-message`} name="message" rows="4" placeholder="Décrivez votre besoin…" required={messageRequis}></textarea>
+  </div>
+
+  <div class="formulaire-devis__pied">
+    <div>
+      <label class="case">
+        <input type="checkbox" name="consentement" value="oui" required />
+        <span>
+          J’accepte que mes données soient utilisées pour répondre à ma demande.
+          {mentions && (
+            <>
+              <br />
+              <a href="/politique-de-confidentialite/">Politique de confidentialité</a>
+            </>
+          )}
+        </span>
+      </label>
+      {mentions && <p class="formulaire-devis__obligatoires"><span class="requis">*</span> Champs obligatoires</p>}
+    </div>
+    <button class="btn btn--principal" type="submit">Envoyer ma demande</button>
+  </div>
+  <p class="formulaire-devis__retour" role="status" aria-live="polite" hidden></p>
+</form>
+
+<script>
+  const LIBELLES: Record<string, string> = {
+    nom: 'Nom',
+    entreprise: 'Entreprise',
+    email: 'Email',
+    telephone: 'Téléphone',
+    besoin: 'Besoin',
+    participants: 'Nombre de personnes',
+    produits: 'Produits / quantités',
+    message: 'Message',
+  };
+
+  document.querySelectorAll<HTMLFormElement>('form.formulaire-devis').forEach((form) => {
+    const retour = form.querySelector<HTMLElement>('.formulaire-devis__retour');
+    const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const afficher = (texte: string, etat: 'ok' | 'erreur') => {
+      if (!retour) return;
+      retour.textContent = texte;
+      retour.dataset.etat = etat;
+      retour.hidden = false;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      const mode = form.dataset.envoi;
+      if (!mode) return; // Netlify : envoi classique.
+      e.preventDefault();
+      const donnees = new FormData(form);
+
+      // Aucun service configuré : la demande s'ouvre dans la messagerie.
+      if (mode === 'mailto') {
+        const corps = Object.entries(LIBELLES)
+          .filter(([cle]) => donnees.has(cle))
+          .map(([cle, libelle]) => `${libelle} : ${donnees.get(cle) || '-'}`)
+          .join('\n');
+        window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(form.dataset.sujet ?? '')}&body=${encodeURIComponent(corps)}`;
+        return;
+      }
+
+      // Web3Forms / Formspree : envoi sans quitter la page.
+      if (bouton) {
+        bouton.disabled = true;
+        bouton.textContent = 'Envoi en cours…';
+      }
+      donnees.delete('redirect');
+      try {
+        const reponse = await fetch(form.action, {
+          method: 'POST',
+          body: donnees,
+          headers: { Accept: 'application/json' },
+        });
+        const json = await reponse.json().catch(() => ({}));
+        if (!reponse.ok || json.success === false) throw new Error(json.message || 'Erreur');
+        form.reset();
+        afficher(form.dataset.merci ?? 'Merci, votre demande est bien partie.', 'ok');
+      } catch {
+        afficher(
+          `Votre demande n’a pas pu partir. Réessayez dans un instant ou écrivez-nous directement${form.dataset.email ? ` à ${form.dataset.email}` : ''}.`,
+          'erreur',
+        );
+      } finally {
+        if (bouton) {
+          bouton.disabled = false;
+          bouton.textContent = 'Envoyer ma demande';
+        }
+      }
+    });
+  });
+</script>

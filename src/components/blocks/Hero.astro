@@ -11,12 +11,12 @@ type Props = Extract<Bloc, { discriminant: 'hero' }>['value'] & {
   /** Fil d'Ariane affiché dans le bandeau (pages internes). */
   fil?: { nom: string; url: string }[];
 };
-const { surtitre, titre, titreAccent, texte, sousTexte, lieu, fil = [], annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
+const { surtitre, titre, titreAccent, texte, sousTexte, lieu, illustration, fil = [], annotation, disposition = 'droite', image, alt = '', boutons = [], principal = false } = Astro.props;
 const img = resolveImage(image);
 const Titre = principal ? 'h1' : 'h2';
 ---
 
-<section class:list={['hero', `hero--${disposition}`, { 'hero--image': img }]}>
+<section class:list={['hero', `hero--${disposition}`, { 'hero--image': img, 'hero--illustration': !img && illustration }]}>
   {
     img && (
       <Picture
@@ -69,5 +69,17 @@ const Titre = principal ? 'h1' : 'h2';
       }
     </div>
     {annotation && <p class="hero__annotation" aria-hidden="true">{annotation}</p>}
+    {
+      !img && illustration === 'contact' && (
+        <div class="hero__illustration" aria-hidden="true">
+          <svg class="hero__illustration-trait" viewBox="0 0 260 140" fill="none">
+            <path d="M250 128H40C14 128 4 108 8 88c5-24 30-30 52-26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+          </svg>
+          <span class="hero__illustration-bulle"><Icone nom="message" taille={58} epaisseur={1.4} /></span>
+          <span class="hero__illustration-mail"><Icone nom="email" taille={64} epaisseur={1.4} /></span>
+          <span class="hero__illustration-casque"><Icone nom="prevention" taille={70} epaisseur={1.4} /></span>
+        </div>
+      )
+    }
   </div>
 </section>

@@ -1,9 +1,95 @@
 titre: Contact
 seo:
-  description: 'Demandez un devis formation, conseil ou matériel de sécurité à Prolipsi Formation, La Baule et Saint-Nazaire.'
+  titre: Contact · Prolipsi Formation à Saint-Nazaire et La Baule
+  description: 'Contactez Prolipsi Formation à Saint-Nazaire : formation, conseil en prévention et matériel de sécurité. Formulaire, téléphone 02 49 52 29 26, plan d’accès.'
   noindex: false
 blocs:
-  - discriminant: contact
-    value:
-      titre: Parlons de votre besoin
-      texte: 'Formation, mise en conformité ou matériel : décrivez votre besoin, nous vous répondons sous 48 heures ouvrées.'
+- discriminant: hero
+  value:
+    surtitre: ''
+    titre: 'Contactez Prolipsi Formation à Saint-Nazaire : formation, conseil et matériel de sécurité'
+    titreAccent: ''
+    texte: Une question, un besoin de formation, un projet de prévention ou de matériel ? Écrivez-nous ou appelez-nous.
+    sousTexte: La Baule · Saint-Nazaire · Loire-Atlantique
+    lieu: ''
+    annotation: ''
+    disposition: droite
+    image: null
+    alt: ''
+    illustration: contact
+    boutons: []
+- discriminant: contact
+  value:
+    titre: Envoyez-nous votre demande
+    texte: Décrivez votre besoin en quelques lignes. Nous revenons vers vous avec une proposition adaptée.
+    variante: complet
+    zone: ''
+    champProduits: Produits recherchés / quantités
+    champNombre: true
+    titreAside: Vous préférez en parler ?
+    texteAdaptation: 'Besoin d’une adaptation ?
+
+      Échangeons sur votre situation.'
+    besoins: 'Formation (secourisme, incendie, habilitation électrique…)
+
+      Conseil & prévention (commission de sécurité, notice, DUERP)
+
+      Matériel de sécurité (extincteurs, DAE, trousses, signalétique)
+
+      Inscription à une session inter-entreprises
+
+      Autre demande'
+- discriminant: coordonnees
+  value:
+    titre: Nos coordonnées
+    zoneTexte: Nous intervenons à La Baule, Saint-Nazaire et en Loire-Atlantique.
+    carte: true
+- discriminant: etapes
+  value:
+    titre: Ce qui se passe après votre demande
+    intro: ''
+    style: carte
+    etapes:
+    - icone: recherche
+      titre: Nous étudions votre besoin
+      texte: Nous vous recontactons pour le préciser si nécessaire.
+    - icone: devis
+      titre: Vous recevez une proposition
+      texte: Un devis adapté à votre activité, votre effectif ou vos locaux.
+    - icone: calendrier
+      titre: Nous planifions ensemble
+      texte: La date et le lieu de la formation ou de l’intervention.
+- discriminant: reassurance
+  value:
+    style: bleue
+    items:
+    - logo: null
+      icone: formation
+      titre: Qualiopi
+      texte: Pour les actions de formation
+    - logo: null
+      icone: certification
+      titre: SST
+      texte: Habilitation INRS / CARSAT
+    - logo: null
+      icone: region
+      titre: Pays de la Loire
+      texte: Organisme de formation
+    - logo: null
+      icone: accessibilite
+      titre: Accessibilité
+      texte: Étudions les adaptations
+- discriminant: faq
+  value:
+    titre: Avant de nous contacter
+    intro: ''
+    disposition: colonnes
+    marqueur: plus
+    premiereOuverte: true
+    questions:
+    - question: Intervenez-vous dans nos locaux ?
+      reponse: Oui. Nous nous déplaçons à La Baule, Saint-Nazaire et en Loire-Atlantique.
+    - question: Comment inscrire un salarié à une session inter-entreprises ?
+      reponse: Consultez le calendrier des prochaines sessions, puis envoyez-nous votre demande en précisant la formation, la date souhaitée et le nombre de participants. Nous confirmons la place et vous transmettons la convocation.
+    - question: Quelles adaptations en situation de handicap ?
+      reponse: Signalez-nous toute situation de handicap dès votre demande. Nous étudions avec vous les adaptations possibles du lieu, du rythme et des supports.

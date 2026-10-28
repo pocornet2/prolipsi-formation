@@ -1,22 +1,17 @@
 ---
 import type { Bloc } from '../../lib/content';
 import { typo } from '../../lib/content';
-import { getReglages, getFormations, CATEGORIES_FORMATION } from '../../lib/content';
+import { getReglages } from '../../lib/content';
 import Icone from '../Icone.astro';
+import FormulaireDevis from '../FormulaireDevis.astro';
 
 type Props = Extract<Bloc, { discriminant: 'contact' }>['value'] & {
   /** Formation présélectionnée dans « Votre besoin ». */
   besoin?: string;
 };
-const { titre, texte, variante = 'simple', zone, besoins, champProduits, besoin } = Astro.props;
+const { titre, texte, variante = 'simple', zone, besoins, champProduits, champNombre, titreAside, texteAdaptation, besoin } = Astro.props;
 const choixLibres = (besoins ?? '').split('\n').map((l) => l.trim()).filter(Boolean);
 const devis = variante === 'devis';
-// Liste « Votre besoin » : le catalogue de formations, par catégorie.
-const formations = devis && !choixLibres.length ? await getFormations() : [];
-const parCategorie = Object.entries(CATEGORIES_FORMATION).map(([cle, nom]) => ({
-  nom,
-  items: formations.filter((f) => f.entry.categorie === cle),
-}));
 const r = await getReglages();
 const site = Astro.site ?? new URL(Astro.url.origin);
 
@@ -42,7 +37,58 @@ const sujet = `Nouveau message depuis le site ${r.nom}`;
 const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
 ---
 
-{devis ? (
+{variante === 'complet' ? (
+<section class="section contact-complet" id="devis">
+  <div class="conteneur">
+    {titre && <h2 class="section__titre section__titre--souligne">{typo(titre)}</h2>}
+    {texte && <p class="section__intro section__intro--court">{typo(texte)}</p>}
+    <div class="contact-complet__grille">
+      <FormulaireDevis
+        id="contact"
+        sujet="Nouvelle demande depuis la page Contact"
+        besoinsLibres={choixLibres}
+        avecFormations={false}
+        champNombre={champNombre ? 'Nombre de personnes à former' : false}
+        champProduits={champProduits || false}
+        entrepriseLabel="Entreprise ou structure"
+        entrepriseRequis={false}
+        besoinRequis={false}
+        messageRequis
+        mentions
+        class="contact-complet__formulaire"
+      />
+      <aside class="contact-complet__aside">
+        <h2 class="contact-complet__titre section__titre--souligne">{typo(titreAside || 'Vous préférez en parler ?')}</h2>
+        <ul role="list">
+          {r.telephone && (
+            <li>
+              <Icone nom="telephone" taille={30} epaisseur={1.6} />
+              <span>
+                <a class="contact-complet__tel" href={telLien}>{r.telephone}</a>
+                {r.horaires && <span class="contact-complet__horaires">{r.horaires}</span>}
+              </span>
+            </li>
+          )}
+          {r.email && (
+            <li>
+              <Icone nom="email" taille={30} epaisseur={1.6} />
+              <a class="contact-complet__email" href={`mailto:${r.email}`}>{r.email}</a>
+            </li>
+          )}
+          {texteAdaptation && (
+            <li>
+              <Icone nom="accessibilite" taille={30} epaisseur={1.6} />
+              <span class="contact-complet__adaptation">
+                {texteAdaptation.split('\n').map((l, i) => (i === 0 ? <strong>{typo(l)}</strong> : <span>{typo(l)}</span>))}
+              </span>
+            </li>
+          )}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+) : devis ? (
 <section class="devis" id="devis">
   <div class="devis__panneau">
     <div class="devis__panneau-inner">
@@ -55,83 +101,15 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
       </ul>
     </div>
   </div>
-  <form
+  <FormulaireDevis
+    id="devis"
+    sujet={choixLibres.length ? 'Demande de devis' : 'Demande de devis formation'}
+    besoinsLibres={choixLibres}
+    besoin={besoin}
+    champNombre={champNombre || !choixLibres.length ? 'Nombre de personnes' : false}
+    champProduits={champProduits || false}
     class="devis__formulaire"
-    name="devis"
-    method="POST"
-    action={formulaireActif ? action || '/merci/' : undefined}
-    data-netlify={netlify ? 'true' : undefined}
-    netlify-honeypot={netlify ? champPiege : undefined}
-    data-mailto={formulaireActif ? undefined : r.email}
-  >
-    {netlify && <input type="hidden" name="form-name" value="devis" />}
-    {web3forms && <input type="hidden" name="access_key" value={cle} />}
-    {web3forms && <input type="hidden" name="subject" value={`Demande de devis formation · ${r.nom}`} />}
-    {web3forms && <input type="hidden" name="from_name" value={r.nom} />}
-    {web3forms && <input type="hidden" name="redirect" value={new URL('/merci/', site).href} />}
-    {formspree && <input type="hidden" name="_subject" value={`Demande de devis formation · ${r.nom}`} />}
-    <p class="visually-hidden" aria-hidden="true">
-      <label>Ne pas remplir <input name={champPiege} tabindex="-1" autocomplete="off" /></label>
-    </p>
-    <div class="champ-ligne">
-      <div class="champ">
-        <label for="devis-nom">Nom <span class="requis" aria-hidden="true">*</span></label>
-        <input id="devis-nom" name="nom" autocomplete="name" placeholder="Votre nom" required />
-      </div>
-      <div class="champ">
-        <label for="devis-entreprise">Entreprise <span class="requis" aria-hidden="true">*</span></label>
-        <input id="devis-entreprise" name="entreprise" autocomplete="organization" placeholder="Nom de votre entreprise" required />
-      </div>
-    </div>
-    <div class="champ-ligne">
-      <div class="champ">
-        <label for="devis-email">Email <span class="requis" aria-hidden="true">*</span></label>
-        <input id="devis-email" name="email" type="email" autocomplete="email" placeholder="votre@email.fr" required />
-      </div>
-      <div class="champ">
-        <label for="devis-tel">Téléphone</label>
-        <input id="devis-tel" name="telephone" type="tel" autocomplete="tel" placeholder="Votre téléphone" />
-      </div>
-    </div>
-    <div class="champ-ligne">
-      {!choixLibres.length && (
-        <div class="champ">
-          <label for="devis-nombre">Nombre de personnes</label>
-          <input id="devis-nombre" name="participants" type="number" min="1" inputmode="numeric" placeholder="Nombre de participants" />
-        </div>
-      )}
-      <div class="champ">
-        <label for="devis-besoin">Votre besoin <span class="requis" aria-hidden="true">*</span></label>
-        <select id="devis-besoin" name="besoin" required>
-          <option value="">{choixLibres.length ? 'Sélectionnez votre besoin' : 'Sélectionnez une formation'}</option>
-          {choixLibres.map((c) => <option>{c}</option>)}
-          {parCategorie.filter((c) => c.items.length).map((c) => (
-            <optgroup label={c.nom}>
-              {c.items.map((f) => <option selected={f.entry.titre === besoin}>{f.entry.titre}</option>)}
-            </optgroup>
-          ))}
-          {!choixLibres.length && <option>Autre besoin / je ne sais pas encore</option>}
-        </select>
-      </div>
-    </div>
-    {champProduits && (
-      <div class="champ">
-        <label for="devis-produits">{champProduits}</label>
-        <input id="devis-produits" name="produits" placeholder="Ex. 4 extincteurs eau 6 L, 1 défibrillateur" />
-      </div>
-    )}
-    <div class="champ">
-      <label for="devis-message">Message</label>
-      <textarea id="devis-message" name="message" rows="3" placeholder="Décrivez votre besoin…"></textarea>
-    </div>
-    <div class="devis__pied">
-      <label class="case">
-        <input type="checkbox" name="consentement" value="oui" required />
-        <span>J’accepte l’utilisation de mes données pour répondre à ma demande.</span>
-      </label>
-      <button class="btn btn--principal" type="submit">Envoyer ma demande</button>
-    </div>
-  </form>
+  />
 </section>
 ) : (
 <section class="section" id="contact">
@@ -205,29 +183,3 @@ const telLien = r.telephone ? `tel:${r.telephone.replace(/[^\d+]/g, '')}` : '';
   </div>
 </section>
 )}
-
-<script>
-  // Sans service d'envoi configuré, la demande s'ouvre dans la messagerie
-  // de l'internaute, déjà remplie, plutôt que de partir dans le vide.
-  document.querySelectorAll<HTMLFormElement>('form[data-mailto]').forEach((form) => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const donnees = new FormData(form);
-      const libelles: Record<string, string> = {
-        nom: 'Nom',
-        entreprise: 'Entreprise',
-        email: 'Email',
-        telephone: 'Téléphone',
-        participants: 'Nombre de personnes',
-        produits: 'Produits / quantités',
-        besoin: 'Besoin',
-        message: 'Message',
-      };
-      const corps = Object.entries(libelles)
-        .map(([cle, libelle]) => `${libelle} : ${donnees.get(cle) || '-'}`)
-        .join('\n');
-      const sujet = `Demande de devis formation - ${donnees.get('entreprise') || ''}`;
-      window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-    });
-  });
-</script>
