@@ -3800,3 +3800,17 @@ address {
 .faq__item[open] .faq__plus--plus {
   transform: rotate(45deg);
 }
+
+/* Pages de texte (mentions, confidentialité) : en-tête aligné et rapproché */
+.entete-page:has(.conteneur--etroit) .entete-page__titre {
+  font-size: var(--t-xl);
+}
+
+.entete-page + .section {
+  padding-top: 0.5rem;
+}
+
+.conteneur--etroit .prose h2 {
+  margin-top: 1.8em;
+  font-size: 1.45rem;
+}

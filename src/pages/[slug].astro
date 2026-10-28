@@ -33,6 +33,6 @@ const filDansHero = page.blocs[0]?.discriminant === 'hero';
   filVisible={!filDansHero}
   schemas={[schemaFaq(page.blocs)]}
 >
-  {!aUnHero && <EntetePage titre={page.titre} />}
+  {!aUnHero && <EntetePage titre={page.titre} etroit={page.blocs[0]?.discriminant === 'texte' && page.blocs[0].value.largeur === 'etroite'} />}
   <Blocs blocs={page.blocs} fil={filDansHero ? [{ nom: 'Accueil', url: '/' }, ...fil] : []} />
 </Base>

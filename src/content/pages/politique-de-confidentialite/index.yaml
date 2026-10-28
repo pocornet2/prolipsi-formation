@@ -1,11 +1,108 @@
 titre: Politique de confidentialité
 seo:
-  description: 'Politique de confidentialité du site Prolipsi Formation.'
+  titre: ''
+  description: Données collectées par le site PROLIPSI Formation, finalités, durées de conservation, cookies et exercice de vos droits (RGPD).
   noindex: true
 blocs:
-  - discriminant: texte
-    value:
-      titre: ''
-      contenu: |-
-        À compléter.
-      largeur: etroite
+- discriminant: texte
+  value:
+    titre: ''
+    contenu: 'Dernière mise à jour : 28 octobre 2026.
+
+
+      PROLIPSI Formation attache une grande importance à la protection de vos données personnelles. Cette page explique quelles données sont collectées sur ce site, pourquoi, combien de temps elles sont conservées et comment exercer vos droits, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.
+
+
+      ## Responsable du traitement
+
+
+      PROLIPSI Formation, 1 rue Thomas Edison, 44600 Saint-Nazaire.
+
+      E-mail : [contact@prolipsi-formation.fr](mailto:contact@prolipsi-formation.fr) · Téléphone : 02 49 52 29 26.
+
+
+      ## Données collectées par les formulaires
+
+
+      Lorsque vous remplissez un formulaire de demande (page Contact, pages Formations, Conseil & prévention et Matériel), nous recevons :
+
+
+      - votre nom et votre adresse e-mail (obligatoires) ;
+
+      - le nom de votre entreprise ou structure, votre numéro de téléphone (facultatifs) ;
+
+      - votre besoin, le nombre de personnes à former, les produits et quantités recherchés et votre message.
+
+
+      Nous vous demandons de ne pas indiquer dans le champ « Message » d’informations sensibles, notamment relatives à votre santé. Si vous souhaitez nous signaler une situation de handicap pour adapter une formation, une description du besoin d’adaptation suffit.
+
+
+      ## Pourquoi nous utilisons ces données
+
+
+      Ces données servent uniquement à :
+
+
+      - répondre à votre demande et vous recontacter si nécessaire ;
+
+      - établir et vous adresser une proposition ou un devis ;
+
+      - organiser la formation, l’accompagnement ou la fourniture de matériel si vous donnez suite.
+
+
+      La base légale est l’exécution de mesures précontractuelles prises à votre demande (article 6.1.b du RGPD). Vos données ne sont ni vendues, ni louées, ni utilisées pour de la prospection sans votre accord.
+
+
+      ## Destinataires
+
+
+      Vos données sont destinées aux seules personnes de PROLIPSI Formation chargées de traiter votre demande. Elles transitent par des prestataires techniques qui agissent pour notre compte :
+
+
+      - **Web3Forms**, service d’envoi des formulaires, qui transmet votre demande à notre adresse e-mail ;
+
+      - **Cloudflare**, hébergeur du site ;
+
+      - notre fournisseur de messagerie, qui reçoit et conserve les e-mails.
+
+
+      Certains de ces prestataires peuvent traiter des données en dehors de l’Union européenne. Ces transferts sont encadrés par les garanties prévues par le RGPD (décision d’adéquation, notamment le Data Privacy Framework UE–États-Unis, ou clauses contractuelles types de la Commission européenne).
+
+
+      ## Durée de conservation
+
+
+      - Demande restée sans suite : 3 ans à compter de notre dernier échange, puis suppression.
+
+      - Demande ayant donné lieu à une formation, une prestation ou une commande : pendant la relation commerciale, puis le temps imposé par nos obligations légales (par exemple 10 ans pour les pièces comptables).
+
+
+      ## Cookies et mesure d’audience
+
+
+      Ce site ne dépose aucun cookie publicitaire ni cookie de mesure d’audience, et n’utilise aucun outil de suivi. Aucun bandeau de consentement n’est donc nécessaire.
+
+
+      Le plan d’accès de la page Contact est fourni par **OpenStreetMap**. Pour afficher la carte, votre navigateur charge des images depuis les serveurs d’OpenStreetMap, qui reçoivent à cette occasion votre adresse IP, comme pour toute page web consultée. OpenStreetMap ne dépose pas de cookie publicitaire.
+
+
+      ## Vos droits
+
+
+      Vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation et d’opposition au traitement de vos données, ainsi que d’un droit à la portabilité. Vous pouvez exercer ces droits à tout moment en écrivant à [contact@prolipsi-formation.fr](mailto:contact@prolipsi-formation.fr) ou par courrier à l’adresse ci-dessus. Une réponse vous sera apportée dans un délai d’un mois.
+
+
+      Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL : [www.cnil.fr](https://www.cnil.fr).
+
+
+      ## Sécurité
+
+
+      Le site est servi exclusivement en connexion chiffrée (HTTPS) et les demandes sont transmises de manière sécurisée. L’accès aux données est limité aux personnes qui en ont besoin pour traiter votre demande.
+
+
+      ## Modification de cette politique
+
+
+      Cette politique peut évoluer, notamment en cas de nouvel outil sur le site. La date de dernière mise à jour figure en haut de cette page.'
+    largeur: etroite

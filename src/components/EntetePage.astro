@@ -4,12 +4,14 @@ interface Props {
   titre: string;
   surtitre?: string;
   intro?: string | null;
+  /** Aligne l'en-tête sur une colonne de lecture étroite. */
+  etroit?: boolean;
 }
-const { titre, surtitre, intro } = Astro.props;
+const { titre, surtitre, intro, etroit = false } = Astro.props;
 ---
 
 <header class="entete-page">
-  <div class="conteneur">
+  <div class:list={['conteneur', { 'conteneur--etroit': etroit }]}>
     {surtitre && <p class="surtitre">{surtitre}</p>}
     <h1 class="entete-page__titre">{typo(titre)}</h1>
     {intro && <p class="entete-page__intro">{typo(intro)}</p>}
