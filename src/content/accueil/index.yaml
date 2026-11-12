@@ -1,20 +1,27 @@
 seo:
   titre: Formation et conseil en sécurité au travail · La Baule, Saint-Nazaire
-  description: 'Formations SST, incendie et habilitations électriques, conseil en prévention et matériel de sécurité à La Baule et Saint-Nazaire. Organisme certifié Qualiopi.'
+  description: >-
+    Formations SST, incendie et habilitations électriques, conseil en prévention
+    et matériel de sécurité à La Baule et Saint-Nazaire. Organisme certifié
+    Qualiopi.
   noindex: false
 blocs:
   - discriminant: hero
     value:
-      surtitre: ''
-      titre: Formation, conseil et matériel de sécurité au travail
+      titre: Formation, conseil et matériel de Sécurité au Travail
       titreAccent: à La Baule et Saint-Nazaire
-      texte: Un seul interlocuteur pour former vos équipes, mettre votre établissement en conformité et l’équiper.
+      texte: >-
+        Un seul interlocuteur pour former vos équipes, mettre votre
+        établissement en conformité et l’équiper.
       annotation: |-
         Des compétences d’aujourd’hui
         pour des environnements de travail plus sûrs
       disposition: droite
       image: /src/assets/images/accueil/blocs/0/value/image.jpg
-      alt: Stagiaire manipulant un extincteur lors d’un exercice incendie encadré par des formateurs
+      alt: >-
+        Stagiaire manipulant un extincteur lors d’un exercice incendie encadré
+        par des formateurs
+      illustration: ''
       boutons:
         - libelle: Voir nos formations
           url: /formations/
@@ -28,6 +35,7 @@ blocs:
           fleche: true
   - discriminant: reassurance
     value:
+      style: blanche
       items:
         - icone: qualite
           titre: Certifié Qualiopi
@@ -43,37 +51,48 @@ blocs:
           texte: Une entreprise ancrée localement à La Baule et Saint-Nazaire
   - discriminant: cartes
     value:
-      surtitre: ''
       titre: Une réponse complète à tous vos besoins de sécurité
       intro: 'Formation, conseil et matériel : trois expertises complémentaires.'
       alignement: centre
+      style: cartes
       cartes:
         - image: /src/assets/images/accueil/blocs/2/value/cartes/0/image.jpg
           alt: Stagiaires pratiquant un massage cardiaque sur un mannequin
           icone: formation
           titre: Se former
-          texte: Formations incendie, SST, habilitations électriques et plus encore, pour des équipes compétentes et réactives.
+          texte: >-
+            Formations incendie, SST, habilitations électriques et plus encore,
+            pour des équipes compétentes et réactives.
           lien: /formations/
           lienLibelle: Découvrir nos formations
         - image: /src/assets/images/accueil/blocs/2/value/cartes/1/image.jpg
-          alt: Consultant en gilet de sécurité échangeant avec une responsable sur une tablette
+          alt: >-
+            Consultant en gilet de sécurité échangeant avec une responsable sur
+            une tablette
           icone: accompagnement
           titre: Être accompagné
-          texte: Audit, Commission de Sécurité, DUERP, notices incendie… Nous vous conseillons pour mettre votre établissement en conformité.
+          texte: >-
+            Audit, Commission de Sécurité, DUERP, notices incendie… Nous vous
+            conseillons pour mettre votre établissement en conformité.
           lien: /conseil/
           lienLibelle: Découvrir notre accompagnement
         - image: /src/assets/images/accueil/blocs/2/value/cartes/2/image.jpg
           alt: Extincteurs, panneaux de signalisation et détecteurs de fumée
           icone: materiel
           titre: S’équiper
-          texte: Extincteurs, signalétique, alarmes, équipements de sécurité… Du matériel professionnel, sélectionné pour vos besoins.
+          texte: >-
+            Extincteurs, signalétique, alarmes, équipements de sécurité… Du
+            matériel professionnel, sélectionné pour vos besoins.
           lien: /materiel/
           lienLibelle: Découvrir notre matériel
   - discriminant: miseEnAvant
     value:
       etiquette: Nouveau
       titre: Du matériel de sécurité, avec la formation en plus !
-      texte: Nous formons vos équipes à utiliser le matériel que nous vous fournissons. Un accompagnement complet, de l’achat à la prise en main sur le terrain.
+      texte: >-
+        Nous formons vos équipes à utiliser le matériel que nous vous
+        fournissons. Un accompagnement complet, de l’achat à la prise en main
+        sur le terrain.
       bouton:
         libelle: Demander un devis matériel
         url: /contact/
@@ -108,13 +127,19 @@ blocs:
       nombreAvis: Plus de 60 avis sur Google
       lienAvis: https://www.google.com/maps
       avis:
-        - citation: Formation SST très concrète et adaptée à notre activité. Formateur pédagogue et à l’écoute. Je recommande Prolipsi !
+        - citation: >-
+            Formation SST très concrète et adaptée à notre activité. Formateur
+            pédagogue et à l’écoute. Je recommande Prolipsi !
           auteur: Entreprise du secteur tertiaire
           icone: entreprise
-        - citation: Un excellent accompagnement pour notre mise en conformité ERP. Des conseils clairs et un vrai suivi.
+        - citation: >-
+            Un excellent accompagnement pour notre mise en conformité ERP. Des
+            conseils clairs et un vrai suivi.
           auteur: Établissement recevant du public (ERP)
           icone: etablissement
-        - citation: Exercice d’évacuation très bien préparé, nos équipes savent maintenant exactement quoi faire.
+        - citation: >-
+            Exercice d’évacuation très bien préparé, nos équipes savent
+            maintenant exactement quoi faire.
           auteur: Industrie, Saint-Nazaire
           icone: entreprise
       titreSessions: Prochaines sessions de formation
@@ -128,15 +153,10 @@ blocs:
       texte: Des gages de qualité pour vous accompagner en toute confiance.
       logos:
         - nom: Qualiopi
-          lien: ''
         - nom: SST
-          lien: ''
         - nom: INRS
-          lien: ''
         - nom: Carsat
-          lien: ''
         - nom: Région Pays de la Loire
-          lien: ''
   - discriminant: faq
     value:
       titre: Vos questions les plus fréquentes
@@ -144,15 +164,30 @@ blocs:
         Une question ?
         Nous avons la réponse !
       disposition: colonnes
+      marqueur: plus
+      premiereOuverte: false
       questions:
         - question: Le SST est-il obligatoire ?
-          reponse: Le Code du travail impose à l’employeur d’organiser les premiers secours. La présence de sauveteurs secouristes du travail est obligatoire dans les ateliers où sont effectués des travaux dangereux et sur les chantiers employant au moins 20 personnes pendant plus de 15 jours. Dans les autres cas, elle est fortement recommandée.
+          reponse: >-
+            Le Code du travail impose à l’employeur d’organiser les premiers
+            secours. La présence de sauveteurs secouristes du travail est
+            obligatoire dans les ateliers où sont effectués des travaux
+            dangereux et sur les chantiers employant au moins 20 personnes
+            pendant plus de 15 jours. Dans les autres cas, elle est fortement
+            recommandée.
         - question: Proposez-vous des formations en entreprise ?
-          reponse: Oui. Nous intervenons directement dans vos locaux à La Baule, Saint-Nazaire et dans toute la région, avec le matériel pédagogique nécessaire.
+          reponse: >-
+            Oui. Nous intervenons directement dans vos locaux à La Baule,
+            Saint-Nazaire et dans toute la région, avec le matériel pédagogique
+            nécessaire.
         - question: Vendez-vous des extincteurs aux entreprises ?
-          reponse: Oui. Nous fournissons, installons et entretenons les extincteurs, et nous formons vos équipes à les utiliser.
+          reponse: >-
+            Oui. Nous fournissons, installons et entretenons les extincteurs, et
+            nous formons vos équipes à les utiliser.
         - question: Accompagnez-vous les ERP (établissements recevant du public) ?
-          reponse: Oui. Nous préparons avec vous le passage de la commission de sécurité, les registres, les notices et les exercices d’évacuation.
+          reponse: >-
+            Oui. Nous préparons avec vous le passage de la commission de
+            sécurité, les registres, les notices et les exercices d’évacuation.
   - discriminant: derniereActu
     value:
       titre: Nos actualités
@@ -163,6 +198,7 @@ blocs:
       texte: Choisissez votre besoin, nous vous apportons une réponse adaptée.
       style: bandeau
       image: /src/assets/images/accueil/blocs/8/value/image.jpg
+      pictos: []
       boutons:
         - libelle: Je veux former mes équipes
           url: /formations/
