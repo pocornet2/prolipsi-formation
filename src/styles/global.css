@@ -301,6 +301,15 @@ address {
   height: 56px;
 }
 
+.logo--entete .logo__image {
+  height: var(--logo-taille, 56px);
+}
+
+.logo--entete .logo__signe {
+  width: calc(var(--logo-taille, 56px) * 46 / 56);
+  height: calc(var(--logo-taille, 56px) * 46 / 56);
+}
+
 .logo__texte {
   display: flex;
   flex-direction: column;
@@ -477,6 +486,15 @@ address {
   .logo__signe {
     width: 36px;
     height: 36px;
+  }
+
+  .logo--entete .logo__image {
+    height: min(var(--logo-taille, 56px), 48px);
+  }
+
+  .logo--entete .logo__signe {
+    width: min(calc(var(--logo-taille, 56px) * 46 / 56), 36px);
+    height: min(calc(var(--logo-taille, 56px) * 46 / 56), 36px);
   }
 
   .logo__nom {

@@ -721,6 +721,11 @@ export default config({
           directory: 'public/images/marque',
           publicPath: '/images/marque/',
         }),
+        logoTaille: fields.integer({
+          label: 'Taille du logo dans l’en-tête (hauteur en px)',
+          description: 'Entre 32 et 120. Laisser vide pour la taille par défaut (56 px).',
+          validation: { min: 32, max: 120 },
+        }),
         couleur: fields.text({
           label: 'Couleur principale',
           description: 'Code hexadécimal, ex. #1f5f4a',

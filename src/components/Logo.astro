@@ -6,11 +6,14 @@ interface Props {
   variante?: 'entete' | 'pied';
   /** false : seul le logo est visible ; le nom reste lu par les moteurs et les lecteurs d’écran. */
   texteVisible?: boolean;
+  /** Hauteur du logo en px (réglage du back-office) ; vide = taille par défaut. */
+  taille?: number | null;
 }
-const { reglages, variante = 'entete', texteVisible = true } = Astro.props;
+const { reglages, variante = 'entete', texteVisible = true, taille = null } = Astro.props;
+const styleTaille = taille ? `--logo-taille:${taille}px` : undefined;
 ---
 
-<span class:list={['logo', `logo--${variante}`]}>
+<span class:list={['logo', `logo--${variante}`]} style={styleTaille}>
   {
     reglages.logo ? (
       <img src={reglages.logo} alt={texteVisible ? '' : reglages.nom} class="logo__image" />

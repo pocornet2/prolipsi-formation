@@ -21,6 +21,7 @@ const REGLAGES_PAR_DEFAUT = {
   logoLigne2: '',
   signature: '',
   logo: null,
+  logoTaille: null,
   couleur: '#1f5f4a',
   telephone: '',
   email: '',

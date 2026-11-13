@@ -19,7 +19,7 @@ const actif = (url: string) => {
 <header class="entete">
   <div class="conteneur entete__inner">
     <a class="marque" href="/" aria-label={`${reglages.nom}, retour à l’accueil`}>
-      <Logo reglages={reglages} texteVisible={false} />
+      <Logo reglages={reglages} texteVisible={false} taille={reglages.logoTaille} />
     </a>
 
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-principal" data-menu-btn>
