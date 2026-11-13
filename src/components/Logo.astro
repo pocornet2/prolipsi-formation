@@ -4,14 +4,16 @@ import type { Reglages } from '../lib/content';
 interface Props {
   reglages: Reglages;
   variante?: 'entete' | 'pied';
+  /** false : seul le logo est visible ; le nom reste lu par les moteurs et les lecteurs d’écran. */
+  texteVisible?: boolean;
 }
-const { reglages, variante = 'entete' } = Astro.props;
+const { reglages, variante = 'entete', texteVisible = true } = Astro.props;
 ---
 
 <span class:list={['logo', `logo--${variante}`]}>
   {
     reglages.logo ? (
-      <img src={reglages.logo} alt="" class="logo__image" />
+      <img src={reglages.logo} alt={texteVisible ? '' : reglages.nom} class="logo__image" />
     ) : (
       <svg class="logo__signe" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
         <rect y="2" width="40" height="5" rx="1" fill="var(--rouge)" />
@@ -22,7 +24,7 @@ const { reglages, variante = 'entete' } = Astro.props;
       </svg>
     )
   }
-  <span class="logo__texte">
+  <span class:list={['logo__texte', !texteVisible && 'visually-hidden']}>
     <span class="logo__nom">{reglages.nom}</span>
     {reglages.logoLigne1 && <span class="logo__ligne1">{reglages.logoLigne1}</span>}
     {reglages.logoLigne2 && <span class="logo__ligne2">{reglages.logoLigne2}</span>}
