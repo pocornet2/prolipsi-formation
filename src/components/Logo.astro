@@ -28,7 +28,7 @@ const styleTaille = taille ? `--logo-taille:${taille}px` : undefined;
     )
   }
   <span class:list={['logo__texte', !texteVisible && 'visually-hidden']}>
-    <span class="logo__nom">{reglages.nom}</span>
+    <span class:list={['logo__nom', variante === 'pied' && 'visually-hidden']}>{reglages.nom}</span>
     {reglages.logoLigne1 && <span class="logo__ligne1">{reglages.logoLigne1}</span>}
     {reglages.logoLigne2 && <span class="logo__ligne2">{reglages.logoLigne2}</span>}
   </span>

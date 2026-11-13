@@ -310,6 +310,12 @@ address {
   height: calc(var(--logo-taille, 56px) * 46 / 56);
 }
 
+.logo--pied {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
 .logo__texte {
   display: flex;
   flex-direction: column;
