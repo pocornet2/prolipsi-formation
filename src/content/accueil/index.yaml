@@ -41,14 +41,14 @@ blocs:
           titre: Certifié Qualiopi
           texte: La qualité de nos formations est certifiée Qualiopi
         - icone: certification
-          titre: Habilitation SST
-          texte: Des formateurs habilités et expérimentés
+          titre: Habilitation
+          texte: Des formateurs sont habilités et expérimentés
         - icone: avis
           titre: 4,8/5 sur Google
           texte: Des entreprises nous font confiance
         - icone: localisation
-          titre: Pays de la Loire
-          texte: Une entreprise ancrée localement à La Baule et Saint-Nazaire
+          titre: Pays de la Loire et Bretagne
+          texte: Une entreprise ancrée localement à Saint-Nazaire
   - discriminant: cartes
     value:
       titre: Une réponse complète à tous vos besoins de sécurité
