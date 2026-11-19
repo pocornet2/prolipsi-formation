@@ -1,5 +1,5 @@
 seo:
-  titre: Formation et conseil en sécurité au travail · La Baule, Saint-Nazaire
+  titre: Conseil, formations en sécurité au travail · Bretagne Pays de Loire
   description: >-
     Formations SST, incendie et habilitations électriques, conseil en prévention
     et matériel de sécurité à La Baule et Saint-Nazaire. Organisme certifié
@@ -8,8 +8,8 @@ seo:
 blocs:
   - discriminant: hero
     value:
-      titre: Formation, conseil et matériel de Sécurité au Travail
-      titreAccent: à La Baule et Saint-Nazaire
+      titre: Conseil, formations et matériel de Sécurité au Travail
+      titreAccent: en Pays de la Loire et Bretagne
       texte: >-
         Un seul interlocuteur pour former vos équipes, mettre votre
         établissement en conformité et l’équiper.
