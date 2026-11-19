@@ -57,15 +57,6 @@ blocs:
       style: cartes
       cartes:
         - image: /src/assets/images/accueil/blocs/2/value/cartes/0/image.jpg
-          alt: Stagiaires pratiquant un massage cardiaque sur un mannequin
-          icone: formation
-          titre: Se former
-          texte: >-
-            Formations incendie, SST, habilitations électriques et plus encore,
-            pour des équipes compétentes et réactives.
-          lien: /formations/
-          lienLibelle: Découvrir nos formations
-        - image: /src/assets/images/accueil/blocs/2/value/cartes/1/image.jpg
           alt: >-
             Consultant en gilet de sécurité échangeant avec une responsable sur
             une tablette
@@ -76,6 +67,15 @@ blocs:
             conseillons pour mettre votre établissement en conformité.
           lien: /conseil/
           lienLibelle: Découvrir notre accompagnement
+        - image: /src/assets/images/accueil/blocs/2/value/cartes/1/image.jpg
+          alt: Stagiaires pratiquant un massage cardiaque sur un mannequin
+          icone: formation
+          titre: Se former
+          texte: >-
+            Formations incendie, SST, habilitations électriques et plus encore,
+            pour des équipes compétentes et réactives.
+          lien: /formations/
+          lienLibelle: Découvrir nos formations
         - image: /src/assets/images/accueil/blocs/2/value/cartes/2/image.jpg
           alt: Extincteurs, panneaux de signalisation et détecteurs de fumée
           icone: materiel
