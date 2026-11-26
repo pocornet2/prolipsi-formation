@@ -11,8 +11,8 @@ blocs:
     value:
       titre: Formations Santé-Sécurité au Travail
       texte: >-
-        Secourisme, incendie, évacuation, habilitation électrique : formez vos
-        équipes aux bons réflexes.
+        Secourisme, incendie, évacuation, habilitation : formez vos équipes aux
+        bons réflexes.
       sousTexte: Dans vos locaux ou en inter-entreprises.
       disposition: droite
       image: /src/assets/images/pages/formations/blocs/0/value/image.jpg
@@ -98,7 +98,7 @@ blocs:
         ### En inter-entreprises
 
 
-        Rejoignez nos sessions dans nos centres à La Baule ou Saint-Nazaire et
+        Rejoignez nos sessions dans notre centre de formation à Saint-Nazaire et
         échangez avec d’autres professionnels.
       image: /src/assets/images/pages/formations/blocs/7/value/image.jpg
       alt: Formateur présentant un extincteur à un groupe de stagiaires
