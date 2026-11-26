@@ -50,7 +50,7 @@ blocs:
     value:
       ancre: commission-securite
       surtitre: 01 · Commission de sécurité
-      titre: Préparez votre commission de sécurité incendie
+      titre: Préparez votre commission de sécurité et d'accessibilité
       texte: Anticipez la visite et identifiez les points à améliorer dans votre ERP.
       points:
         - Audit préalable de l’établissement
@@ -224,10 +224,11 @@ blocs:
             organiser une pré-visite qui simule le passage de la commission.
         - question: Le DUERP est-il un accompagnement ou une formation ?
           reponse: >-
-            C’est un accompagnement : nous évaluons avec vous les risques de
-            votre activité et construisons le document et le plan d’action. Il
-            peut être complété par la formation de vos équipes (SST, incendie,
-            gestes et postures…).
+            C’est un accompagnement : une conseiller IPRP (intervenant en
+            prévention des risques professionnels) évaluera avec vous les
+            risques de votre activité et construira le document et le plan
+            d’action. Il peut être complété par la formation "être à jour et
+            mieux exploiter son document unique".
         - question: Quel budget et quels délais prévoir ?
           reponse: >-
             Ils dépendent de la taille de l’établissement et de la prestation.
