@@ -8,11 +8,9 @@ seo:
 blocs:
   - discriminant: hero
     value:
-      titre: Conseil, formations et matériel de Sécurité au Travail
+      titre: Conseil, formation et matériel de Sécurité au Travail
       titreAccent: en Pays de la Loire et Bretagne
-      texte: >-
-        Un seul interlocuteur pour former vos équipes, mettre votre
-        établissement en conformité et l’équiper.
+      texte: Anticiper aujourd'hui, protéger demain
       annotation: |-
         Des compétences d’aujourd’hui
         pour des environnements de travail plus sûrs
@@ -199,15 +197,15 @@ blocs:
       image: /src/assets/images/accueil/blocs/8/value/image.jpg
       pictos: []
       boutons:
-        - libelle: Je veux former mes équipes
-          url: /formations/
-          style: principal
-          icone: formation
-          fleche: false
         - libelle: Je veux me mettre en conformité
           url: /conseil/
           style: blanc
           icone: devis
+          fleche: false
+        - libelle: Je veux former mes équipes
+          url: /formations/
+          style: principal
+          icone: formation
           fleche: false
         - libelle: Je veux m’équiper
           url: /materiel/
