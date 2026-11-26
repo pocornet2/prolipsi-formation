@@ -52,7 +52,7 @@ blocs:
   - discriminant: cartes
     value:
       titre: Une réponse complète à tous vos besoins de sécurité
-      intro: 'Formation, conseil et matériel : trois expertises complémentaires.'
+      intro: 'Conseil, formation et matériel : trois expertises complémentaires.'
       alignement: centre
       style: cartes
       cartes:
@@ -72,8 +72,8 @@ blocs:
           icone: formation
           titre: Se former
           texte: >-
-            Formations incendie, SST, habilitations électriques et plus encore,
-            pour des équipes compétentes et réactives.
+            Formations incendie, SST, habilitations et plus encore, pour des
+            équipes compétentes et réactives.
           lien: /formations/
           lienLibelle: Découvrir nos formations
         - image: /src/assets/images/accueil/blocs/2/value/cartes/2/image.jpg
@@ -108,17 +108,18 @@ blocs:
         - image: /src/assets/images/accueil/blocs/3/value/produits/1/image.jpg
           alt: Panneau vert de sortie de secours
           titre: Signalétique
-          texte: Panneaux, plans d’évacuation, consignes
+          texte: Panneaux, plans d’évacuation, consignes, BAES
           lien: /materiel/
         - image: /src/assets/images/accueil/blocs/3/value/produits/2/image.jpg
           alt: Détecteur de fumée
           titre: Détection et alarme
-          texte: Détecteurs, alarmes incendie, BAES
+          texte: Détecteurs, alarmes incendie...
           lien: /materiel/
         - image: /src/assets/images/accueil/blocs/3/value/produits/3/image.jpg
-          alt: Casque, gants et lunettes de protection
+          alt: 'Défibrilateur, trousse de secours '
           titre: Équipements de sécurité
-          texte: EPI, trousses de secours, matériel d’intervention
+          texte: |
+            EPI, trousses de secours, défibrillateur
           lien: /materiel/
   - discriminant: avisSessions
     value:
@@ -154,9 +155,7 @@ blocs:
       logos:
         - nom: Qualiopi
         - nom: SST
-        - nom: INRS
-        - nom: Carsat
-        - nom: Région Pays de la Loire
+        - nom: CNPP
   - discriminant: faq
     value:
       titre: Vos questions les plus fréquentes
@@ -177,9 +176,9 @@ blocs:
             recommandée.
         - question: Proposez-vous des formations en entreprise ?
           reponse: >-
-            Oui. Nous intervenons directement dans vos locaux à La Baule,
-            Saint-Nazaire et dans toute la région, avec le matériel pédagogique
-            nécessaire.
+            Oui. Nous intervenons directement dans vos locaux, en
+            intra-entreprise, à La Baule, Guérande, Saint-Nazaire et dans toute
+            la région, avec le matériel pédagogique nécessaire.
         - question: Vendez-vous des extincteurs aux entreprises ?
           reponse: >-
             Oui. Nous fournissons, installons et entretenons les extincteurs, et
