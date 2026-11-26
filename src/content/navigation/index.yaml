@@ -1,8 +1,8 @@
 liens:
-  - libelle: Formations
-    url: /formations/
   - libelle: Conseil
     url: /conseil/
+  - libelle: Formation
+    url: /formations/
   - libelle: Matériel
     url: /materiel/
   - libelle: Calendrier
@@ -20,10 +20,10 @@ bouton:
   icone: devis
   fleche: false
 piedDePage:
-  - libelle: Formations
-    url: /formations/
   - libelle: Conseil
     url: /conseil/
+  - libelle: Formation
+    url: /formations/
   - libelle: Matériel
     url: /materiel/
   - libelle: Calendrier
