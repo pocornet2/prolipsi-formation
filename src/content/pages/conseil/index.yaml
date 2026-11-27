@@ -17,7 +17,7 @@ blocs:
         adapté à votre établissement.
       lieu: Loire-Atlantique · Presqu’île guérandaise
       disposition: droite
-      image: /src/assets/images/pages/conseil/blocs/0/value/image.jpg
+      image: /src/assets/images/pages/conseil/blocs/0/value/image.jpeg
       alt: >-
         Consultant en prévention échangeant avec une responsable d’établissement
         dans un couloir équipé d’un extincteur
@@ -66,7 +66,7 @@ blocs:
         libelle: Découvrir l’accompagnement
         url: '#devis'
       lienSecondaire: {}
-      image: /src/assets/images/pages/conseil/blocs/2/value/image.jpg
+      image: /src/assets/images/pages/conseil/blocs/2/value/image.jpeg
       alt: >-
         Consultant vérifiant un extincteur avec le responsable d’un
         établissement
@@ -95,7 +95,7 @@ blocs:
       lienSecondaire:
         libelle: Besoin de matériel ? Découvrez notre offre
         url: /materiel/
-      image: /src/assets/images/pages/conseil/blocs/3/value/image.jpg
+      image: /src/assets/images/pages/conseil/blocs/3/value/image.jpeg
       alt: >-
         Plans d’un établissement annotés à côté d’un dossier sécurité incendie
         et accessibilité
@@ -123,7 +123,7 @@ blocs:
         libelle: Découvrir l’accompagnement DUERP
         url: '#devis'
       lienSecondaire: {}
-      image: /src/assets/images/pages/conseil/blocs/4/value/image.jpg
+      image: /src/assets/images/pages/conseil/blocs/4/value/image.jpeg
       alt: Consultant et salariée évaluant les risques dans un atelier
       position: gauche
       fond: blanc
