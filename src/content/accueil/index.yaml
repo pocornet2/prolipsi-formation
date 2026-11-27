@@ -11,9 +11,7 @@ blocs:
       titre: Conseil, formation et matériel de Sécurité au Travail
       titreAccent: en Pays de la Loire et Bretagne
       texte: Anticiper aujourd'hui, protéger demain
-      annotation: |-
-        Des compétences d’aujourd’hui
-        pour des environnements de travail plus sûrs
+      annotation: Anticiper aujourd'hui, protéger demain
       disposition: droite
       image: /src/assets/images/accueil/blocs/0/value/image.jpeg
       alt: >-
