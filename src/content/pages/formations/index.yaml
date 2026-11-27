@@ -150,19 +150,38 @@ blocs:
       titre: Ils nous font confiance
       style: bulle
       items:
-        - citation: 'Toute l’équipe a suivi la formation SST avec Prolipsi Formation et nous sommes ravis ! Formation dynamique, concrète et super engageante, avec des mises en situation très utiles. Un immense merci à Tony pour son énergie, sa pédagogie et son professionnalisme ! Nous recommandons à 100 % !'
+        - citation: >-
+            Toute l’équipe a suivi la formation SST avec Prolipsi Formation et
+            nous sommes ravis ! Formation dynamique, concrète et super
+            engageante, avec des mises en situation très utiles. Un immense
+            merci à Tony pour son énergie, sa pédagogie et son professionnalisme
+            ! Nous recommandons à 100 % !
           auteur: Esprit Flammes
           contexte: Formation SST · avis Google
-        - citation: 'Nous avons fait appel à Tony pour 3 formations : secourisme, habilitation électrique, et mise à jour du document unique. Je le recommande vivement pour ses prestations, chaque participant était très satisfait du déroulement des stages.'
+        - citation: >-
+            Nous avons fait appel à Tony pour 3 formations : secourisme,
+            habilitation électrique, et mise à jour du document unique. Je le
+            recommande vivement pour ses prestations, chaque participant était
+            très satisfait du déroulement des stages.
           auteur: CCOMPUB
           contexte: Secourisme, habilitation électrique, DUERP · avis Google
-        - citation: 'Merci, bravo ! Un dépoussiérage des méthodes de formation. A la fois théorique, juste ce qu’il faut, et très pratico-pratique, une formation SST très terrain et vraiment un formateur qui crée avec légèreté et professionnalisme un cadre serein, bienveillant, propice à l’essai, l’échec, le réessaie et la réussite de tous ! Vraiment top'
+        - citation: >-
+            Merci, bravo ! Un dépoussiérage des méthodes de formation. A la fois
+            théorique, juste ce qu’il faut, et très pratico-pratique, une
+            formation SST très terrain et vraiment un formateur qui crée avec
+            légèreté et professionnalisme un cadre serein, bienveillant, propice
+            à l’essai, l’échec, le réessaie et la réussite de tous ! Vraiment
+            top
           auteur: Julie A.
           contexte: Formation SST · avis Google
-        - citation: 'Merci beaucoup à Tony pour son sens de la pédagogie et pour cette formation. Bonne continuation :)'
+        - citation: >-
+            Merci beaucoup à Tony pour son sens de la pédagogie et pour cette
+            formation. Bonne continuation :)
           auteur: Melanie J.
           contexte: Avis Google
-        - citation: 'Formation aujourd’hui avec Tony, il était super sympa et a rendu la formation intéressante 😁'
+        - citation: >-
+            Formation aujourd’hui avec Tony, il était super sympa et a rendu la
+            formation intéressante 😁
           auteur: Lucie R.
           contexte: Avis Google
   - discriminant: faq
