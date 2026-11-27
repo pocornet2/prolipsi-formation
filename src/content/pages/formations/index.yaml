@@ -150,7 +150,9 @@ blocs:
       titre: Ils nous font confiance
       style: bulle
       items:
-        - {}
+        - citation: 'Toute l’équipe a suivi la formation SST avec Prolipsi Formation et nous sommes ravis ! Formation dynamique, concrète et super engageante, avec des mises en situation très utiles. Un immense merci à Tony pour son énergie, sa pédagogie et son professionnalisme ! Nous recommandons à 100 % !'
+          auteur: Esprit Flammes
+          contexte: Formation SST · avis Google
         - {}
   - discriminant: faq
     value:
