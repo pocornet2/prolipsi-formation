@@ -76,7 +76,7 @@ blocs:
           lienLibelle: Découvrir nos formations
         - image: /src/assets/images/accueil/blocs/2/value/cartes/2/image.jpg
           alt: Extincteurs, panneaux de signalisation et détecteurs de fumée
-          icone: materiel
+          icone: prevention
           titre: S’équiper
           texte: >-
             Extincteurs, signalétique, alarmes, équipements de sécurité… Du
