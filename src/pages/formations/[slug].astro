@@ -140,6 +140,15 @@ const infos = [
             </aside>
           )
         }
+        {
+          f.fichePdf && (
+            <div class="boutons fiche-pdf">
+              <a class="btn btn--contour" href={f.fichePdf} download>
+                <Icone nom="liste" taille={19} />Télécharger la fiche complète (PDF)
+              </a>
+            </div>
+          )
+        }
       </div>
     </div>
   </article>

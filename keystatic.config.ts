@@ -915,6 +915,12 @@ export default config({
           description: 'Deux ou trois phrases : affiché en tête de la fiche et utilisé par Google.',
           multiline: true,
         }),
+        fichePdf: fields.file({
+          label: 'Fiche PDF complète (bouton en bas de page)',
+          description: 'Facultatif. Si un PDF est choisi, un bouton de téléchargement apparaît en bas de la fiche.',
+          directory: 'public/pdf/formations',
+          publicPath: '/pdf/formations/',
+        }),
         seo,
         contenu: fields.markdoc({
           label: 'Fiche détaillée (objectifs, public, programme…)',

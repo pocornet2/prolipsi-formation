@@ -272,6 +272,10 @@ address {
   color: #fff;
 }
 
+.fiche-pdf {
+  margin-top: 2rem;
+}
+
 .boutons {
   display: flex;
   flex-wrap: wrap;
