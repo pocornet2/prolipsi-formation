@@ -1438,8 +1438,8 @@ address {
 
 .logos__image {
   width: auto;
-  max-width: 160px;
-  height: 56px;
+  max-width: 200px;
+  height: 150px;
   object-fit: contain;
 }
 
