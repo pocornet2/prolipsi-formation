@@ -15,7 +15,7 @@ blocs:
         Des compétences d’aujourd’hui
         pour des environnements de travail plus sûrs
       disposition: droite
-      image: /src/assets/images/accueil/blocs/0/value/image.jpg
+      image: /src/assets/images/accueil/blocs/0/value/image.jpeg
       alt: >-
         Stagiaire manipulant un extincteur lors d’un exercice incendie encadré
         par des formateurs
