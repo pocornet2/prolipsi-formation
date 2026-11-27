@@ -148,7 +148,7 @@ blocs:
         url: /calendrier/
   - discriminant: logos
     value:
-      titre: Nos certifications et partenaires
+      titre: Nos certifications
       texte: Des gages de qualité pour vous accompagner en toute confiance.
       logos:
         - image: /src/assets/images/accueil/blocs/5/value/logos/0/image.jpg
