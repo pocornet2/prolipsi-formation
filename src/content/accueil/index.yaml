@@ -122,9 +122,9 @@ blocs:
   - discriminant: avisSessions
     value:
       titreAvis: Ils nous font confiance
-      note: 4,8
-      nombreAvis: Plus de 60 avis sur Google
-      lienAvis: https://www.google.com/maps
+      note: '5'
+      nombreAvis: Plus de 35 avis sur Google
+      lienAvis: https://share.google/6dfc0p04pdbhFp0sn
       avis:
         - citation: >-
             Formation SST très concrète et adaptée à notre activité. Formateur
@@ -151,9 +151,12 @@ blocs:
       titre: Nos certifications et partenaires
       texte: Des gages de qualité pour vous accompagner en toute confiance.
       logos:
-        - nom: Qualiopi
-        - nom: SST
-        - nom: CNPP
+        - image: /src/assets/images/accueil/blocs/5/value/logos/0/image.jpg
+          nom: Qualiopi
+        - image: /src/assets/images/accueil/blocs/5/value/logos/1/image.png
+          nom: SST
+        - image: /src/assets/images/accueil/blocs/5/value/logos/2/image.jpg
+          nom: CNPP
   - discriminant: faq
     value:
       titre: Vos questions les plus fréquentes
