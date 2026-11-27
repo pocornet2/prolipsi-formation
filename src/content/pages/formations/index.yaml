@@ -162,6 +162,9 @@ blocs:
         - citation: 'Merci beaucoup à Tony pour son sens de la pédagogie et pour cette formation. Bonne continuation :)'
           auteur: Melanie J.
           contexte: Avis Google
+        - citation: 'Formation aujourd’hui avec Tony, il était super sympa et a rendu la formation intéressante 😁'
+          auteur: Lucie R.
+          contexte: Avis Google
   - discriminant: faq
     value:
       titre: Vos questions sur nos formations
