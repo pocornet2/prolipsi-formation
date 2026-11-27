@@ -54,7 +54,7 @@ blocs:
       alignement: centre
       style: cartes
       cartes:
-        - image: /src/assets/images/accueil/blocs/2/value/cartes/0/image.jpg
+        - image: /src/assets/images/accueil/blocs/2/value/cartes/0/image.jpeg
           alt: >-
             Consultant en gilet de sécurité échangeant avec une responsable sur
             une tablette
